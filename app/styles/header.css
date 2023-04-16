@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  color: #444;
+  font-family: sans-serif;
+}
+
+button {
+  display: inline-block;
+  background-color: #fff;
+  border: none;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 3rem 6rem;
+  border-bottom: 1px solid grey;
+}
+
+.icon {
+  height: 3rem;
+  width: 3rem;
+}
+
+.location {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+
+  border: 1px solid grey;
+  border-radius: 3rem;
+  padding: 0.5rem 1rem;
+  width: 28rem;
+}
+
+.location input {
+  font-size: 1.8rem;
+  border: none;
+  height: 3rem;
+  width: 22rem;
+}
+
+.location input:focus {
+  outline: none;
+}
+
+.logo {
+  height: 5rem;
+  width: 6rem;
+}
+
+.home {
+  display: flex;
+  align-items: center;
+}
+
+.home p {
+  display: inline-block;
+  font-size: 4rem;
+  font-family: 'Courgette', cursive;
+  color: #f76707;
+}

@@ -1,0 +1,25 @@
+.rooms {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+
+  margin: 4rem 0rem;
+}
+
+.rooms img {
+  height: 32rem;
+  width: 32rem;
+  border-radius: 1rem;
+}
+
+.locationResults {
+  font-size: 1rem;
+  line-height: 2rem;
+  box-shadow: 1px 2px 2px 1px rgba(0, 0, 0, 0.08);
+
+  margin: 5px;
+  background-color: #fff;
+  padding: 20px 20px;
+  border-radius: 14px;
+  cursor: default;
+}
