@@ -1,9 +1,10 @@
 import { NavLink } from '@remix-run/react';
 import styles from '../styles/header.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useJsApiLoader, GoogleMap, MarkerF } from '@react-google-maps/api';
 import { MAPSKEY } from '../api/config';
+import MapModal from './MapModal';
 
 const Header = () => {
   const [locationResults, setLocationResults] = useState([]);
@@ -11,6 +12,10 @@ const Header = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [address, setAddress] = useState('');
   const [center, setCenter] = useState({ lat: 0, lng: 0 });
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [resultsIsOpen, setResultsIsOpen] = useState(false);
+
+  const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (navigator?.geolocation)
@@ -31,7 +36,14 @@ const Header = () => {
       setLocationResults(
         response.data.predictions.map((el: any) => {
           return (
-            <p key={el.description} onClick={(e) => setAddress(el.description)}>
+            <p
+              key={el.description}
+              onClick={(e) => {
+                setAddress(el.description);
+                setSearchTerm(el.description);
+                setResultsIsOpen(false);
+              }}
+            >
               {el.description}
             </p>
           );
@@ -51,6 +63,23 @@ const Header = () => {
     };
   }, [searchTerm]);
 
+  useEffect(() => {
+    // Attach an event listener to the document that listens for clicks
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  function handleClickOutside(event: any) {
+    // If the user clicks outside the div, hide it
+    if (divRef.current && !divRef.current.contains(event.target)) {
+      divRef.current.style.display = 'none';
+    }
+  }
+
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: `${MAPSKEY}`,
   });
@@ -60,14 +89,18 @@ const Header = () => {
   )}&key=${MAPSKEY}`;
 
   useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        const location = data.results[0]?.geometry.location;
-        setCenter({ lat: location.lat, lng: location.lng });
-        console.log(`Latitude: ${location.lat}, Longitude: ${location.lng}`);
-      });
-  }, [url]);
+    address &&
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          const location = data.results[0]?.geometry.location;
+          setCenter({ lat: location?.lat, lng: location?.lng });
+        });
+  }, [address, url]);
+
+  const openModal = () => {
+    setIsOpen(!modalIsOpen);
+  };
 
   if (!isLoaded) return <></>;
 
@@ -92,9 +125,9 @@ const Header = () => {
           </span>
         </NavLink>
       </div>
-      <div>
-        <div className="location">
-          <button>
+      <div className="location">
+        <div className="location-input">
+          <button onClick={openModal}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -119,19 +152,30 @@ const Header = () => {
             <input
               type="text"
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+                setResultsIsOpen(true);
+              }}
             ></input>
           </div>
         </div>
-        <div className="locationResults">{locationResults}</div>
+        {resultsIsOpen && (
+          <div className="locationResults" ref={divRef}>
+            {locationResults}
+          </div>
+        )}
       </div>
-      <GoogleMap
-        center={center}
-        mapContainerStyle={{ width: '100rem', height: '100rem' }}
-        zoom={15}
-      >
-        <MarkerF position={center} />
-      </GoogleMap>
+
+      <MapModal modalIsOpen={modalIsOpen}>
+        <GoogleMap
+          center={center}
+          mapContainerStyle={{ width: '100rem', height: '100rem' }}
+          zoom={15}
+        >
+          <MarkerF position={center} />
+        </GoogleMap>
+      </MapModal>
+
       <div>
         <button className="profile">
           <svg

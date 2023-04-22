@@ -36,6 +36,10 @@ button {
 }
 
 .location {
+  position: relative;
+}
+
+.location .location-input {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -61,6 +65,17 @@ button {
 .logo {
   height: 5rem;
   width: 6rem;
+}
+
+.locationResults {
+  position: absolute;
+
+  align-self: center;
+  width: 25rem;
+}
+
+.locationResults p {
+  font-size: 1.4rem;
 }
 
 .home {
