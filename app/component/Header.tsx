@@ -2,7 +2,7 @@ import { NavLink } from '@remix-run/react';
 import styles from '../styles/header.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import { useJsApiLoader, GoogleMap, MarkerF } from '@react-google-maps/api';
+import { useJsApiLoader } from '@react-google-maps/api';
 import { MAPSKEY } from '../api/config';
 import MapModal from './MapModal';
 
@@ -24,6 +24,7 @@ const Header = () => {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
+        console.log(position);
       });
   }, []);
 
@@ -99,10 +100,10 @@ const Header = () => {
   }, [address, url]);
 
   const openModal = () => {
-    setIsOpen(!modalIsOpen);
+    setIsOpen(true);
   };
 
-  if (!isLoaded) return <></>;
+  // if (!isLoaded) return;
 
   return (
     <div className="header">
@@ -166,15 +167,13 @@ const Header = () => {
         )}
       </div>
 
-      <MapModal modalIsOpen={modalIsOpen}>
-        <GoogleMap
+      {isLoaded && (
+        <MapModal
+          modalIsOpen={modalIsOpen}
           center={center}
-          mapContainerStyle={{ width: '100rem', height: '100rem' }}
-          zoom={15}
-        >
-          <MarkerF position={center} />
-        </GoogleMap>
-      </MapModal>
+          setIsOpen={setIsOpen}
+        />
+      )}
 
       <div>
         <button className="profile">

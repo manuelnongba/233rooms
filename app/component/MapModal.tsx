@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { GoogleMap, MarkerF } from '@react-google-maps/api';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -14,40 +14,43 @@ const customStyles = {
   },
 };
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-Modal.setAppElement('body');
-
-const MapModal = (props: React.PropsWithChildren<{ modalIsOpen: boolean }>) => {
-  const [modalIsOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setIsOpen(props.modalIsOpen);
-  }, [props.modalIsOpen]);
-
+const MapModal = (
+  props: React.PropsWithChildren<{
+    modalIsOpen: boolean;
+    center: { lat: number; lng: number };
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }>
+) => {
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
   }
 
   function closeModal() {
-    setIsOpen(false);
+    props.setIsOpen(false);
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.15 }}
+    <Modal
+      isOpen={props.modalIsOpen}
+      onAfterOpen={afterOpenModal}
+      onRequestClose={closeModal}
+      style={customStyles}
     >
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.95 }}
+        transition={{ duration: 0.15 }}
       >
-        <div>{props.children}</div>
-      </Modal>
-    </motion.div>
+        <GoogleMap
+          center={props.center}
+          mapContainerStyle={{ width: '100rem', height: '100rem' }}
+          zoom={15}
+        >
+          <MarkerF position={props.center} />
+        </GoogleMap>
+      </motion.div>
+    </Modal>
   );
 };
 export default MapModal;

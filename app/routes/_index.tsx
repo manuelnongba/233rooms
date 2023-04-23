@@ -18,8 +18,13 @@ export default function Index() {
 
 export const loader = async () => {
   const { rows } = await pool.query(`
-    SELECT * FROM rooms;
+   SELECT id, title, image, ST_Distance(location::geography, ST_GeographyFromText('POINT(-0.076942 5.618416)')) AS distance
+   FROM rooms
+   WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(-0.076942 5.618416)'), 10000);
+  
   `);
+
+  console.log(rows);
 
   return rows;
 };
@@ -27,3 +32,7 @@ export const loader = async () => {
 export function links() {
   return [...headerLinks(), ...roomsLinks()];
 }
+
+// SELECT id, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(5.618416 -0.076942)')) AS distance
+//   FROM rooms
+//   WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(5.618416 -0.076942)'), 10000);

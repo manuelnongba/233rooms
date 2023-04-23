@@ -4,12 +4,15 @@ exports.shorthands = undefined;
 
 exports.up = (pgm) => {
   pgm.sql(`
-    CREATE TABLE rooms (
-      id SERIAL PRIMARY KEY,
-      image VARCHAR(500) NOT NULL,
-      location POINT NOT NULL,
-      address VARCHAR(500) NOT NULL
-    )
+  CREATE TABLE rooms (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(50) NOT NULL,
+	  price INTEGER(10) NOT NULL,
+	  description VARCHAR(240),
+	  image VARCHAR(200), 
+	  address VARCHAR(200) NOT NULL,
+    location GEOGRAPHY(POINT, 4326) NOT NULL
+      );
   `);
 };
 
