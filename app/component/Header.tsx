@@ -5,28 +5,49 @@ import axios from 'axios';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { MAPSKEY } from '../api/config';
 import MapModal from './MapModal';
+import { getCurrentLocation } from '~/actions';
+import { connect } from 'react-redux';
 
-const Header = () => {
+const Header = ({
+  location,
+  getCurrentLocation,
+}: {
+  location: { latitude: number; longitude: number };
+  getCurrentLocation: any;
+}) => {
   const [locationResults, setLocationResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [address, setAddress] = useState('');
-  const [center, setCenter] = useState({ lat: 0, lng: 0 });
+  const [center, setCenter] = useState({
+    lat: location.latitude,
+    lng: location.longitude,
+  });
   const [modalIsOpen, setIsOpen] = useState(false);
   const [resultsIsOpen, setResultsIsOpen] = useState(false);
 
   const divRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (navigator?.geolocation)
-      navigator.geolocation.getCurrentPosition((position) => {
-        setCenter({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
-        });
-        console.log(position);
-      });
-  }, []);
+    getCurrentLocation();
+  }, [getCurrentLocation]);
+
+  useEffect(() => {
+    setCenter({
+      lat: location.latitude,
+      lng: location.longitude,
+    });
+  }, [location]);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
 
   useEffect(() => {
     const googlePlaces = async () => {
@@ -54,33 +75,6 @@ const Header = () => {
     googlePlaces();
   }, [debouncedSearchTerm]);
 
-  useEffect(() => {
-    const timerId = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timerId);
-    };
-  }, [searchTerm]);
-
-  useEffect(() => {
-    // Attach an event listener to the document that listens for clicks
-    document.addEventListener('mousedown', handleClickOutside);
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  function handleClickOutside(event: any) {
-    // If the user clicks outside the div, hide it
-    if (divRef.current && !divRef.current.contains(event.target)) {
-      divRef.current.style.display = 'none';
-    }
-  }
-
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: `${MAPSKEY}`,
   });
@@ -103,7 +97,25 @@ const Header = () => {
     setIsOpen(true);
   };
 
-  // if (!isLoaded) return;
+  useEffect(() => {
+    // Attach an event listener to the document that listens for clicks
+    document.addEventListener('mousedown', handleClickOutside);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  function handleClickOutside(event: Event) {
+    // If the user clicks outside the div, hide it
+    if (
+      divRef.current &&
+      !divRef.current.contains(event.target as HTMLDivElement)
+    ) {
+      divRef.current.style.display = 'none';
+    }
+  }
 
   return (
     <div className="header">
@@ -167,7 +179,7 @@ const Header = () => {
         )}
       </div>
 
-      {isLoaded && (
+      {isLoaded && center.lat && (
         <MapModal
           modalIsOpen={modalIsOpen}
           center={center}
@@ -197,7 +209,11 @@ const Header = () => {
   );
 };
 
-export default Header;
+export const mapStateToProps = (state: any) => {
+  return { location: state.location };
+};
+
+export default connect(mapStateToProps, { getCurrentLocation })(Header);
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }];

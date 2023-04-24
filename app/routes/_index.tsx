@@ -21,10 +21,7 @@ export const loader = async () => {
    SELECT id, title, image, ST_Distance(location::geography, ST_GeographyFromText('POINT(-0.076942 5.618416)')) AS distance
    FROM rooms
    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(-0.076942 5.618416)'), 10000);
-  
   `);
-
-  console.log(rows);
 
   return rows;
 };

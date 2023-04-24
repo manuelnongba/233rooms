@@ -6,8 +6,6 @@ interface RoomsProps {
 
 const Rooms: React.FC<RoomsProps> = ({ rooms }) => {
   const room = rooms.map((el: any) => {
-    console.log(el);
-
     return (
       <div key={el.id}>
         <img src={`${el.image}`} alt="" />

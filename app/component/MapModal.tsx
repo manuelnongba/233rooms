@@ -14,6 +14,8 @@ const customStyles = {
   },
 };
 
+Modal.setAppElement('body');
+
 const MapModal = (
   props: React.PropsWithChildren<{
     modalIsOpen: boolean;
