@@ -1,6 +1,8 @@
+import Footer from '~/component/Footer';
 import Header from '~/component/Header';
 import { links as headerLinks } from '~/component/Header';
 import { links as roomsLinks } from '~/component/Rooms';
+import { links as footerLinks } from '~/component/Footer';
 import Rooms from '~/component/Rooms';
 import { getRooms } from '~/data/rooms.server';
 
@@ -9,6 +11,7 @@ export default function Index() {
     <div>
       <Header />
       <Rooms />
+      <Footer />
     </div>
   );
 }
@@ -36,7 +39,7 @@ export const loader = async ({ request }: any) => {
 };
 
 export function links() {
-  return [...headerLinks(), ...roomsLinks()];
+  return [...headerLinks(), ...roomsLinks(), ...footerLinks()];
 }
 
 // SELECT id, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(5.618416 -0.076942)')) AS distance

@@ -5,7 +5,7 @@ import roomsReducer from './roomsReducer';
 
 export interface StoreState {
   location: Location;
-  rooms: Rooms;
+  rooms: Rooms | any;
 }
 
 export default combineReducers<StoreState>({

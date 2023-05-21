@@ -1,14 +1,18 @@
 .rooms {
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  margin: 6rem 6rem;
 
-  margin: 4rem 0rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: center;
+  align-items: center;
+
+  column-gap: 2rem;
+  row-gap: 8rem;
 }
 
 .rooms img {
-  height: 32rem;
-  width: 32rem;
+  height: 30rem;
+  width: 30rem;
   border-radius: 1rem;
 }
 
