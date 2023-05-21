@@ -1,19 +1,21 @@
-import { NavLink } from '@remix-run/react';
+import { NavLink, useFetcher } from '@remix-run/react';
 import styles from '../styles/header.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { MAPSKEY } from '../api/config';
 import MapModal from './MapModal';
-import { getCurrentLocation } from '~/actions';
+import { getCurrentLocation, getRooms } from '~/actions';
 import { connect } from 'react-redux';
 
 const Header = ({
   location,
   getCurrentLocation,
+  getRooms,
 }: {
   location: { latitude: number; longitude: number };
   getCurrentLocation: any;
+  getRooms: any;
 }) => {
   const [locationResults, setLocationResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -27,6 +29,26 @@ const Header = ({
   const [resultsIsOpen, setResultsIsOpen] = useState(false);
 
   const divRef = useRef<HTMLDivElement>(null);
+
+  const fetcher = useFetcher();
+  const submit = fetcher.submit;
+
+  useEffect(() => {
+    if (center.lat) {
+      const data = {
+        lat: String(center.lat),
+        lng: String(center.lng),
+      };
+
+      submit(data, { method: 'GET', action: '?index' });
+    }
+  }, [center, submit]);
+
+  useEffect(() => {
+    if (fetcher.data) {
+      getRooms(fetcher.data);
+    }
+  }, [fetcher.data, getRooms]);
 
   useEffect(() => {
     getCurrentLocation();
@@ -116,6 +138,10 @@ const Header = ({
       divRef.current.style.display = 'none';
     }
   }
+
+  // if (fetcher.state !== 'idle') {
+  //   return <h1>Loading...</h1>;
+  // }
 
   return (
     <div className="header">
@@ -210,10 +236,14 @@ const Header = ({
 };
 
 export const mapStateToProps = (state: any) => {
-  return { location: state.location };
+  console.log(state);
+
+  return { location: state.location, rooms: state.rooms };
 };
 
-export default connect(mapStateToProps, { getCurrentLocation })(Header);
+export default connect(mapStateToProps, { getCurrentLocation, getRooms })(
+  Header
+);
 
 export function links() {
   return [{ rel: 'stylesheet', href: styles }];

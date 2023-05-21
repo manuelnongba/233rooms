@@ -6,9 +6,18 @@ export interface Location {
   latitude: number | null;
 }
 
+export interface Rooms {
+  rooms: any;
+}
+
 export interface LocationAction {
   type: ActionTypes.LOCATION;
   payload: Location;
+}
+
+export interface RoomsAction {
+  type: ActionTypes.ROOMS;
+  payload: Rooms;
 }
 
 export const getCurrentLocation = () => (dispatch: Dispatch) => {
@@ -21,4 +30,11 @@ export const getCurrentLocation = () => (dispatch: Dispatch) => {
         payload: { longitude, latitude },
       });
     });
+};
+
+export const getRooms = (rooms: any) => (dispatch: Dispatch) => {
+  dispatch<any>({
+    type: ActionTypes.ROOMS,
+    payload: { rooms },
+  });
 };

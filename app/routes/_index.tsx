@@ -1,29 +1,38 @@
-import { useLoaderData } from '@remix-run/react';
 import Header from '~/component/Header';
 import { links as headerLinks } from '~/component/Header';
 import { links as roomsLinks } from '~/component/Rooms';
 import Rooms from '~/component/Rooms';
-import { pool } from '~/data/db.server';
+import { getRooms } from '~/data/rooms.server';
 
 export default function Index() {
-  const rooms: string[] = useLoaderData();
-
   return (
     <div>
       <Header />
-      <Rooms rooms={rooms} />
+      <Rooms />
     </div>
   );
 }
 
-export const loader = async () => {
-  const { rows } = await pool.query(`
-   SELECT id, title, image, ST_Distance(location::geography, ST_GeographyFromText('POINT(-0.076942 5.618416)')) AS distance
-   FROM rooms
-   WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(-0.076942 5.618416)'), 10000);
-  `);
+export const loader = async ({ request }: any) => {
+  const url = new URL(await request.url);
 
-  return rows;
+  if (
+    typeof url.searchParams.get('lng') !== 'string' &&
+    typeof url.searchParams.get('lat') !== 'string'
+  ) {
+    return [];
+  }
+
+  const rooms = await getRooms(
+    url.searchParams.get('lng'),
+    url.searchParams.get('lat')
+  );
+
+  return rooms;
+
+  // return json(
+  //   await getRooms(url.searchParams.get('lng'), url.searchParams.get('lat'))
+  // );
 };
 
 export function links() {
