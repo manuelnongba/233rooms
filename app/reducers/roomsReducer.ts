@@ -1,11 +1,14 @@
+import type { Rooms } from '~/actions';
 import { ActionTypes } from '~/actions/types';
 import type { Action } from '~/actions/types';
 
-export default (state: any[], action: Action) => {
+// const defaultRoomValue = { id: 0, title: '', image: '', distance: 0 };
+
+export default (state: Rooms, action: Action) => {
   switch (action.type) {
     case ActionTypes.ROOMS:
       return action.payload;
     default:
-      return [];
+      return state || [];
   }
 };

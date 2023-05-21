@@ -7,7 +7,8 @@ export interface Location {
 }
 
 export interface Rooms {
-  rooms: any;
+  // {id: 1, title: 'Accra Room', image: 'accra.png', distance: 13270.3905742
+  rooms: object[];
 }
 
 export interface LocationAction {
@@ -32,9 +33,9 @@ export const getCurrentLocation = () => (dispatch: Dispatch) => {
     });
 };
 
-export const getRooms = (rooms: any) => (dispatch: Dispatch) => {
-  dispatch<any>({
+export const getRooms = (rooms: Rooms) => (dispatch: Dispatch) => {
+  dispatch<RoomsAction>({
     type: ActionTypes.ROOMS,
-    payload: { rooms },
+    payload: rooms,
   });
 };

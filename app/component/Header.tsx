@@ -236,8 +236,6 @@ const Header = ({
 };
 
 export const mapStateToProps = (state: any) => {
-  console.log(state);
-
   return { location: state.location, rooms: state.rooms };
 };
 
