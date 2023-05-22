@@ -27,3 +27,19 @@
   border-radius: 14px;
   cursor: default;
 }
+
+.room-details {
+  cursor: pointer;
+}
+
+.address-price {
+  font-size: 1.4rem;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.address-price p {
+  font-weight: 600;
+}

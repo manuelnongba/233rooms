@@ -15,8 +15,17 @@ const Rooms = ({ rooms }: any) => {
     setRoom(
       rooms.map((el: any) => {
         return (
-          <div key={el.id}>
-            <img src={`${el.image}`} alt="" />
+          <div key={el.id} className="room-details">
+            <div>
+              <img src={`${el.image}`} alt="" />
+            </div>
+            <div className="address-price">
+              <p>{el.address}</p>
+              <div>
+                <p style={{ display: 'inline-block' }}>{`¢${el.price}`}</p>
+                <span> month</span>
+              </div>
+            </div>
           </div>
         );
       })
