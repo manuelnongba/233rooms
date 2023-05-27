@@ -8,8 +8,6 @@
 
   column-gap: 2rem;
   row-gap: 8rem;
-  background-image: url('public/accra.png');
-  background-size: 100vh;
 }
 
 .rooms img {

@@ -3,17 +3,18 @@ import Header from '~/component/Header';
 import { links as headerLinks } from '~/component/Header';
 import { links as roomsLinks } from '~/component/Rooms';
 import { links as footerLinks } from '~/component/Footer';
+import { links as sliderLinks } from '~/component/Slider';
 import Rooms from '~/component/Rooms';
 import { getRooms } from '~/data/rooms.server';
 
-import Slideshow from '~/component/Slider';
+// import Slideshow from '~/component/Slider';
 
 export default function Index() {
   return (
     <div>
       <Header />
       <Rooms />
-      <Slideshow />
+      {/* <Slideshow /> */}
       <Footer />
     </div>
   );
@@ -42,7 +43,12 @@ export const loader = async ({ request }: any) => {
 };
 
 export function links() {
-  return [...headerLinks(), ...roomsLinks(), ...footerLinks()];
+  return [
+    ...headerLinks(),
+    ...roomsLinks(),
+    ...footerLinks(),
+    ...sliderLinks(),
+  ];
 }
 
 // SELECT id, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(5.618416 -0.076942)')) AS distance
