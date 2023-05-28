@@ -18,10 +18,10 @@ const Rooms = ({ rooms }: any) => {
         return (
           <div className="room-details" key={el.id}>
             <Slideshow />
-            <div className="address-price">
+            <div className="room-sub-details">
               <p>{el.address}</p>
-              <div>
-                <p style={{ display: 'inline-block' }}>{`¢${el.price}`}</p>
+              <div className="price">
+                <p>{`¢${el.price}`}</p>
                 <span> month</span>
               </div>
             </div>

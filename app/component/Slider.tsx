@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from '~/styles/slider.css';
 
 const slideImages = [
@@ -18,6 +18,8 @@ const slideImages = [
 
 const Slideshow = () => {
   const [slideIndex, setSlideIndex] = useState(1);
+  const nextButton: any = useRef();
+  const prevButton: any = useRef();
 
   const nextSlide = () => {
     if (slideIndex !== slideImages.length) {
@@ -43,26 +45,40 @@ const Slideshow = () => {
     setSlideIndex(i);
   };
 
+  const onMouseOver = (): any => {
+    prevButton.current.style.opacity = 1;
+    nextButton.current.style.opacity = 1;
+  };
+
+  const onMouseOut = (): any => {
+    prevButton.current.style.opacity = 0;
+    nextButton.current.style.opacity = 0;
+  };
+
   return (
-    <div className="container-slider">
+    <div
+      className="container-slider"
+      onMouseOver={onMouseOver}
+      onMouseOut={onMouseOut}
+    >
       {slideImages.map((el, i) => {
         return (
           <div
             key={i}
             className={slideIndex === i + 1 ? 'slide active-img' : 'slide'}
           >
-            <img src={el.url} alt="a" />
+            <img src={el.url} alt="ant" />
           </div>
         );
       })}
-      <button onClick={prevSlide} className="btn-slide">
+      <button ref={prevButton} onClick={prevSlide} className="btn-slide prev">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="btn-slide"
+          // className="btn-slide"
         >
           <path
             strokeLinecap="round"
@@ -71,14 +87,14 @@ const Slideshow = () => {
           />
         </svg>
       </button>
-      <button onClick={nextSlide} className="btn-slide">
+      <button ref={nextButton} onClick={nextSlide} className="btn-slide next">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="btn-slide"
+          // className="btn-slide"
         >
           <path
             strokeLinecap="round"

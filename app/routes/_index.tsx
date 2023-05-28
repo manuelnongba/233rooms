@@ -7,14 +7,12 @@ import { links as sliderLinks } from '~/component/Slider';
 import Rooms from '~/component/Rooms';
 import { getRooms } from '~/data/rooms.server';
 
-// import Slideshow from '~/component/Slider';
-
 export default function Index() {
   return (
     <div>
       <Header />
       <Rooms />
-      {/* <Slideshow /> */}
+
       <Footer />
     </div>
   );
