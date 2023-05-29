@@ -14,6 +14,10 @@ const slideImages = [
     url: 'accra.png',
     caption: 'city2',
   },
+  {
+    url: 'kumasi.png',
+    caption: 'city1',
+  },
 ];
 
 const Slideshow = () => {
@@ -21,7 +25,9 @@ const Slideshow = () => {
   const nextButton: any = useRef();
   const prevButton: any = useRef();
 
-  const nextSlide = () => {
+  const nextSlide = (e: any) => {
+    e.preventDefault();
+
     if (slideIndex !== slideImages.length) {
       setSlideIndex(slideIndex + 1);
     }
@@ -31,7 +37,9 @@ const Slideshow = () => {
     }
   };
 
-  const prevSlide = () => {
+  const prevSlide = (e: any) => {
+    e.preventDefault();
+
     if (slideIndex !== 1) {
       setSlideIndex(slideIndex - 1);
     }
@@ -71,14 +79,17 @@ const Slideshow = () => {
           </div>
         );
       })}
-      <button ref={prevButton} onClick={prevSlide} className="btn-slide prev">
+      <button
+        ref={prevButton}
+        onClick={(e) => prevSlide(e)}
+        className="btn-slide prev"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          // className="btn-slide"
         >
           <path
             strokeLinecap="round"
@@ -87,14 +98,17 @@ const Slideshow = () => {
           />
         </svg>
       </button>
-      <button ref={nextButton} onClick={nextSlide} className="btn-slide next">
+      <button
+        ref={nextButton}
+        onClick={(e) => nextSlide(e)}
+        className="btn-slide next"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          // className="btn-slide"
         >
           <path
             strokeLinecap="round"
@@ -105,7 +119,7 @@ const Slideshow = () => {
       </button>
 
       <div className="container-dots">
-        {Array.from({ length: 5 }).map((item, i) => {
+        {Array.from({ length: slideImages.length }).map((item, i) => {
           return (
             <div
               onClick={() => moveDot(i + 1)}
