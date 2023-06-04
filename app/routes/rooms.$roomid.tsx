@@ -1,5 +1,7 @@
+import RoomDetail from '~/component/RoomDetail';
+
 const Room = () => {
-  return <div>Hello</div>;
+  return <RoomDetail />;
 };
 
 export default Room;

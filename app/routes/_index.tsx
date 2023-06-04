@@ -12,7 +12,6 @@ export default function Index() {
     <div>
       <Header />
       <Rooms />
-
       <Footer />
     </div>
   );

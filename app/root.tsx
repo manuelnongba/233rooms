@@ -11,6 +11,8 @@ import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
 
+import globalCss from '~/styles/global.css';
+
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 
 export default function App() {
@@ -32,4 +34,8 @@ export default function App() {
       </html>
     </Provider>
   );
+}
+
+export function links() {
+  return [{ rel: 'stylesheet', href: globalCss }];
 }
