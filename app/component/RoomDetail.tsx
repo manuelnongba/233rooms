@@ -1,5 +1,6 @@
 import { useParams } from '@remix-run/react';
 import { connect } from 'react-redux';
+import { getRooms } from '~/actions';
 
 const RoomDetail = ({ rooms }: any) => {
   const params = useParams();
@@ -20,12 +21,10 @@ const RoomDetail = ({ rooms }: any) => {
         price: 0,
       };
 
-  console.log(roomValues.image);
-
   return (
     <div>
       <img
-        src="accra.png"
+        src={`/${roomValues.image}`}
         alt="nn"
         style={{ height: '1000px', width: '1000px' }}
       />
@@ -37,4 +36,4 @@ const mapStateToProps = (state: any) => {
   return { rooms: state.rooms };
 };
 
-export default connect(mapStateToProps)(RoomDetail);
+export default connect(mapStateToProps, { getRooms })(RoomDetail);
