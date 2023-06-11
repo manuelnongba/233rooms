@@ -4,8 +4,6 @@ import styles from '~/styles/roomDetails.css';
 const RoomDetails = () => {
   const data = useLoaderData();
 
-  console.log(data);
-
   const roomValues = data ? data : [];
 
   const roomDetails = roomValues.map((el: any, i: any) => {

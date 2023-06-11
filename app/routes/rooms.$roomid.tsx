@@ -15,10 +15,11 @@ const Room = () => {
 
 export default Room;
 
-export const loader = () => {
-  const details = getRoomDetails();
+export const loader = ({ params }: any) => {
+  const id = params.roomid;
+  const data = getRoomDetails(id);
 
-  return details;
+  return data;
 };
 
 export const links = () => {
