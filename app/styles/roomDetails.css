@@ -1,7 +1,9 @@
 .room-details {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  justify-content: space-between;
   margin: 6rem 4rem;
+
+  font-size: 1.4rem;
 }
 
 .main-photo {
@@ -10,6 +12,10 @@
   z-index: -1;
 
   grid-column: -1/-1;
+
+  display: flex;
+  flex-direction: column;
+  gap: 10rem;
 }
 
 .main-photo img {
@@ -47,3 +53,12 @@
   right: 35rem;
   bottom: 18rem;
 } */
+
+.sub-details {
+  padding-top: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  gap: 40rem;
+}
