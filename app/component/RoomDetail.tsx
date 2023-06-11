@@ -1,39 +1,25 @@
-import { useParams } from '@remix-run/react';
-import { connect } from 'react-redux';
-import { getRooms } from '~/actions';
+import { useLoaderData } from '@remix-run/react';
 
-const RoomDetail = ({ rooms }: any) => {
-  const params = useParams();
+const RoomDetail = () => {
+  const data = useLoaderData();
 
-  const roomData = rooms.find((room: any) => {
-    return room.id === Number(params.roomid);
+  console.log(data);
+
+  const roomValues = data ? data : [];
+
+  const roomDetails = roomValues.map((el: any, i: any) => {
+    return (
+      <div key={i}>
+        <img
+          src={`/${el.image}`}
+          alt="nn"
+          style={{ height: '1000px', width: '1000px' }}
+        />
+      </div>
+    );
   });
 
-  const roomValues = roomData
-    ? {
-        image: roomData.image,
-        address: roomData.address,
-        price: roomData.price,
-      }
-    : {
-        image: '',
-        address: '',
-        price: 0,
-      };
-
-  return (
-    <div>
-      <img
-        src={`/${roomValues.image}`}
-        alt="nn"
-        style={{ height: '1000px', width: '1000px' }}
-      />
-    </div>
-  );
+  return roomDetails;
 };
 
-const mapStateToProps = (state: any) => {
-  return { rooms: state.rooms };
-};
-
-export default connect(mapStateToProps, { getRooms })(RoomDetail);
+export default RoomDetail;

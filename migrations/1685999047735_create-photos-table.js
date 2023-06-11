@@ -7,8 +7,8 @@ exports.up = (pgm) => {
   CREATE TABLE photos (
     id SERIAL PRIMARY KEY,
 	  image VARCHAR(200), 
-	  room_id VARCHAR(200) NOT NULL,
-    user_id VARCHAR(200) NOT NULL
+	  room_id INTEGER REFERENCES rooms(id) NOT NULL,
+    user_id INTEGER REFERENCES users(id) NOT NULL
       );
   `);
 };

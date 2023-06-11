@@ -15,3 +15,15 @@ export const getRooms = async (lng: any, lat: any) => {
     throw error;
   }
 };
+
+export const getRoomDetails = async () => {
+  try {
+    const sql = `SELECT image FROM photos WHERE room_id = 1`;
+
+    const { rows } = await pool.query(sql);
+
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+};
