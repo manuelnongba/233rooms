@@ -10,11 +10,12 @@
   right: 0.5rem;
 }
 
-.menu p {
+.menu .action {
   padding: 2rem 2rem;
 }
 
-.menu p:hover {
+.action:hover,
+.action:hover button {
   cursor: pointer;
   background-color: #efefef;
 }

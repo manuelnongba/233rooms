@@ -19,6 +19,24 @@ const Login = () => {
       <div className="icon-img">
         {authMode === 'login' ? <FaLock /> : <FaUserPlus />}
       </div>
+      {authMode === 'signup' ? (
+        <div>
+          <p>
+            <label htmlFor="firstname">First Name</label>
+            <input type="firstname" id="firstname" name="firstname" required />
+          </p>
+          <p>
+            <label htmlFor="lastname">Last Name</label>
+            <input type="lastname" id="lastname" name="lastname" required />
+          </p>
+          <p>
+            <label htmlFor="phone">Phone</label>
+            <input type="phone" id="phone" name="phone" />
+          </p>
+        </div>
+      ) : (
+        ''
+      )}
       <p>
         <label htmlFor="email">Email Address</label>
         <input type="email" id="email" name="email" required />

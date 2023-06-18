@@ -1,16 +1,25 @@
-import { Link } from '@remix-run/react';
+import { Form, Link, useLoaderData } from '@remix-run/react';
 import styles from '~/styles/menu.css';
 
 const Menu = ({ isMenu }: any) => {
+  const userId = useLoaderData();
+
   const style = {
     display: 'block',
   };
 
   return (
     <div className="menu" style={isMenu ? style : {}}>
-      <Link to="login">
-        <p>Login </p>
-      </Link>
+      {userId && (
+        <Form method="post" action="/logout" className="action">
+          <button>Logout</button>
+        </Form>
+      )}
+      {!userId && (
+        <Link to="login">
+          <p className="action">Login </p>
+        </Link>
+      )}
     </div>
   );
 };

@@ -15,7 +15,7 @@
 }
 
 #auth-form a {
-  font-size: 0.75rem;
+  font-size: 1.2rem;
   color: var(--color-primary-10);
 }
 
@@ -85,7 +85,7 @@
   border: none;
   border-radius: 30px;
   padding: 0.65rem 2rem;
-  font-size: 0.85rem;
+  font-size: 1.4rem;
 }
 
 .form button:hover {
@@ -100,10 +100,10 @@
   cursor: not-allowed;
 }
 
-.form a {
-  font-size: 0.75rem;
+/* .form a {
+  font-size: 1.4rem;
   color: var(--color-primary-50);
-}
+} */
 
 /* .form a:hover {
   color: yellow;
