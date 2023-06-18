@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import Slideshow from './Slider';
 import { Link } from '@remix-run/react';
+import Menu from './Menu';
 
 // interface RoomsProps {
 //   rooms: object[];

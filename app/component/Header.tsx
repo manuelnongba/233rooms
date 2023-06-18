@@ -7,6 +7,7 @@ import { MAPSKEY } from '../api/config';
 import MapModal from './MapModal';
 import { getCurrentLocation, getRooms } from '~/actions';
 import { connect } from 'react-redux';
+import Menu from './Menu';
 
 const Header = ({
   location,
@@ -27,6 +28,7 @@ const Header = ({
   });
   const [modalIsOpen, setIsOpen] = useState(false);
   const [resultsIsOpen, setResultsIsOpen] = useState(false);
+  const [isMenu, setIsMenu] = useState(false);
 
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -143,6 +145,10 @@ const Header = ({
   //   return <h1>Loading...</h1>;
   // }
 
+  const showMenu = () => {
+    setIsMenu(!isMenu);
+  };
+
   return (
     <div className="header">
       <div>
@@ -213,8 +219,8 @@ const Header = ({
         />
       )}
 
-      <div>
-        <button className="profile">
+      <div className="profile">
+        <button onClick={showMenu}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -230,6 +236,7 @@ const Header = ({
             />
           </svg>
         </button>
+        <Menu isMenu={isMenu} />
       </div>
     </div>
   );

@@ -77,3 +77,16 @@ button {
   font-family: 'Courgette', cursive;
   color: #f76707;
 }
+
+.profile {
+  position: relative;
+}
+
+.profile svg:hover {
+  cursor: pointer;
+}
+
+.profile-icon {
+  height: 4rem;
+  width: 4rem;
+}

@@ -1,0 +1,26 @@
+.menu {
+  width: 20rem;
+  border-radius: 0.6rem;
+  box-shadow: 2px 2px 5px 2px #ececec;
+  background-color: #fff;
+
+  display: none;
+
+  position: absolute;
+  right: 0.5rem;
+}
+
+.menu p {
+  padding: 2rem 2rem;
+}
+
+.menu p:hover {
+  cursor: pointer;
+  background-color: #efefef;
+}
+
+.menu a {
+  font-size: 1.4rem;
+  text-decoration: none;
+  color: #000;
+}

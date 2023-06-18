@@ -35,14 +35,15 @@ const RoomDetails = () => {
             </p>
           </div>
         </div>
+
+        <div>
+          <p>{roomValues[0].description}</p>
+        </div>
       </div>
 
       <div>
         <div className="main-photo">
           <img src={`/${roomValues[0].image}`} alt="rooms details" />
-          <div>
-            <p>{roomValues[0].description}</p>
-          </div>
         </div>
 
         <div className="sub-photos">{roomDetails}</div>

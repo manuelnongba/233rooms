@@ -19,9 +19,9 @@ export const getRooms = async (lng: any, lat: any) => {
 export const getRoomDetails = async (id: any) => {
   try {
     const sql = `
-    SELECT r.title, r.price, r.description, p.image, r.address FROM photos p
-    LEFT JOIN rooms r ON r.id = p.room_id 
-    WHERE p.room_id = ${id}`;
+    SELECT r.title, r.price, r.description, rp.image, r.address FROM roomphotos rp
+    LEFT JOIN rooms r ON r.id = rp.room_id 
+    WHERE rp.room_id = ${id}`;
 
     const { rows } = await pool.query(sql);
 

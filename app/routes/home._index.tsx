@@ -4,6 +4,7 @@ import { links as headerLinks } from '~/component/Header';
 import { links as roomsLinks } from '~/component/Rooms';
 import { links as footerLinks } from '~/component/Footer';
 import { links as sliderLinks } from '~/component/Slider';
+import { links as menuLinks } from '~/component/Menu';
 import Rooms from '~/component/Rooms';
 import { getRooms } from '~/data/rooms.server';
 
@@ -45,6 +46,7 @@ export function links() {
     ...roomsLinks(),
     ...footerLinks(),
     ...sliderLinks(),
+    ...menuLinks(),
   ];
 }
 
