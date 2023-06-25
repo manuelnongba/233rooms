@@ -1,6 +1,6 @@
 .room-details {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   margin: 6rem 4rem;
 
   font-size: 1.4rem;

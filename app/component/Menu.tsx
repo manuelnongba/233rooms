@@ -11,13 +11,18 @@ const Menu = ({ isMenu }: any) => {
   return (
     <div className="menu" style={isMenu ? style : {}}>
       {userId && (
-        <Form method="post" action="/logout" className="action">
-          <button>Logout</button>
+        <Form method="post" action="/logout">
+          <button className="action">Logout</button>
         </Form>
       )}
       {!userId && (
         <Link to="login">
           <p className="action">Login </p>
+        </Link>
+      )}
+      {!userId && (
+        <Link to="login?mode=signup">
+          <p className="action">Sign Up</p>
         </Link>
       )}
     </div>

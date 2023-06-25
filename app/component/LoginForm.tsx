@@ -10,7 +10,9 @@ const Login = () => {
 
   const submitBtnCaption = authMode === 'login' ? 'login' : 'Create User';
   const toggleBtnCaption =
-    authMode === 'login' ? 'Create a new user' : 'Login with existing user';
+    authMode === 'login'
+      ? 'Do not have an account? Sign up.'
+      : 'Login with existing account';
 
   const isSubmitting = navigation.state !== 'idle';
 
