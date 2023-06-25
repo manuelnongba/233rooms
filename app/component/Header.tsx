@@ -196,6 +196,7 @@ const Header = ({
           <div>
             <input
               type="text"
+              placeholder="Search desired location"
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);

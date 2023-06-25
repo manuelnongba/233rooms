@@ -1,27 +1,24 @@
-.room-details {
+.details {
   display: flex;
   justify-content: space-around;
+  flex-direction: column;
   margin: 6rem 4rem;
 
   font-size: 1.4rem;
 }
 
-.main-photo {
-  position: relative;
-
+.details {
   z-index: -1;
-
-  grid-column: -1/-1;
-
-  display: flex;
-  flex-direction: column;
-  /* gap: 10rem; */
 }
 
-.main-photo img {
+.room-details img {
   height: 45rem;
-  width: 95rem;
+  width: 100rem;
   border-radius: 1rem;
+}
+
+.room-title {
+  padding: 1.5rem 0rem;
 }
 
 .sub-photos {
@@ -44,23 +41,28 @@
   border-radius: 1rem;
 }
 
-/* .room-details .first {
-  position: absolute;
-  right: 0;
-  bottom: 18rem;
-}
-
-.room-details .second {
-  position: absolute;
-  right: 35rem;
-  bottom: 18rem;
-} */
-
 .sub-details {
   display: flex;
-  flex-direction: column;
   align-items: flex-start;
   justify-content: space-around;
+}
 
-  height: 60rem;
+.room-desc {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.price-desc {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rem;
+
+  padding: 1rem 0rem;
+}
+
+.price-desc span {
+  margin-left: 0.5rem;
 }
