@@ -11,10 +11,16 @@ const Menu = ({ isMenu }: any) => {
   return (
     <div className="menu" style={isMenu ? style : {}}>
       {userId && (
+        <Link to="/rooms/rent">
+          <p className="action">Rent out your home</p>
+        </Link>
+      )}
+      {userId && (
         <Form method="post" action="/logout">
           <button className="action">Logout</button>
         </Form>
       )}
+
       {!userId && (
         <Link to="login">
           <p className="action">Login </p>
