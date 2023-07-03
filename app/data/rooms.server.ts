@@ -1,9 +1,24 @@
 import { pool } from './db.server';
 
+export const createRoom = async ({
+  bedrooms,
+  bathrooms,
+  title,
+  location,
+  description,
+  price,
+}: any) => {
+  const sql = `INSERT INTO rooms(bedrooms, bathrooms, title, location)
+               VALUES (${bedrooms}, ${bathrooms}, '${title}', '${location}')
+              `;
+
+  await pool.query(sql);
+};
+
 export const getRooms = async (lng: any, lat: any) => {
   try {
     const sql = `
-    SELECT id, title, image, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
+    SELECT id, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
     FROM rooms
     WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 100000);
     `;

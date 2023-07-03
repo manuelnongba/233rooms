@@ -15,6 +15,7 @@ app.use(compression());
 dotenv.config({ path: './config.env' });
 
 app.use(cors());
+
 // http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 app.disable('x-powered-by');
 

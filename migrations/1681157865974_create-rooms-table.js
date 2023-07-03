@@ -6,12 +6,14 @@ exports.up = (pgm) => {
   pgm.sql(`
   CREATE TABLE rooms (
     id SERIAL PRIMARY KEY,
-    title VARCHAR(50) NOT NULL,
-	  price INTEGER(10) NOT NULL,
+    title VARCHAR(50) NOT NULL DEFAULT 'New Room',
+	  price INTEGER NOT NULL DEFAULT 0,
 	  description VARCHAR(240),
-	  image VARCHAR(200), 
-	  address VARCHAR(200) NOT NULL,
-    location GEOGRAPHY(POINT, 4326) NOT NULL
+	  address VARCHAR(200),
+    location GEOGRAPHY(POINT, 4326),
+    user_id INTEGER REFERENCES users(id),
+    bathrooms INTEGER,
+    bedrooms INTEGER
       );
   `);
 };
