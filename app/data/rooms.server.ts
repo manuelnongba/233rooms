@@ -10,9 +10,22 @@ export const createRoom = async ({
 }: any) => {
   const sql = `INSERT INTO rooms(bedrooms, bathrooms, title, location)
                VALUES (${bedrooms}, ${bathrooms}, '${title}', '${location}')
+               RETURNING id;
               `;
 
-  await pool.query(sql);
+  let roomId: number | null = null;
+
+  if (bedrooms !== undefined) {
+    console.log(sql);
+    const res = await pool.query(sql);
+    roomId = +res.rows[0].id;
+  }
+
+  const sql2 = `UPDATE rooms SET price = ${price} and description = '${description}' WHERE id = ${roomId}`;
+  if (roomId !== null && price !== undefined) {
+    console.log(sql2);
+    await pool.query(sql2);
+  }
 };
 
 export const getRooms = async (lng: any, lat: any) => {

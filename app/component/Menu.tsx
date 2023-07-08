@@ -11,7 +11,7 @@ const Menu = ({ isMenu }: any) => {
   return (
     <div className="menu" style={isMenu ? style : {}}>
       {userId && (
-        <Link to="rent">
+        <Link to="/rent">
           <p className="action">Rent out your home</p>
         </Link>
       )}

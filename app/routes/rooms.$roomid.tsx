@@ -16,9 +16,11 @@ const Room = () => {
 
 export default Room;
 
-export const loader = ({ params }: any) => {
+export const loader = async ({ params }: any) => {
   const id = params.roomid;
-  const data = getRoomDetails(id);
+  const data = await getRoomDetails(id);
+
+  console.log(data);
 
   return data;
 };
