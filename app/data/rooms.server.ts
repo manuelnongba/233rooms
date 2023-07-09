@@ -5,8 +5,6 @@ export const createRoom = async ({
   bathrooms,
   title,
   location,
-  description,
-  price,
 }: any) => {
   const sql = `INSERT INTO rooms(bedrooms, bathrooms, title, location)
                VALUES (${bedrooms}, ${bathrooms}, '${title}', '${location}')
@@ -15,17 +13,43 @@ export const createRoom = async ({
 
   let roomId: number | null = null;
 
-  if (bedrooms !== undefined) {
-    console.log(sql);
+  if (bedrooms) {
     const res = await pool.query(sql);
     roomId = +res.rows[0].id;
   }
 
-  const sql2 = `UPDATE rooms SET price = ${price} and description = '${description}' WHERE id = ${roomId}`;
-  if (roomId !== null && price !== undefined) {
-    console.log(sql2);
-    await pool.query(sql2);
+  return roomId;
+};
+
+export const uploadImages = async ({
+  price,
+  roomId,
+  description,
+  images,
+}: any) => {
+  if (price) {
+    const sqlPrice = `UPDATE rooms SET price = ${+price} WHERE id = ${+roomId}`;
+
+    await pool.query(sqlPrice);
   }
+
+  if (description) {
+    const sqlDesc = `UPDATE rooms SET description = '${description}' WHERE id = ${roomId}`;
+    console.log(sqlDesc);
+
+    await pool.query(sqlDesc);
+  }
+
+  const imgArr = images?.split(',');
+  console.log(imgArr);
+
+  if (images)
+    imgArr.forEach(async (el: any) => {
+      const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el}', ${roomId})`;
+      console.log(sql);
+
+      await pool.query(sql);
+    });
 };
 
 export const getRooms = async (lng: any, lat: any) => {
