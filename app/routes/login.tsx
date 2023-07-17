@@ -1,5 +1,5 @@
-import { links as loginLinks } from '~/component/LoginForm';
-import LoginForm from '~/component/LoginForm';
+import { links as loginLinks } from '~/component/auth/LoginForm';
+import LoginForm from '~/component/auth/LoginForm';
 import { signUp, login } from '~/data/auth.server';
 import { validateCredentials } from '~/data/validation.server';
 
@@ -23,7 +23,6 @@ export const action = async ({ request }: any) => {
 
   try {
     validateCredentials(credentials);
-    console.log('jjjjj');
   } catch (error) {
     return error;
   }
