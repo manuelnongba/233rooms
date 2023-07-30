@@ -59,9 +59,10 @@ export const uploadImages = async ({
 export const getRooms = async (lng: any, lat: any) => {
   try {
     const sql = `
-    SELECT id, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
-    FROM rooms
-    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 1000000);
+    SELECT r.id, rp.image, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
+    FROM rooms r
+    left join roomphotos rp on rp.room_id = r.id
+    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 10000000);
     `;
 
     const { rows } = await pool.query(sql);

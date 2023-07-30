@@ -1,4 +1,4 @@
-import { useLoaderData } from '@remix-run/react';
+import { useLoaderData, useMatches } from '@remix-run/react';
 import { FaLocationArrow, FaMoneyCheck } from 'react-icons/fa';
 import styles from '~/styles/roomDetails.css';
 
@@ -7,6 +7,9 @@ const RoomDetails = () => {
   let roomDataObj: any = {
     image: [],
   };
+
+  const data = useMatches();
+  console.log(data);
 
   roomData.forEach((el: any) => {
     roomDataObj = { ...el, image: [...roomDataObj.image, el.image] };
@@ -21,8 +24,6 @@ const RoomDetails = () => {
       </div>
     );
   });
-
-  console.log(roomDetails);
 
   return (
     <div className="details">

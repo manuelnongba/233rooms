@@ -1,26 +1,26 @@
 import { useRef, useState } from 'react';
 import styles from '~/styles/slider.css';
 
-const slideImages = [
-  {
-    url: 'accra.png',
-    caption: 'city',
-  },
-  {
-    url: 'kumasi.png',
-    caption: 'city1',
-  },
-  {
-    url: 'accra.png',
-    caption: 'city2',
-  },
-  {
-    url: 'kumasi.png',
-    caption: 'city1',
-  },
-];
+// const slideImages = [
+//   {
+//     url: 'accra.png',
+//     caption: 'city',
+//   },
+//   {
+//     url: 'kumasi.png',
+//     caption: 'city1',
+//   },
+//   {
+//     url: 'accra.png',
+//     caption: 'city2',
+//   },
+//   {
+//     url: 'kumasi.png',
+//     caption: 'city1',
+//   },
+// ];
 
-const Slideshow = () => {
+const Slideshow = ({ slideImages }: any) => {
   const [slideIndex, setSlideIndex] = useState(1);
   const nextButton: any = useRef();
   const prevButton: any = useRef();
@@ -69,13 +69,13 @@ const Slideshow = () => {
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
     >
-      {slideImages.map((el, i) => {
+      {slideImages.map((el: any, i: any) => {
         return (
           <div
             key={i}
             className={slideIndex === i + 1 ? 'slide active-img' : 'slide'}
           >
-            <img src={el.url} alt="ant" />
+            <img src={el} alt="ant" />
           </div>
         );
       })}

@@ -13,13 +13,22 @@ import { Link } from '@remix-run/react';
 const Rooms = ({ rooms }: any) => {
   const [room, setRoom] = useState();
 
+  let roomsObj: any = {};
+
+  rooms.forEach((el: any) => {
+    if (roomsObj[el.id] && el) roomsObj[el.id].image.push(el.image);
+    else roomsObj[el.id] = { ...el, image: [el.image] };
+  });
+
+  const roomsArr: any = Object.values(roomsObj);
+
   useEffect(() => {
     setRoom(
-      rooms.map((el: any) => {
+      roomsArr.map((el: any, i: any) => {
         return (
           <div className="room-details" key={el.id}>
             <Link to={`rooms/${el.id}`}>
-              <Slideshow />
+              <Slideshow slideImages={el.image} />
               <div className="room-sub-details">
                 <p>{el.address}</p>
                 <div className="price">
@@ -32,7 +41,7 @@ const Rooms = ({ rooms }: any) => {
         );
       })
     );
-  }, [rooms]);
+  }, [roomsArr]);
 
   return <main className="rooms">{room}</main>;
 };
