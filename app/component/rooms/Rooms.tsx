@@ -13,16 +13,15 @@ import { Link } from '@remix-run/react';
 const Rooms = ({ rooms }: any) => {
   const [room, setRoom] = useState();
 
-  let roomsObj: any = {};
-
-  rooms.forEach((el: any) => {
-    if (roomsObj[el.id] && el) roomsObj[el.id].image.push(el.image);
-    else roomsObj[el.id] = { ...el, image: [el.image] };
-  });
-
-  const roomsArr: any = Object.values(roomsObj);
-
   useEffect(() => {
+    let roomsObj: any = {};
+
+    rooms.forEach((el: any) => {
+      if (roomsObj[el.id] && el) roomsObj[el.id].image.push(el.image);
+      else roomsObj[el.id] = { ...el, image: [el.image] };
+    });
+
+    const roomsArr: any = Object.values(roomsObj);
     setRoom(
       roomsArr.map((el: any, i: any) => {
         return (
@@ -41,7 +40,7 @@ const Rooms = ({ rooms }: any) => {
         );
       })
     );
-  }, [roomsArr]);
+  }, [rooms]);
 
   return <main className="rooms">{room}</main>;
 };

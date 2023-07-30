@@ -5,7 +5,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
   CREATE TABLE rooms (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     title VARCHAR(50) NOT NULL DEFAULT 'New Room',
 	  price INTEGER NOT NULL DEFAULT 0,
 	  description VARCHAR(240),

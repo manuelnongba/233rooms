@@ -29,8 +29,10 @@ export const uploadImages = async ({
   roomId,
   description,
   images,
+  address,
   lng,
   lat,
+  userId,
 }: any) => {
   try {
     const sqlPrice = `UPDATE rooms SET price = ${+price} WHERE id = ${+roomId}`;
@@ -41,6 +43,12 @@ export const uploadImages = async ({
 
     const sqlLocation = `UPDATE rooms SET location = 'POINT(${lng} ${lat})' WHERE id = ${roomId}`;
     await pool.query(sqlLocation);
+
+    const sqlAddress = `UPDATE rooms SET address = '${address}' WHERE id = ${roomId}`;
+    await pool.query(sqlAddress);
+
+    const sqlUserId = `UPDATE rooms SET user_id = '${userId}' WHERE id = ${roomId}`;
+    await pool.query(sqlUserId);
 
     const imgArr = images?.split(',');
 

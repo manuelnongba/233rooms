@@ -24,7 +24,5 @@ export const loader = async ({ request }: any) => {
     url.searchParams.get('lat')
   );
 
-  console.log(rooms);
-
   return rooms;
 };

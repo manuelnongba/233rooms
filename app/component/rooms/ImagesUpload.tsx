@@ -3,6 +3,7 @@ import {
   NavLink,
   useActionData,
   useFetcher,
+  useMatches,
   useNavigate,
 } from '@remix-run/react';
 import { useCallback, useEffect, useState } from 'react';
@@ -28,7 +29,8 @@ function ImagesUpload() {
   const fetcher = useFetcher();
   const data = useActionData();
   const navigate = useNavigate();
-  console.log(data);
+  const userId = useMatches()[1].data;
+  console.log(userId);
 
   const onDrop = useCallback((acceptedFiles: any) => {
     if (acceptedFiles?.length) {
@@ -102,7 +104,9 @@ function ImagesUpload() {
     formData.append('lng', locationCoords.lng);
     formData.append('lat', locationCoords.lat);
     formData.append('price', formState.price);
+    formData.append('address', formState.location);
     formData.append('description', formState.description);
+    formData.append('userId', userId);
     fetcher.submit(formData, { method: 'post', action: '/rent/next-step' });
 
     // formData.append('upload_preset', 'friendsbook');
