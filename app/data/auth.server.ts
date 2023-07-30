@@ -43,6 +43,14 @@ export async function getUserFromSession(request: any) {
   return userId;
 }
 
+export const requireUserSession = async (request: any) => {
+  const userId = await getUserFromSession(request);
+
+  if (!userId) {
+    throw redirect('/auth?mode=login');
+  }
+};
+
 export const destroyUserSession = async (request: any) => {
   const session = await sessionStorage.getSession(
     request.headers.get('Cookie')

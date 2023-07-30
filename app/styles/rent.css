@@ -1,0 +1,35 @@
+.rent-container {
+  width: 90%;
+  margin: 2rem auto;
+}
+
+.rent-container form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.rent-container input,
+.rent-container select {
+  width: 20rem;
+  border: none;
+  border-bottom: 1px solid #000;
+  margin: 2rem 2rem;
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  outline: none;
+}
+
+.rent-container button {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem 1rem;
+  cursor: pointer;
+
+  margin-left: 10rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

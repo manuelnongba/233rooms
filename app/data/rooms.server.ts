@@ -61,7 +61,7 @@ export const getRooms = async (lng: any, lat: any) => {
     const sql = `
     SELECT id, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
     FROM rooms
-    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 10000);
+    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 1000000);
     `;
 
     const { rows } = await pool.query(sql);
@@ -80,6 +80,8 @@ export const getRoomDetails = async (id: any) => {
     WHERE rp.room_id = ${id}`;
 
     const { rows } = await pool.query(sql);
+
+    console.log(sql);
 
     return rows;
   } catch (error) {
