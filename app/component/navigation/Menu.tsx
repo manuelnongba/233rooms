@@ -16,6 +16,11 @@ const Menu = ({ isMenu }: any) => {
         </Link>
       )}
       {userId && (
+        <Link to="/my-rooms">
+          <p className="action">My Rooms</p>
+        </Link>
+      )}
+      {userId && (
         <Form method="post" action="/logout">
           <button className="action">Logout</button>
         </Form>

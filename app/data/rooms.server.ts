@@ -97,3 +97,17 @@ export const getRoomDetails = async (id: any) => {
     throw error;
   }
 };
+
+export const getUserRooms = async (userId: Number) => {
+  const sql = `SELECT * FROM rooms 
+               LEFT JOIN roomphotos rp  ON rp.room_id = rooms.id
+                WHERE user_id = ${userId}
+                LIMIT 1;
+               `;
+
+  const { rows } = await pool.query(sql);
+
+  console.log(rows);
+
+  return rows;
+};
