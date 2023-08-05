@@ -7,6 +7,7 @@ const MyRooms = () => {
   const data = useLoaderData();
 
   const userRooms = data.map((el: any) => {
+    const image = el.image.split(',')[0];
     return (
       <Link
         to={`/rooms/${el.room_id}`}
@@ -14,7 +15,7 @@ const MyRooms = () => {
         key={el.image}
       >
         <div className="image-wrapper">
-          <img src={el.image} alt={el.image} />
+          <img src={image} alt={image} />
         </div>
         <div className="my-room-details">
           <div>
@@ -49,7 +50,9 @@ const MyRooms = () => {
   });
   return (
     <div className="my-rooms-main">
-      <Logo />
+      <div className="header">
+        <Logo />
+      </div>
       <div className="my-rooms-wrapper">
         <div className="my-rooms">
           <div className="sub-header">

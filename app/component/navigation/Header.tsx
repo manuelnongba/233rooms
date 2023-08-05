@@ -151,7 +151,7 @@ const Header = ({
   };
 
   return (
-    <div className="header">
+    <div className="header sticky">
       <Logo />
       <div className="location">
         <div className="location-input">
