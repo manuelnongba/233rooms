@@ -101,6 +101,7 @@ export const getRoomDetails = async (id: any) => {
 export const getUserRooms = async (userId: Number) => {
   const sql = `SELECT * FROM rooms 
                LEFT JOIN roomphotos rp  ON rp.room_id = rooms.id
+               LEFT JOIN users u ON u.id = rooms.user_id
                 WHERE user_id = ${userId}
                 LIMIT 1;
                `;

@@ -1,34 +1,64 @@
-import { useLoaderData } from '@remix-run/react';
+import { Link, useLoaderData } from '@remix-run/react';
 import styles from '~/styles/myRooms.css';
+import { Logo } from '../utils/Logo';
+import { FaBath, FaBed, FaLocationArrow, FaWifi } from 'react-icons/fa';
 
 const MyRooms = () => {
   const data = useLoaderData();
 
   const userRooms = data.map((el: any) => {
     return (
-      <div key={el.image}>
-        <div>
+      <Link
+        to={`/rooms/${el.room_id}`}
+        className="my-room-wrapper"
+        key={el.image}
+      >
+        <div className="image-wrapper">
           <img src={el.image} alt={el.image} />
         </div>
-        <div>
+        <div className="my-room-details">
           <div>
             <p>{el.title}</p>
-            <span>{el.address}</span>
+            <span>
+              <FaLocationArrow /> &nbsp;
+              {el.address}
+            </span>
           </div>
-          <div>
-            <span>{el.price}</span>
-            <span>{el.bedrooms}</span>
-            <span>{el.bathrooms}</span>
+          <div className="my-room-icons">
+            <FaBed />
+            <FaBath />
+            <FaWifi />
+          </div>
+          <div className="my-room-sub-details">
+            <div>
+              <span>{el.price}</span>
+              <span>price</span>
+            </div>
+            <div>
+              <span>{el.bedrooms}</span>
+              <span>bedrooms</span>
+            </div>
+            <div>
+              <span>{el.bathrooms}</span>
+              <span>bathrooms</span>
+            </div>
           </div>
         </div>
-      </div>
+      </Link>
     );
   });
   return (
-    <div>
-      <h2>Welcome, Emmanuel!</h2>
-      <h3>Your Rooms</h3>
-      {userRooms}
+    <div className="my-rooms-main">
+      <Logo />
+      <div className="my-rooms-wrapper">
+        <div className="my-rooms">
+          <div className="sub-header">
+            <h1>Welcome, {data[0].firstname}!</h1>
+            <h2>Your Rooms</h2>
+          </div>
+          {userRooms}
+        </div>
+      </div>
     </div>
   );
 };

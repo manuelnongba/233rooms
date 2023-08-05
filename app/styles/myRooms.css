@@ -1,0 +1,98 @@
+.my-rooms-main {
+  margin: 2rem 0;
+}
+
+.my-rooms-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.my-rooms {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 3rem;
+}
+
+/* .my-rooms .sub-header {
+  display: flex;
+  align-self: flex-start;
+  justify-self: flex-start;
+} */
+
+.my-rooms .sub-header h2 {
+  margin-top: 8rem;
+  font-weight: 100;
+  font-size: 2rem;
+}
+
+.my-rooms .sub-header h1 {
+  margin-top: 8rem;
+  font-size: 2.8rem;
+}
+
+.my-room-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 5rem;
+
+  width: 65rem;
+  background-color: #eee;
+  border-radius: 2rem;
+
+  text-decoration: none;
+  color: #000;
+}
+
+.my-room-wrapper .image-wrapper img {
+  height: 20rem;
+  width: 30rem;
+  border-radius: 2rem 0rem 0rem 2rem;
+}
+
+.my-room-details {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+
+  font-size: 1.6rem;
+}
+
+.my-room-sub-details {
+  display: grid;
+  grid-template-columns: repeat(3, 10rem);
+}
+
+.my-room-sub-details div {
+  display: flex;
+  flex-direction: column;
+}
+
+.my-room-sub-details div span:first-child {
+  font-weight: 600;
+}
+
+.my-room-details div p {
+  font-weight: 600;
+}
+
+.my-room-details div span {
+  display: flex;
+  align-items: center;
+}
+
+.my-room-details div span svg {
+  fill: #a4a2a2;
+}
+
+.my-room-icons {
+  display: flex;
+  gap: 1rem;
+}
+
+.my-room-icons svg {
+  height: 2rem;
+  width: 2rem;
+  fill: #a9a5a5;
+}
