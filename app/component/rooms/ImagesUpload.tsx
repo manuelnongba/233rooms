@@ -13,6 +13,7 @@ import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import styles from '~/styles/imageUpload.css';
 import { MAPSKEY } from '~/api/config';
 import axios from 'axios';
+import { Logo } from '../utils/Logo';
 
 function ImagesUpload() {
   const [images, setImages] = useState<any>([]);
@@ -138,110 +139,93 @@ function ImagesUpload() {
 
   return (
     <div className="upload-container">
-      <div>
-        <NavLink to="/" className="home">
-          <svg
-            id="logosandtypes_com"
-            data-name="logosandtypes com"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 90 150"
-            strokeWidth={4}
-            stroke="#f76707"
-            fill="none"
-            className="logo"
-          >
-            <path d="M68.49,78.77C109.39,68.45,120.55,11,80.41,11,69.86,11,59.16,17.78,52,31.33,50.17,17.47,40.91,10.69,24.59,11L23,23.94c12.87-.3,17.52,5.54,17.52,16a78.26,78.26,0,0,1-2.33,16.17L26,110.83H41.72l6.68-31,5.11.47C69.72,115.91,104.3,140.26,131,139.8l1.71-13.72C102.1,126.7,76.21,97.12,68.49,78.77ZM50.64,67.54c4.8-19.84,16-43.29,30.08-43.29,22.28,0,6,43.9-24.2,43.9A40,40,0,0,1,50.64,67.54Z" />
-          </svg>
-          <span>
-            <p>oom</p>
-          </span>
-        </NavLink>
+      <div className="header">
+        <Logo />
       </div>
 
-      <Form onSubmit={handleSubmit}>
-        <h1>Upload Image(s)</h1>
-        <div className="image-upload-container">
-          <div
-            {...getRootProps({
-              className: 'image-upload',
-            })}
-          >
-            <input {...getInputProps()} />
-            <div className="upload-images">
-              <ArrowUpTrayIcon className="tray-icon" />
-              {isDragActive ? (
-                <p>Drop the files here ...</p>
-              ) : (
-                <p className="file-select">
-                  Drag & drop files here, or{' '}
-                  <span style={{ color: '#228be6' }}>click</span> to select
-                  files
-                </p>
-              )}
+      <div className="form-wrapper">
+        <Form onSubmit={handleSubmit}>
+          <h1>Upload Image(s)</h1>
+          <div className="image-upload-container">
+            <div
+              {...getRootProps({
+                className: 'image-upload',
+              })}
+            >
+              <input {...getInputProps()} />
+              <div className="upload-images">
+                <ArrowUpTrayIcon className="tray-icon" />
+                {isDragActive ? (
+                  <p>Drop the files here ...</p>
+                ) : (
+                  <p className="file-select">
+                    Drag & drop files here, or{' '}
+                    <span style={{ color: '#228be6' }}>click</span> to select
+                    files
+                  </p>
+                )}
+              </div>
+            </div>
+
+            <div className="preview">
+              <ul className="images-list">
+                {images.map((file: any) => (
+                  <li key={file.name} className="images-listing">
+                    <img
+                      src={file.preview}
+                      alt={file.name}
+                      width={100}
+                      height={100}
+                      onLoad={() => {
+                        URL.revokeObjectURL(file.preview);
+                      }}
+                      className="uploaded-image"
+                    />
+                    <button
+                      type="button"
+                      className="remove-btn"
+                      onClick={() => removeFile(file.name)}
+                    >
+                      <XMarkIcon className="remove-icon" />
+                    </button>
+                    <p className="file-name">{file.name}</p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className="preview">
-            <ul className="images-list">
-              {images.map((file: any) => (
-                <li key={file.name} className="images-listing">
-                  <img
-                    src={file.preview}
-                    alt={file.name}
-                    width={100}
-                    height={100}
-                    onLoad={() => {
-                      URL.revokeObjectURL(file.preview);
-                    }}
-                    className="uploaded-image"
-                  />
-                  <button
-                    type="button"
-                    className="remove-btn"
-                    onClick={() => removeFile(file.name)}
-                  >
-                    <XMarkIcon className="remove-icon" />
-                  </button>
-                  <p className="file-name">{file.name}</p>
-                </li>
-              ))}
-            </ul>
+          <div className="description">
+            <textarea
+              // type="text"
+              name="description"
+              onChange={handleInputChange}
+              placeholder="Give a detailed description of your property"
+            />
           </div>
-        </div>
-
-        <div className="price">
-          <input
-            type="text"
-            name="price"
-            placeholder="price"
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <input
-            type="text"
-            name="location"
-            placeholder="Location"
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div>
-          <input
-            type="text"
-            name="description"
-            onChange={handleInputChange}
-            placeholder="Give a detailed description of your property"
-          />
-        </div>
-
-        <div>
-          <button type="submit">
-            Post Room <FaChevronRight />
-          </button>
-        </div>
-      </Form>
+          <div className="room-location">
+            <input
+              type="text"
+              name="location"
+              placeholder="Location"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="price">
+            <input
+              type="text"
+              name="price"
+              placeholder="price"
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="post">
+            <button type="submit">
+              Post Room <FaChevronRight />
+            </button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 }

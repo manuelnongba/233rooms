@@ -17,49 +17,53 @@ const RentRoom = () => {
 
   return (
     <div className="rent-container">
-      <Logo />
+      <div className="header">
+        <Logo />
+      </div>
 
-      <Form method="post" action="/rent/next-step">
-        <div>
-          <select name="bedrooms" onChange={handleChange}>
-            <option value="">No. Of Rooms</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8+">8+</option>
-          </select>
-        </div>
-        <div>
-          <select name="bathrooms" onChange={handleChange}>
-            <option value="">No. Of Baths</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8+">8+</option>
-          </select>
-        </div>
-        <div>
-          <input
-            type="text"
-            name="title"
-            placeholder="Give your property a title"
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <button type="submit">
-            Add Images <FaChevronRight />
-          </button>
-        </div>
-      </Form>
+      <div className="form-wrapper">
+        <Form method="post" action="/rent/next-step">
+          <div>
+            <select name="bedrooms" onChange={handleChange}>
+              <option value="">No. Of Rooms</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8+">8+</option>
+            </select>
+          </div>
+          <div>
+            <select name="bathrooms" onChange={handleChange}>
+              <option value="">No. Of Baths</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8+">8+</option>
+            </select>
+          </div>
+          <div>
+            <input
+              type="text"
+              name="title"
+              placeholder="Give your property a title"
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <button type="submit">
+              Add Images <FaChevronRight />
+            </button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
 };

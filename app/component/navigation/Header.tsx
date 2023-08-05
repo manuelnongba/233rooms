@@ -1,4 +1,4 @@
-import { NavLink, useFetcher } from '@remix-run/react';
+import { useFetcher } from '@remix-run/react';
 import styles from '~/styles/header.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';

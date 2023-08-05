@@ -1,35 +1,41 @@
-.rent-container {
+/* .rent-container {
   width: 90%;
   margin: 2rem auto;
+} */
+
+.form-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4rem 0;
 }
 
 .rent-container form {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
   flex-direction: column;
+  gap: 5rem;
 }
 
 .rent-container input,
 .rent-container select {
-  width: 20rem;
+  width: 25rem;
   border: none;
   border-bottom: 1px solid #000;
-  margin: 2rem 2rem;
   padding: 0.8rem 1rem;
   cursor: pointer;
   outline: none;
 }
 
 .rent-container button {
+  cursor: pointer;
   background-color: #000;
   color: #fff;
-  padding: 1rem 1rem;
-  cursor: pointer;
-
-  margin-left: 10rem;
+  padding: 1.5rem 2rem;
+  border-radius: 0.4rem;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.5rem;
 }
