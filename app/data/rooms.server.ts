@@ -35,20 +35,35 @@ export const uploadImages = async ({
   userId,
 }: any) => {
   try {
-    const sqlPrice = `UPDATE rooms SET price = ${+price} WHERE id = ${+roomId}`;
-    await pool.query(sqlPrice);
+    // const sqlPrice = `UPDATE rooms SET price = ${+price} WHERE id = ${+roomId}`;
+    // await pool.query(sqlPrice);
 
-    const sqlDesc = `UPDATE rooms SET description = '${description}' WHERE id = ${roomId}`;
-    await pool.query(sqlDesc);
+    // const sqlDesc = `UPDATE rooms SET description = '${description}' WHERE id = ${roomId}`;
+    // await pool.query(sqlDesc);
 
-    const sqlLocation = `UPDATE rooms SET location = 'POINT(${lng} ${lat})' WHERE id = ${roomId}`;
-    await pool.query(sqlLocation);
+    // const sqlLocation = `UPDATE rooms SET location = 'POINT(${lng} ${lat})' WHERE id = ${roomId}`;
+    // await pool.query(sqlLocation);
 
-    const sqlAddress = `UPDATE rooms SET address = '${address}' WHERE id = ${roomId}`;
-    await pool.query(sqlAddress);
+    // const sqlAddress = `UPDATE rooms SET address = '${address}' WHERE id = ${roomId}`;
+    // await pool.query(sqlAddress);
 
-    const sqlUserId = `UPDATE rooms SET user_id = '${userId}' WHERE id = ${roomId}`;
-    await pool.query(sqlUserId);
+    // const sqlUserId = `UPDATE rooms SET user_id = '${userId}' WHERE id = ${roomId}`;
+    // await pool.query(sqlUserId);
+
+    const sql = `
+    UPDATE rooms
+    SET price = $1, description = $2, location = ST_GeomFromText($3), address = $4, user_id = $5
+    WHERE id = $6;
+  `;
+
+    await pool.query(sql, [
+      +price,
+      description,
+      `POINT(${lng} ${lat})`,
+      address,
+      userId,
+      roomId,
+    ]);
 
     const imgArr = images?.split(',');
 

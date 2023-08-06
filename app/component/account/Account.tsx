@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from '@remix-run/react';
+import { Form, useActionData, useLoaderData } from '@remix-run/react';
 import { Logo } from '../utils/Logo';
 import styles from '~/styles/account.css';
 import { useEffect, useRef, useState } from 'react';
@@ -44,7 +44,7 @@ const Account = () => {
           <h1>User Information</h1>
           <p>You can edit personal information about yourself</p>
         </div>
-        <Form>
+        <Form method="post">
           <div className="user-email">
             <label htmlFor="">Email Address</label>
             <input
@@ -95,7 +95,7 @@ const Account = () => {
             />
           </div>
           <div className="submit-button">
-            <button type="submit">Update Info</button>
+            <button>Update Info</button>
           </div>
         </Form>
       </div>
