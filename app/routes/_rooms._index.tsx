@@ -1,11 +1,13 @@
+import Footer from '~/component/navigation/Footer';
 import Rooms from '~/component/rooms/Rooms';
 import { getRooms } from '~/data/rooms.server';
 
 export default function Index() {
   return (
-    <div>
+    <>
       <Rooms />
-    </div>
+      <Footer />
+    </>
   );
 }
 

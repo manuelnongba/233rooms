@@ -15,7 +15,7 @@ export default RentLayout;
 export async function loader({ request }: any) {
   await requireUserSession(request);
 
-  return getUserFromSession(request);
+  return await getUserFromSession(request);
 }
 
 export function links() {

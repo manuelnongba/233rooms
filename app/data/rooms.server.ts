@@ -100,13 +100,12 @@ export const getRoomDetails = async (id: any) => {
 
 export const getUserRooms = async (userId: Number) => {
   const sql = `SELECT title, price, description, address, 
-               bathrooms, bedrooms, STRING_AGG(image, ',') as image, room_id, firstname 
+               bathrooms, bedrooms, STRING_AGG(image, ',') as image, room_id 
                FROM rooms 
                LEFT JOIN roomphotos rp  ON rp.room_id = rooms.id
-               LEFT JOIN users u ON u.id = rooms.user_id
                 WHERE user_id = ${userId}
                 GROUP BY rp.room_id, rooms.title, rooms.price, rooms.description, rooms.address,
-                rooms.bathrooms, rooms.bedrooms, u.firstname;
+                rooms.bathrooms, rooms.bedrooms;
                `;
 
   const { rows } = await pool.query(sql);

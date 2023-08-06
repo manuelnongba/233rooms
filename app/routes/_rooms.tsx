@@ -1,5 +1,4 @@
 import { Outlet } from '@remix-run/react';
-import Footer from '~/component/navigation/Footer';
 import Header from '~/component/navigation/Header';
 import { getUserFromSession } from '~/data/auth.server';
 import { links as headerLinks } from '~/component/navigation/Header';
@@ -13,13 +12,12 @@ export default function Home() {
     <>
       <Header />
       <Outlet />
-      <Footer />
     </>
   );
 }
 
-export function loader({ request }: any) {
-  return getUserFromSession(request);
+export async function loader({ request }: any) {
+  return await getUserFromSession(request);
 }
 
 export function links() {

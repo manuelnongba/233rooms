@@ -1,0 +1,70 @@
+.user-info-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4rem;
+
+  width: 50%;
+  margin: 4rem auto;
+}
+
+.user-info-header {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: calc(100% + 1rem);
+}
+
+form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.user-info-container div:not(.user-info-header, .user-fullname-input) {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: calc(100% + 0.8rem);
+}
+
+.user-info-container input {
+  border: 0.5px solid #000;
+  border-radius: 0.8rem;
+  height: 3.5rem;
+  padding: 1rem 1rem;
+}
+
+.user-fullname-input {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.user-email input {
+  width: 35rem;
+}
+
+.user-fullname-input input {
+  width: 16.5rem;
+}
+
+.user-phone {
+  width: 16.5rem;
+}
+
+.user-address {
+  width: 16.5rem;
+}
+
+.submit-button button {
+  background-color: #000;
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}

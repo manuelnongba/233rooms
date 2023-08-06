@@ -6,7 +6,7 @@ import { FaBath, FaBed, FaLocationArrow, FaWifi } from 'react-icons/fa';
 const MyRooms = () => {
   const data = useLoaderData();
 
-  const userRooms = data.map((el: any) => {
+  const userRooms = data.userRooms.map((el: any) => {
     const image = el.image.split(',')[0];
     return (
       <Link
@@ -56,7 +56,7 @@ const MyRooms = () => {
       <div className="my-rooms-wrapper">
         <div className="my-rooms">
           <div className="sub-header">
-            <h1>Welcome, {data[0].firstname}!</h1>
+            <h1>Welcome, {data.userName[0].firstname}!</h1>
             <h2>Your Rooms</h2>
           </div>
           {userRooms}
