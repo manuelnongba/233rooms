@@ -52,6 +52,10 @@ button {
   outline: none;
 }
 
+.hide-srh {
+  display: none;
+}
+
 .logo {
   height: 5rem;
   width: 6rem;

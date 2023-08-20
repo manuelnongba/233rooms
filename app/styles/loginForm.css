@@ -1,25 +1,21 @@
-#auth-form {
-  max-width: 28rem;
-  margin: 2rem auto;
+.form {
+  max-width: 36rem;
+  margin: 8rem auto;
   border-radius: 8px;
-  background-color: var(--color-primary-200);
+  background-color: #fcfcfc;
   color: var(--color-gray-10);
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 5px 4px rgba(0, 0, 0, 0.1);
   animation: fade-slide-up 1.5s ease-out forwards;
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
-#auth-form input {
-  text-align: center;
-}
-
-#auth-form a {
+.form a {
   font-size: 1.2rem;
   color: var(--color-primary-10);
 }
 
-#auth-form a:hover {
+.form a:hover {
   color: #000;
 }
 
@@ -54,21 +50,12 @@
 }
 
 .form input {
+  text-align: center;
   font: inherit;
   padding: 0.5rem;
   border-radius: 6px;
   width: 100%;
   color: var(--color-gray-600);
-}
-
-.form-row {
-  display: flex;
-  gap: 2rem;
-  text-align: left;
-}
-
-.form-row p {
-  flex: 1;
 }
 
 .form-actions {

@@ -17,7 +17,7 @@ const Login = () => {
   const isSubmitting = navigation.state !== 'idle';
 
   return (
-    <Form method="post" className="form" id="auth-form">
+    <Form method="post" className="form">
       <div className="icon-img">
         {authMode === 'login' ? <FaLock /> : <FaUserPlus />}
       </div>

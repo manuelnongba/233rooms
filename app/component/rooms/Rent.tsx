@@ -53,6 +53,7 @@ const RentRoom = () => {
             <input
               type="text"
               name="title"
+              maxLength={30}
               placeholder="Give your property a title"
               onChange={handleChange}
             />

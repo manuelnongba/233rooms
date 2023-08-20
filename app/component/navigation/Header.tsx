@@ -1,4 +1,4 @@
-import { useFetcher } from '@remix-run/react';
+import { useFetcher, useLocation } from '@remix-run/react';
 import styles from '~/styles/header.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
@@ -30,8 +30,10 @@ const Header = ({
   const [modalIsOpen, setIsOpen] = useState(false);
   const [resultsIsOpen, setResultsIsOpen] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
+  const loc = useLocation();
 
   const divRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   const fetcher = useFetcher();
   const submit = fetcher.submit;
@@ -82,13 +84,14 @@ const Header = ({
 
       setLocationResults(
         response.data.predictions.map((el: any) => {
+          if (el.description) setResultsIsOpen(true);
           return (
             <p
               key={el.description}
               onClick={(e) => {
                 setAddress(el.description);
                 setSearchTerm(el.description);
-                setResultsIsOpen(false);
+                setResultsIsOpen(true);
               }}
             >
               {el.description}
@@ -135,10 +138,13 @@ const Header = ({
   function handleClickOutside(event: Event) {
     // If the user clicks outside the div, hide it
     if (
-      divRef.current &&
-      !divRef.current.contains(event.target as HTMLDivElement)
+      (divRef.current &&
+        !divRef.current.contains(event.target as HTMLDivElement)) ||
+      (menuRef.current &&
+        !menuRef.current.contains(event.target as HTMLDivElement))
     ) {
-      divRef.current.style.display = 'none';
+      setResultsIsOpen(false);
+      setIsMenu(false);
     }
   }
 
@@ -150,10 +156,13 @@ const Header = ({
     setIsMenu(!isMenu);
   };
 
+  let hideSearch = '';
+  if (loc.pathname === '/auth') hideSearch = 'hide-srh';
+
   return (
     <div className="header sticky">
       <Logo />
-      <div className="location">
+      <div className={`location ${hideSearch}`}>
         <div className="location-input">
           <button onClick={openModal}>
             <svg
@@ -220,7 +229,7 @@ const Header = ({
             />
           </svg>
         </button>
-        <Menu isMenu={isMenu} />
+        <Menu isMenu={isMenu} menuRef={menuRef} setIsMenu={setIsMenu} />
       </div>
     </div>
   );

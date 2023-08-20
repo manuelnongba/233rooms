@@ -9,7 +9,9 @@ export const createRoom = async ({
 }: any) => {
   try {
     const sql = `INSERT INTO rooms(bedrooms, bathrooms, title)
-    VALUES (${bedrooms}, ${bathrooms}, '${title}')
+    VALUES (${bedrooms.trim().replace(/[,'/]/g, '')}, ${bathrooms
+      .trim()
+      .replace(/[,'/]/g, '')}, '${title.trim().replace(/[,'/]/g, '')}')
     RETURNING id;
    `;
 
@@ -35,21 +37,6 @@ export const uploadImages = async ({
   userId,
 }: any) => {
   try {
-    // const sqlPrice = `UPDATE rooms SET price = ${+price} WHERE id = ${+roomId}`;
-    // await pool.query(sqlPrice);
-
-    // const sqlDesc = `UPDATE rooms SET description = '${description}' WHERE id = ${roomId}`;
-    // await pool.query(sqlDesc);
-
-    // const sqlLocation = `UPDATE rooms SET location = 'POINT(${lng} ${lat})' WHERE id = ${roomId}`;
-    // await pool.query(sqlLocation);
-
-    // const sqlAddress = `UPDATE rooms SET address = '${address}' WHERE id = ${roomId}`;
-    // await pool.query(sqlAddress);
-
-    // const sqlUserId = `UPDATE rooms SET user_id = '${userId}' WHERE id = ${roomId}`;
-    // await pool.query(sqlUserId);
-
     const sql = `
     UPDATE rooms
     SET price = $1, description = $2, location = ST_GeomFromText($3), address = $4, user_id = $5
@@ -57,10 +44,10 @@ export const uploadImages = async ({
   `;
 
     await pool.query(sql, [
-      +price,
-      description,
+      +price.trim().replace(/[,'/]/g, ''),
+      description.trim().replace(/[,'/]/g, ''),
       `POINT(${lng} ${lat})`,
-      address,
+      address.trim().replace(/[,'/]/g, ''),
       userId,
       roomId,
     ]);
@@ -69,7 +56,9 @@ export const uploadImages = async ({
 
     if (images)
       imgArr.forEach(async (el: any) => {
-        const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el}', ${roomId})`;
+        const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el
+          .trim()
+          .replace(/[,'/]/g, '')}', ${roomId})`;
         console.log(sql);
 
         await pool.query(sql);

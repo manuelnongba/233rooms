@@ -199,6 +199,7 @@ function ImagesUpload() {
               // type="text"
               name="description"
               onChange={handleInputChange}
+              maxLength={240}
               placeholder="Give a detailed description of your property"
             />
           </div>
@@ -206,13 +207,14 @@ function ImagesUpload() {
             <input
               type="text"
               name="location"
+              maxLength={200}
               placeholder="Location"
               onChange={handleInputChange}
             />
           </div>
           <div className="price">
             <input
-              type="text"
+              type="number"
               name="price"
               placeholder="price"
               onChange={handleInputChange}
