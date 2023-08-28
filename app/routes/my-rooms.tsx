@@ -1,6 +1,7 @@
 import MyRooms from '~/component/rooms/MyRooms';
 import { links as myRoomsLinks } from '~/component/rooms/MyRooms';
 import { links as headerLinks } from '~/component/navigation/Header';
+import { links as myRoomsMenuLinks } from '~/component/rooms/MyRoomsMenu';
 import { getUserFromSession } from '~/data/auth.server';
 import { getUserRooms } from '~/data/rooms.server';
 import { getUserName } from '~/data/user.server';
@@ -24,5 +25,5 @@ export const loader = async ({ request }: any) => {
 };
 
 export const links = () => {
-  return [...myRoomsLinks(), ...headerLinks()];
+  return [...myRoomsLinks(), ...headerLinks(), ...myRoomsMenuLinks()];
 };

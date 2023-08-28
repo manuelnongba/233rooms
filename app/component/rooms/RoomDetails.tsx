@@ -1,25 +1,45 @@
-import { useLoaderData, useMatches } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
+import { useState, type MouseEvent, useEffect } from 'react';
 import { FaLocationArrow, FaMoneyCheck } from 'react-icons/fa';
 import styles from '~/styles/roomDetails.css';
 
 const RoomDetails = () => {
-  const roomData = useLoaderData();
-  let roomDataObj: any = {
+  const [roomDataObj, setRoomDataObj] = useState<any>({
+    title: '',
+    description: '',
+    price: '',
+    address: '',
     image: [],
+  });
+  const roomData = useLoaderData();
+  const [mainImage, setMainImage] = useState<string>(roomData[0].image);
+
+  // const data = useMatches();
+
+  useEffect(() => {
+    const imagesData = roomData.map((el: any) => el.image);
+    roomData.forEach((el: any) => {
+      setRoomDataObj({ ...el, image: [...imagesData] });
+    });
+  }, [roomData]);
+
+  const onImageClick = (e: MouseEvent) => {
+    const target = e.target as HTMLImageElement;
+    const selectedImage: string = target.dataset.image?.replace('/', '')!;
+
+    setMainImage(selectedImage);
   };
 
-  const data = useMatches();
-  console.log(data);
-
-  roomData.forEach((el: any) => {
-    roomDataObj = { ...el, image: [...roomDataObj.image, el.image] };
-  });
-
-  const roomDetails = roomDataObj.image?.map((el: any, i: any) => {
+  const roomImages = roomDataObj.image?.map((el: any, i: any) => {
     return (
       <div key={i}>
         <div>
-          <img src={`/${el}`} alt="rooms details" />
+          <img
+            data-image={`/${el}`}
+            src={`/${el}`}
+            alt="rooms details"
+            onClick={onImageClick}
+          />
         </div>
       </div>
     );
@@ -32,7 +52,7 @@ const RoomDetails = () => {
       </div>
 
       <div className="room-details">
-        <img src={`/${roomDataObj?.image[0]}`} alt="rooms details" />
+        <img src={`/${mainImage}`} alt="rooms details" />
 
         <div className="sub-details">
           <div className="room-desc">
@@ -59,7 +79,7 @@ const RoomDetails = () => {
             </div>
           </div>
 
-          <div className="sub-photos">{roomDetails}</div>
+          <div className="sub-photos">{roomImages}</div>
         </div>
       </div>
     </div>

@@ -20,8 +20,32 @@
   background-color: #efefef;
 }
 
-.menu a {
+a {
   font-size: 1.4rem;
   text-decoration: none;
   color: #000;
+}
+
+.my-rooms-menu {
+  width: 15rem;
+  border-radius: 0.6rem;
+  box-shadow: 0.5px 0.5px 4px 1px rgba(0, 0, 0, 0.2);
+  background-color: #212529;
+
+  position: absolute;
+  right: 40rem;
+}
+
+.my-rooms-menu .action {
+  width: 15rem;
+  padding: 1rem 2rem;
+  text-align: left;
+  color: #fff;
+}
+
+.my-rooms-menu .action:hover,
+.my-rooms-menu .action:hover button {
+  background-color: #343a40;
+  width: 15rem;
+  border-radius: 0.6rem;
 }

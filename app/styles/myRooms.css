@@ -11,6 +11,13 @@
   gap: 3rem;
 }
 
+.my-room-details-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-right: 1rem;
+}
+
 /* .my-rooms .sub-header {
   display: flex;
   align-self: flex-start;
@@ -91,4 +98,9 @@
   height: 2rem;
   width: 2rem;
   fill: #a9a5a5;
+}
+
+.ellipsis {
+  position: relative;
+  cursor: pointer;
 }

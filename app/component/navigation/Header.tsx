@@ -34,6 +34,7 @@ const Header = ({
 
   const divRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
+  const profileRef = useRef<HTMLButtonElement>(null);
 
   const fetcher = useFetcher();
   const submit = fetcher.submit;
@@ -121,17 +122,17 @@ const Header = ({
       });
   }, [address, url]);
 
-  const openModal = () => {
-    setIsOpen(true);
+  const showMenu = () => {
+    setIsMenu(!isMenu);
   };
 
   useEffect(() => {
     // Attach an event listener to the document that listens for clicks
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     // Clean up the event listener when the component unmounts
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -141,20 +142,21 @@ const Header = ({
       (divRef.current &&
         !divRef.current.contains(event.target as HTMLDivElement)) ||
       (menuRef.current &&
-        !menuRef.current.contains(event.target as HTMLDivElement))
+        !menuRef.current.contains(event.target as HTMLDivElement) &&
+        !profileRef.current?.contains(event.target as HTMLButtonElement))
     ) {
       setResultsIsOpen(false);
+
       setIsMenu(false);
     }
   }
 
+  const openModal = () => {
+    setIsOpen(true);
+  };
   // if (fetcher.state !== 'idle') {
   //   return <h1>Loading...</h1>;
   // }
-
-  const showMenu = () => {
-    setIsMenu(!isMenu);
-  };
 
   let hideSearch = '';
   if (loc.pathname === '/auth') hideSearch = 'hide-srh';
@@ -213,7 +215,7 @@ const Header = ({
       )}
 
       <div className="profile">
-        <button onClick={showMenu}>
+        <button onClick={showMenu} ref={profileRef}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -229,7 +231,7 @@ const Header = ({
             />
           </svg>
         </button>
-        <Menu isMenu={isMenu} menuRef={menuRef} setIsMenu={setIsMenu} />
+        <Menu isMenu={isMenu} menuRef={menuRef} />
       </div>
     </div>
   );

@@ -1,12 +1,12 @@
 import { Form, Link, useLoaderData } from '@remix-run/react';
 import styles from '~/styles/menu.css';
 
-const Menu = ({ isMenu, menuRef, setIsMenu }: any) => {
+const Menu = ({ isMenu, menuRef }: any) => {
   const userId = useLoaderData();
 
   return (
     isMenu && (
-      <div className="menu" ref={menuRef} onClick={() => setIsMenu(false)}>
+      <div className="menu" ref={menuRef}>
         {userId && (
           <Link to="/rent">
             <p className="action">Rent out your home</p>
