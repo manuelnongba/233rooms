@@ -1,7 +1,8 @@
-import { Form, useActionData, useLoaderData } from '@remix-run/react';
-import { Logo } from '../utils/Logo';
+import { Form, useLoaderData } from '@remix-run/react';
+
 import styles from '~/styles/account.css';
 import { useEffect, useRef, useState } from 'react';
+import Header from '../navigation/Header';
 
 const Account = () => {
   const [inputValue, setInputValue] = useState({
@@ -36,13 +37,11 @@ const Account = () => {
 
   return (
     <div>
-      <div className="header">
-        <Logo />
-      </div>
-      <div className="user-info-container">
-        <div className="user-info-header">
+      <Header />
+      <div className="info-container">
+        <div className="info-header">
           <h1>User Information</h1>
-          <p>You can edit personal information about yourself</p>
+          <p>You can edit your personal information </p>
         </div>
         <Form method="post">
           <div className="user-email">

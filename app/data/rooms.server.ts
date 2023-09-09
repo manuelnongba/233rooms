@@ -88,13 +88,11 @@ export const getRooms = async (lng: any, lat: any) => {
 export const getRoomDetails = async (id: any) => {
   try {
     const sql = `
-    SELECT r.title, r.price, r.description, rp.image, r.address FROM roomphotos rp
+    SELECT r.bedrooms, r.bathrooms, r.title, r.price, r.description, r.address, rp.image, r.address FROM roomphotos rp
     LEFT JOIN rooms r ON r.id = rp.room_id 
     WHERE rp.room_id = ${id}`;
 
     const { rows } = await pool.query(sql);
-
-    console.log(sql);
 
     return rows;
   } catch (error) {
@@ -114,7 +112,53 @@ export const getUserRooms = async (userId: Number) => {
 
   const { rows } = await pool.query(sql);
 
-  console.log(rows);
-
   return rows;
+};
+
+export const updateRoomInfo = async (
+  { bedrooms, bathrooms, title, price, address, description }: any,
+  roomid: any
+) => {
+  try {
+    const sql = `
+    UPDATE rooms
+    SET bedrooms = $1, bathrooms = $2, title = $3, price = $4, address = $5, description = $6
+    WHERE id = $7;
+  `;
+
+    await pool.query(sql, [
+      bedrooms,
+      bathrooms,
+      title,
+      price,
+      address,
+      description,
+      roomid,
+    ]);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getRoomImages = async (roomid: number) => {
+  try {
+    const sql = `SELECT * FROM roomphotos
+                 WHERE room_id = ${roomid}`;
+
+    const { rows } = await pool.query(sql);
+
+    return rows;
+  } catch (error) {}
+};
+
+export const deleteRoom = async (roomid: number) => {
+  try {
+    const sql = `
+    DELETE FROM rooms WHERE id = $1;
+  `;
+
+    await pool.query(sql, [roomid]);
+  } catch (error) {
+    throw error;
+  }
 };

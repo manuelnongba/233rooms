@@ -39,3 +39,46 @@ body {
     transform: translateY(0);
   }
 }
+
+.info-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4rem;
+
+  width: 50%;
+  margin: 4rem auto;
+}
+
+.info-container div:not(.info-header, .user-fullname-input, .cta) {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: calc(100% + 0.8rem);
+}
+
+.info-container form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.info-container input {
+  border: 0.5px solid #000;
+  border-radius: 0.8rem;
+  height: 3.5rem;
+  padding: 1rem 1rem;
+}
+
+.info-container button {
+  padding: 1rem 2rem;
+  border-radius: 0.4rem;
+  cursor: pointer;
+}
+
+.info-header {
+  display: flex;
+}

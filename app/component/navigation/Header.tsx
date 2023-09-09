@@ -92,7 +92,7 @@ const Header = ({
               onClick={(e) => {
                 setAddress(el.description);
                 setSearchTerm(el.description);
-                setResultsIsOpen(true);
+                setResultsIsOpen(false);
               }}
             >
               {el.description}
@@ -146,7 +146,6 @@ const Header = ({
         !profileRef.current?.contains(event.target as HTMLButtonElement))
     ) {
       setResultsIsOpen(false);
-
       setIsMenu(false);
     }
   }
@@ -158,13 +157,13 @@ const Header = ({
   //   return <h1>Loading...</h1>;
   // }
 
-  let hideSearch = '';
-  if (loc.pathname === '/auth') hideSearch = 'hide-srh';
+  let showSearch = '';
+  if (loc.pathname == '/') showSearch = 'show-srh';
 
   return (
     <div className="header sticky">
       <Logo />
-      <div className={`location ${hideSearch}`}>
+      <div className={`location ${showSearch}`}>
         <div className="location-input">
           <button onClick={openModal}>
             <svg
@@ -231,7 +230,7 @@ const Header = ({
             />
           </svg>
         </button>
-        <Menu isMenu={isMenu} menuRef={menuRef} />
+        <Menu isMenu={isMenu} menuRef={menuRef} setIsMenu={setIsMenu} />
       </div>
     </div>
   );

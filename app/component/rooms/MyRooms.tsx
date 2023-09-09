@@ -1,6 +1,6 @@
 import { useLoaderData } from '@remix-run/react';
 import styles from '~/styles/myRooms.css';
-import { Logo } from '../utils/Logo';
+
 import {
   FaBath,
   FaBed,
@@ -10,6 +10,7 @@ import {
 } from 'react-icons/fa';
 import { useState } from 'react';
 import MyRoomsMenu from './MyRoomsMenu';
+import Header from '../navigation/Header';
 
 const MyRoomsDetails = ({ myRoomsData }: any) => {
   const [isMenu, setIsMenu] = useState(false);
@@ -76,9 +77,10 @@ const MyRooms = () => {
   return (
     <div className="my-rooms-main">
       <div className="my-rooms-main">
-        <div className="header">
+        {/* <div className="header">
           <Logo />
-        </div>
+        </div> */}
+        <Header />
         <div className="my-rooms-wrapper">
           <div className="my-rooms">
             <div className="sub-header">

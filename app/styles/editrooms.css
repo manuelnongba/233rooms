@@ -1,0 +1,28 @@
+.edit-room {
+  display: flex;
+  justify-content: space-between;
+
+  width: 80rem;
+}
+
+.cta {
+  width: 24rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-photos {
+  background-color: #e9ecef;
+}
+
+.cta .delete-action {
+  background-color: red;
+  color: #fff;
+}
+
+.submit-button button {
+  background-color: #000;
+  color: #fff;
+}

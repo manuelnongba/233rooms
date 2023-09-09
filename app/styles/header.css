@@ -27,6 +27,7 @@ button {
 
 .location {
   position: relative;
+  display: none;
 }
 
 .location .location-input {
@@ -52,8 +53,8 @@ button {
   outline: none;
 }
 
-.hide-srh {
-  display: none;
+.show-srh {
+  display: block;
 }
 
 .logo {

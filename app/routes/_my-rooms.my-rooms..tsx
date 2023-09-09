@@ -1,14 +1,16 @@
 import MyRooms from '~/component/rooms/MyRooms';
 import { links as myRoomsLinks } from '~/component/rooms/MyRooms';
 import { links as headerLinks } from '~/component/navigation/Header';
-import { links as myRoomsMenuLinks } from '~/component/rooms/MyRoomsMenu';
+import { links as menuLinks } from '~/component/navigation/Menu';
 import { getUserFromSession } from '~/data/auth.server';
 import { getUserRooms } from '~/data/rooms.server';
 import { getUserName } from '~/data/user.server';
+import { Outlet } from '@remix-run/react';
 
 const MyRoomsPage = () => {
   return (
     <>
+      <Outlet />
       <MyRooms />;
     </>
   );
@@ -25,5 +27,5 @@ export const loader = async ({ request }: any) => {
 };
 
 export const links = () => {
-  return [...myRoomsLinks(), ...headerLinks(), ...myRoomsMenuLinks()];
+  return [...myRoomsLinks(), ...headerLinks(), ...menuLinks()];
 };

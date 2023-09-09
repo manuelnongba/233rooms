@@ -1,6 +1,8 @@
 import Account from '~/component/account/Account';
 import { links as accountLinks } from '~/component/account/Account';
 import { links as headerLinks } from '~/component/navigation/Header';
+import { links as sharedLinks } from '~/component/rooms/EditRoom';
+import { links as menuLinks } from '~/component/navigation/Menu';
 import { getUserFromSession } from '~/data/auth.server';
 import { getUserInfo, updateUserInfo } from '~/data/user.server';
 
@@ -34,5 +36,10 @@ export const action = async ({ request }: any) => {
 };
 
 export const links = () => {
-  return [...accountLinks(), ...headerLinks()];
+  return [
+    ...accountLinks(),
+    ...headerLinks(),
+    ...sharedLinks(),
+    ...menuLinks(),
+  ];
 };

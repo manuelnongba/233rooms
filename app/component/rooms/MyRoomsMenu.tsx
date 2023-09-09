@@ -1,6 +1,5 @@
 import { Link } from '@remix-run/react';
 import { useCallback, useEffect, useRef } from 'react';
-import styles from '~/styles/menu.css';
 
 const MyRoomsMenu = ({ isMyRoomsMenu, setIsMyRoomsMenu, roomId }: any) => {
   const menuRef = useRef<HTMLDivElement>(null);
@@ -36,7 +35,7 @@ const MyRoomsMenu = ({ isMyRoomsMenu, setIsMyRoomsMenu, roomId }: any) => {
           <Link to={`/rooms/${roomId}`}>
             <p className="action">View Room </p>
           </Link>
-          <Link to="auth?mode=signup">
+          <Link to={`edit/${roomId}`}>
             <p className="action">Edit</p>
           </Link>
         </div>
@@ -46,7 +45,3 @@ const MyRoomsMenu = ({ isMyRoomsMenu, setIsMyRoomsMenu, roomId }: any) => {
 };
 
 export default MyRoomsMenu;
-
-export const links = () => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
