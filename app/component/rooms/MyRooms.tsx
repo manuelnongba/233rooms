@@ -19,7 +19,10 @@ const MyRoomsDetails = ({ myRoomsData }: any) => {
     setIsMenu(!isMenu);
   };
 
-  const image = myRoomsData?.image.split(',')[0];
+  let image;
+  if (myRoomsData?.image?.includes(','))
+    image = myRoomsData?.image.split(',')[0];
+  else image = myRoomsData?.image;
 
   return (
     <div
@@ -43,7 +46,7 @@ const MyRoomsDetails = ({ myRoomsData }: any) => {
             <MyRoomsMenu
               isMyRoomsMenu={isMenu}
               setIsMyRoomsMenu={setIsMenu}
-              roomId={myRoomsData?.room_id}
+              roomId={myRoomsData?.id}
             />
           </div>
         </div>
@@ -88,7 +91,7 @@ const MyRooms = () => {
               <h2>Your Rooms</h2>
             </div>
             {data.userRooms.map((el: any) => (
-              <MyRoomsDetails key={el.room_id} myRoomsData={el} />
+              <MyRoomsDetails key={el.id} myRoomsData={el} />
             ))}
           </div>
         </div>

@@ -24,7 +24,7 @@ const RentRoom = () => {
       <div className="form-wrapper">
         <Form method="post" action="/rent/next-step">
           <div>
-            <select name="bedrooms" onChange={handleChange}>
+            <select name="bedrooms" onChange={handleChange} required>
               <option value="">No. Of Rooms</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -37,7 +37,7 @@ const RentRoom = () => {
             </select>
           </div>
           <div>
-            <select name="bathrooms" onChange={handleChange}>
+            <select name="bathrooms" onChange={handleChange} required>
               <option value="">No. Of Baths</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -56,6 +56,7 @@ const RentRoom = () => {
               maxLength={30}
               placeholder="Give your property a title"
               onChange={handleChange}
+              required
             />
           </div>
           <div>

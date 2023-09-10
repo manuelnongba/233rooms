@@ -1,6 +1,11 @@
 import { useLoaderData } from '@remix-run/react';
 import { useState, type MouseEvent, useEffect } from 'react';
-import { FaLocationArrow, FaMoneyCheck } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaLocationArrow,
+  FaMoneyCheck,
+  FaPhoneAlt,
+} from 'react-icons/fa';
 import styles from '~/styles/roomDetails.css';
 
 const RoomDetails = () => {
@@ -11,17 +16,18 @@ const RoomDetails = () => {
     address: '',
     image: [],
   });
-  const roomData = useLoaderData();
-  const [mainImage, setMainImage] = useState<string>(roomData[0].image);
+  const { roomInfo, userInfo } = useLoaderData();
+  const [mainImage, setMainImage] = useState<string>(roomInfo[0].image);
+  const userInfoData = userInfo[0];
 
   // const data = useMatches();
 
   useEffect(() => {
-    const imagesData = roomData.map((el: any) => el.image);
-    roomData.forEach((el: any) => {
+    const imagesData = roomInfo.map((el: any) => el.image);
+    roomInfo.forEach((el: any) => {
       setRoomDataObj({ ...el, image: [...imagesData] });
     });
-  }, [roomData]);
+  }, [roomInfo]);
 
   const onImageClick = (e: MouseEvent) => {
     const target = e.target as HTMLImageElement;
@@ -80,6 +86,24 @@ const RoomDetails = () => {
           </div>
 
           <div className="sub-photos">{roomImages}</div>
+        </div>
+      </div>
+      <div className="user-contact-main">
+        <div className="user-name-image">
+          <img src={`/${userInfoData.avatar}`} alt={userInfoData.avatar} />
+          <p>
+            {userInfoData.firstname} {userInfoData.lastname}
+          </p>
+        </div>
+        <div className="user-contact">
+          <div>
+            <FaPhoneAlt />
+            <span>{userInfoData.phone}</span>
+          </div>
+          <div>
+            <FaEnvelope />
+            <span>{userInfoData.email}</span>
+          </div>
         </div>
       </div>
     </div>

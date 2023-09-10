@@ -14,7 +14,7 @@ const Login = () => {
       ? 'Do not have an account? Sign up.'
       : 'Login with existing account';
 
-  const isSubmitting = navigation.state !== 'idle';
+  const isSubmitting = navigation.state === 'submitting';
 
   return (
     <Form method="post" className="form">

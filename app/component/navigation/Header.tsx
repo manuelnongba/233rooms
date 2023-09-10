@@ -68,6 +68,7 @@ const Header = ({
   }, [location]);
 
   useEffect(() => {
+    if (!searchTerm) setResultsIsOpen(false);
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
     }, 1000);

@@ -30,18 +30,30 @@ function ImagesUpload() {
   const data = useActionData();
   const navigate = useNavigate();
   const userId = useMatches()[1].data;
-  console.log(userId);
 
-  const onDrop = useCallback((acceptedFiles: any) => {
-    if (acceptedFiles?.length) {
-      setImages((previousFiles: any) => [
-        ...previousFiles,
-        ...acceptedFiles.map((file: any) =>
-          Object.assign(file, { preview: URL.createObjectURL(file) })
-        ),
-      ]);
-    }
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: any) => {
+      let imageExists = false;
+      images?.forEach((el: any) => {
+        if (el.name === acceptedFiles[0].name) {
+          alert('Image already added! Choose a different image.');
+          imageExists = true;
+        }
+      });
+
+      if (acceptedFiles?.length && !imageExists) {
+        setImages((previousFiles: any) => [
+          ...previousFiles,
+          ...acceptedFiles.map((file: any) => {
+            console.log(previousFiles, acceptedFiles);
+
+            return Object.assign(file, { preview: URL.createObjectURL(file) });
+          }),
+        ]);
+      }
+    },
+    [images]
+  );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 

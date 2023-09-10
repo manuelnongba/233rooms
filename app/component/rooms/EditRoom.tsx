@@ -54,9 +54,9 @@ const EditRoom = () => {
             <p>You can edit your room details</p>
           </div>
           <div className="cta">
-            <button className="edit-photos">
-              <Link to="images">Edit Photos</Link>
-            </button>
+            <Link to="images">
+              <button className="edit-photos">Edit Photos</button>
+            </Link>
 
             <Form method="delete">
               <button className="delete-action">Delete Room</button>

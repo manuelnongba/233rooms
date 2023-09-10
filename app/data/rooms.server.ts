@@ -88,11 +88,12 @@ export const getRooms = async (lng: any, lat: any) => {
 export const getRoomDetails = async (id: any) => {
   try {
     const sql = `
-    SELECT r.bedrooms, r.bathrooms, r.title, r.price, r.description, r.address, rp.image, r.address FROM roomphotos rp
-    LEFT JOIN rooms r ON r.id = rp.room_id 
-    WHERE rp.room_id = ${id}`;
+    SELECT r.bedrooms, r.bathrooms, r.title, r.price, r.description, r.address, rp.image, r.address FROM rooms r
+    LEFT JOIN roomphotos rp ON rp.room_id  = r.id
+    WHERE r.id = ${id}`;
 
     const { rows } = await pool.query(sql);
+    console.log(rows);
 
     return rows;
   } catch (error) {
@@ -101,16 +102,17 @@ export const getRoomDetails = async (id: any) => {
 };
 
 export const getUserRooms = async (userId: Number) => {
-  const sql = `SELECT title, price, description, address, 
-               bathrooms, bedrooms, STRING_AGG(image, ',') as image, room_id 
-               FROM rooms 
-               LEFT JOIN roomphotos rp  ON rp.room_id = rooms.id
+  const sql = `SELECT r.id, title, price, description, address, 
+               bathrooms, bedrooms, STRING_AGG(image, ',') as image
+               FROM rooms r
+               LEFT JOIN roomphotos rp  ON rp.room_id = r.id
                 WHERE user_id = ${userId}
-                GROUP BY rp.room_id, rooms.title, rooms.price, rooms.description, rooms.address,
-                rooms.bathrooms, rooms.bedrooms;
+                GROUP BY r.id, r.title, r.price, r.description, r.address,
+                r.bathrooms, r.bedrooms;
                `;
 
   const { rows } = await pool.query(sql);
+  console.log(rows);
 
   return rows;
 };
@@ -158,6 +160,18 @@ export const deleteRoom = async (roomid: number) => {
   `;
 
     await pool.query(sql, [roomid]);
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteRoomImage = async (imageID: number) => {
+  try {
+    const sql = `
+    DELETE FROM roomphotos WHERE id = $1;
+  `;
+
+    await pool.query(sql, [imageID]);
   } catch (error) {
     throw error;
   }
