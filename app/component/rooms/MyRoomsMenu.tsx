@@ -32,11 +32,11 @@ const MyRoomsMenu = ({ isMyRoomsMenu, setIsMyRoomsMenu, roomId }: any) => {
     isMyRoomsMenu && (
       <div>
         <div ref={menuRef} className="my-rooms-menu">
-          <Link to={`/rooms/${roomId}`}>
-            <p className="action">View Room </p>
-          </Link>
           <Link to={`edit/${roomId}`}>
             <p className="action">Edit</p>
+          </Link>
+          <Link to={`/rooms/${roomId}`}>
+            <p className="action">View Room </p>
           </Link>
         </div>
       </div>

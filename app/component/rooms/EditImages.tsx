@@ -10,6 +10,7 @@ interface RoomImagesInterface {
 const EditImages = () => {
   const roomImages = useLoaderData();
   const fetcher = useFetcher();
+  console.log(roomImages);
 
   const handleDelete = (e: any, imageID: number) => {
     e.preventDefault();
@@ -18,6 +19,9 @@ const EditImages = () => {
     formData.append('imageID', String(imageID));
 
     const confirmed = confirm('Click OK to delete photo');
+
+    if (roomImages.length === 1)
+      return alert('You need to have at least one image uploaded.');
 
     if (confirmed)
       fetcher.submit(formData, {

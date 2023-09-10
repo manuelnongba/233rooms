@@ -9,6 +9,7 @@ import {
   getRoomDetails,
   updateRoomInfo,
 } from '~/data/rooms.server';
+import { redirect } from '@remix-run/node';
 
 const EditRoomPage = () => {
   return (
@@ -51,6 +52,6 @@ export const action = async ({ request, params }: any) => {
   if (request.method === 'DELETE') {
     await deleteRoom(roomid);
 
-    return { deleteId: roomid };
+    return redirect('/my-rooms');
   }
 };

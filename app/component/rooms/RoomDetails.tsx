@@ -63,47 +63,53 @@ const RoomDetails = () => {
         <div className="sub-details">
           <div className="room-desc">
             <div>
-              <h1>{roomDataObj?.description}</h1>
-            </div>
-
-            <div className="price-desc">
               <div>
-                <p>
-                  <FaMoneyCheck />
-                  <span>Price: </span>
-                  {roomDataObj?.price}
-                </p>
+                <h1>{roomDataObj?.description}</h1>
               </div>
 
-              <div>
+              <div className="price-desc">
+                <div>
+                  <p>
+                    <FaMoneyCheck />
+                    <span>Price: </span>
+                    {roomDataObj?.price}
+                  </p>
+                </div>
+
+                <div>
+                  <p>
+                    <FaLocationArrow />
+                    <span>Address: </span>
+                    {roomDataObj?.address}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="user-contact-main">
+              <div className="user-name-image">
+                <img
+                  src={`/${userInfoData.avatar}`}
+                  alt={userInfoData.avatar}
+                />
                 <p>
-                  <FaLocationArrow />
-                  <span>Address: </span>
-                  {roomDataObj?.address}
+                  {userInfoData.firstname} {userInfoData.lastname}
                 </p>
+              </div>
+              <div className="user-contact">
+                <div>
+                  <FaPhoneAlt />
+                  <span>{userInfoData.phone}</span>
+                </div>
+                <div>
+                  <FaEnvelope />
+                  <span>{userInfoData.email}</span>
+                </div>
               </div>
             </div>
           </div>
 
           <div className="sub-photos">{roomImages}</div>
-        </div>
-      </div>
-      <div className="user-contact-main">
-        <div className="user-name-image">
-          <img src={`/${userInfoData.avatar}`} alt={userInfoData.avatar} />
-          <p>
-            {userInfoData.firstname} {userInfoData.lastname}
-          </p>
-        </div>
-        <div className="user-contact">
-          <div>
-            <FaPhoneAlt />
-            <span>{userInfoData.phone}</span>
-          </div>
-          <div>
-            <FaEnvelope />
-            <span>{userInfoData.email}</span>
-          </div>
         </div>
       </div>
     </div>

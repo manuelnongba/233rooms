@@ -1,6 +1,7 @@
 import type { ActionArgs, LoaderArgs } from '@remix-run/node';
 import EditImages from '~/component/rooms/EditImages';
 import { deleteRoomImage, getRoomImages } from '~/data/rooms.server';
+import { links as menuLinks } from '../component/navigation/Menu';
 import styles from '../styles/editImages.css';
 import { links as headerLinks } from '../component/navigation/Header';
 
@@ -31,5 +32,9 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export const links = () => {
-  return [{ rel: 'stylesheet', href: styles }, ...headerLinks()];
+  return [
+    { rel: 'stylesheet', href: styles },
+    ...headerLinks(),
+    ...menuLinks(),
+  ];
 };

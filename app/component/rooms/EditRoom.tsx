@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import Header from '../navigation/Header';
-import { Form, Link, useLoaderData } from '@remix-run/react';
+import { Form, Link, useLoaderData, useNavigate } from '@remix-run/react';
 import styles from '~/styles/editrooms.css';
+import { redirect } from '@remix-run/node';
 
 const EditRoom = () => {
   const [inputValue, setInputValue] = useState({
@@ -37,12 +38,11 @@ const EditRoom = () => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
-  // function deleteRoomHandler() {
-  //   const proceed = confirm('Are you sure? Do you want to delete this item?');
-  //   if (!proceed) return;
-
-  //   fetcher.submit(null, { method: 'delete', action: `/my-rooms/${roomid}` });
-  // }
+  function deleteRoomHandler(e: any) {
+    const proceed = confirm('Click OK to delete this room!');
+    if (!proceed) return;
+    // fetcher.submit(null, { method: 'delete', action: `/my-rooms/${roomid}` });
+  }
 
   return (
     <div>
@@ -58,7 +58,7 @@ const EditRoom = () => {
               <button className="edit-photos">Edit Photos</button>
             </Link>
 
-            <Form method="delete">
+            <Form method="delete" onSubmit={deleteRoomHandler}>
               <button className="delete-action">Delete Room</button>
             </Form>
           </div>

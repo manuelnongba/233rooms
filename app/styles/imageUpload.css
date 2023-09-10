@@ -39,6 +39,11 @@
   color: #265b8a !important;
 }
 
+.price span {
+  font-style: italic;
+  font-size: 1.2rem;
+}
+
 .post button {
   background-color: #000;
   color: #fff;

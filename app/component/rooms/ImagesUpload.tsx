@@ -36,8 +36,8 @@ function ImagesUpload() {
       let imageExists = false;
       images?.forEach((el: any) => {
         if (el.name === acceptedFiles[0].name) {
-          alert('Image already added! Choose a different image.');
           imageExists = true;
+          alert('Image already added! Choose a different image.');
         }
       });
 
@@ -102,7 +102,9 @@ function ImagesUpload() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    if (!images?.length) return;
+    if (!images?.length) {
+      return alert('Please upload images of your property!');
+    }
     const formData = new FormData();
     let img: string = '';
     images.forEach((image: any, i: any) => {
@@ -206,15 +208,6 @@ function ImagesUpload() {
             </div>
           </div>
 
-          <div className="description">
-            <textarea
-              // type="text"
-              name="description"
-              onChange={handleInputChange}
-              maxLength={240}
-              placeholder="Give a detailed description of your property"
-            />
-          </div>
           <div className="room-location">
             <input
               type="text"
@@ -222,15 +215,30 @@ function ImagesUpload() {
               maxLength={200}
               placeholder="Location"
               onChange={handleInputChange}
+              required
             />
           </div>
+
+          <div className="description">
+            <textarea
+              // type="text"
+              name="description"
+              onChange={handleInputChange}
+              maxLength={240}
+              placeholder="Give a detailed description of your property"
+              required
+            />
+          </div>
+
           <div className="price">
             <input
               type="number"
               name="price"
               placeholder="price"
               onChange={handleInputChange}
+              required
             />
+            <span>per month</span>
           </div>
           <div className="post">
             <button type="submit">
