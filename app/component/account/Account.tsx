@@ -1,8 +1,9 @@
-import { Form, useLoaderData } from '@remix-run/react';
+import { Form, useActionData, useLoaderData } from '@remix-run/react';
 
 import styles from '~/styles/account.css';
 import { useEffect, useRef, useState } from 'react';
 import Header from '../navigation/Header';
+import { hideAlert, showAlert } from '../utils/alert';
 
 const Account = () => {
   const [inputValue, setInputValue] = useState({
@@ -12,6 +13,8 @@ const Account = () => {
     phone: '',
     address: '',
   });
+  const [rowCount, setRowCount] = useState();
+
   const emailRef: any = useRef();
   const firstnameRef: any = useRef();
   const lastnameRef: any = useRef();
@@ -19,6 +22,16 @@ const Account = () => {
   const addressRef: any = useRef();
 
   const userInfo = useLoaderData()[0];
+  const data = useActionData();
+
+  useEffect(() => {
+    setRowCount(data);
+
+    if (rowCount) {
+      hideAlert();
+      showAlert('success', 'User Details Successfully Updated.');
+    }
+  }, [data, rowCount]);
 
   useEffect(() => {
     setInputValue({
@@ -35,6 +48,17 @@ const Account = () => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = () => {
+    try {
+      if (rowCount) showAlert('success', 'User Details Successfully Updated.');
+      else showAlert('success', 'updating...');
+    } catch (error) {
+      console.log(error);
+
+      showAlert('error', 'error');
+    }
+  };
+
   return (
     <div>
       <Header />
@@ -43,7 +67,7 @@ const Account = () => {
           <h1>User Information</h1>
           <p>You can edit your personal information </p>
         </div>
-        <Form method="post">
+        <Form method="post" onSubmit={handleSubmit}>
           <div className="user-email">
             <label htmlFor="">Email Address</label>
             <input
@@ -94,7 +118,7 @@ const Account = () => {
             />
           </div>
           <div className="submit-button">
-            <button>Update Info</button>
+            <button type="submit">Update Info</button>
           </div>
         </Form>
       </div>

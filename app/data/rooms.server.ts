@@ -1,12 +1,7 @@
+import { redirect } from '@remix-run/node';
 import { pool } from './db.server';
 
-export const createRoom = async ({
-  bedrooms,
-  bathrooms,
-  title,
-  lng,
-  lat,
-}: any) => {
+export const createRoom = async ({ bedrooms, bathrooms, title }: any) => {
   try {
     const sql = `INSERT INTO rooms(bedrooms, bathrooms, title)
     VALUES (${bedrooms.trim().replace(/[,'/]/g, '')}, ${bathrooms
@@ -40,10 +35,11 @@ export const uploadImages = async ({
     const sql = `
     UPDATE rooms
     SET price = $1, description = $2, location = ST_GeomFromText($3), address = $4, user_id = $5
-    WHERE id = $6;
+    WHERE id = $6
+    RETURNING user_id;
   `;
 
-    await pool.query(sql, [
+    const { rows } = await pool.query(sql, [
       +price.trim().replace(/[,'/]/g, ''),
       description.trim().replace(/[,'/]/g, ''),
       `POINT(${lng} ${lat})`,
@@ -59,10 +55,11 @@ export const uploadImages = async ({
         const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el
           .trim()
           .replace(/[,'/]/g, '')}', ${roomId})`;
-        console.log(sql);
 
         await pool.query(sql);
       });
+
+    return rows[0].user_id;
   } catch (error) {
     throw error;
   }
@@ -93,7 +90,6 @@ export const getRoomDetails = async (id: any) => {
     WHERE r.id = ${id}`;
 
     const { rows } = await pool.query(sql);
-    console.log(rows);
 
     return rows;
   } catch (error) {
@@ -103,16 +99,15 @@ export const getRoomDetails = async (id: any) => {
 
 export const getUserRooms = async (userId: Number) => {
   const sql = `SELECT r.id, title, price, description, address, 
-               bathrooms, bedrooms, STRING_AGG(image, ',') as image
+               bathrooms, bedrooms, STRING_AGG(image, ',' ORDER BY rp.id) as image
                FROM rooms r
                LEFT JOIN roomphotos rp  ON rp.room_id = r.id
                 WHERE user_id = ${userId}
                 GROUP BY r.id, r.title, r.price, r.description, r.address,
-                r.bathrooms, r.bedrooms;
+                r.bathrooms, r.bedrooms
                `;
 
   const { rows } = await pool.query(sql);
-  console.log(rows);
 
   return rows;
 };
@@ -128,7 +123,7 @@ export const updateRoomInfo = async (
     WHERE id = $7;
   `;
 
-    await pool.query(sql, [
+    const { rowCount } = await pool.query(sql, [
       bedrooms,
       bathrooms,
       title,
@@ -137,6 +132,8 @@ export const updateRoomInfo = async (
       description,
       roomid,
     ]);
+
+    return rowCount;
   } catch (error) {
     throw error;
   }
@@ -159,7 +156,9 @@ export const deleteRoom = async (roomid: number) => {
     DELETE FROM rooms WHERE id = $1;
   `;
 
-    await pool.query(sql, [roomid]);
+    const { command } = await pool.query(sql, [roomid]);
+
+    return command;
   } catch (error) {
     throw error;
   }

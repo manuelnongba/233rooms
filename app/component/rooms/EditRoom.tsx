@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import Header from '../navigation/Header';
-import { Form, Link, useLoaderData, useNavigate } from '@remix-run/react';
+import {
+  Form,
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigate,
+} from '@remix-run/react';
 import styles from '~/styles/editrooms.css';
-import { redirect } from '@remix-run/node';
+import { hideAlert, showAlert } from '../utils/alert';
 
 const EditRoom = () => {
   const [inputValue, setInputValue] = useState({
@@ -13,6 +19,9 @@ const EditRoom = () => {
     price: '',
     address: '',
   });
+  const [rowCount, setRowCount] = useState();
+  const [command, setCommand] = useState();
+
   const bedroomsRef: any = useRef();
   const bathroomsRef: any = useRef();
   const titleRef: any = useRef();
@@ -21,6 +30,33 @@ const EditRoom = () => {
   const addressRef: any = useRef();
 
   const roomInfo = useLoaderData()[0];
+  const data = useActionData();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (data === 1) setRowCount(data);
+
+    if (rowCount) {
+      hideAlert();
+      showAlert('success', 'User Details Successfully Updated.');
+    }
+  }, [data, rowCount]);
+
+  useEffect(() => {
+    if (data === 'DELETE') setCommand(data);
+
+    if (command) {
+      try {
+        showAlert('success', 'Room Successfully deleted.');
+        setTimeout(() => {
+          navigate('/my-rooms');
+        }, 1000);
+      } catch (error) {
+        showAlert('error', 'error');
+      }
+    }
+  }, [command, data, navigate]);
 
   useEffect(() => {
     setInputValue({
@@ -41,8 +77,18 @@ const EditRoom = () => {
   function deleteRoomHandler(e: any) {
     const proceed = confirm('Click OK to delete this room!');
     if (!proceed) return;
-    // fetcher.submit(null, { method: 'delete', action: `/my-rooms/${roomid}` });
   }
+
+  const handleSubmit = () => {
+    try {
+      if (rowCount) showAlert('success', 'Room Details Successfully Updated.');
+      else showAlert('success', 'updating...');
+    } catch (error) {
+      console.log(error);
+
+      showAlert('error', 'error');
+    }
+  };
 
   return (
     <div>
@@ -63,7 +109,7 @@ const EditRoom = () => {
             </Form>
           </div>
         </div>
-        <Form method="post">
+        <Form method="post" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="">Bedrooms</label>
             <input
@@ -116,7 +162,7 @@ const EditRoom = () => {
             />
           </div>
           <div>
-            <label htmlFor="">Address</label>
+            <label htmlFor="">Location</label>
             <input
               type="text"
               name="address"
@@ -126,7 +172,7 @@ const EditRoom = () => {
             />
           </div>
           <div className="submit-button">
-            <button>Update Info</button>
+            <button type="submit">Update Info</button>
           </div>
         </Form>
       </div>

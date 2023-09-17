@@ -31,7 +31,17 @@ export const updateUserInfo = async (
     WHERE id = $5;
   `;
 
-    await pool.query(sql, [email, firstname, lastname, phone, userId]);
+    const { rowCount } = await pool.query(sql, [
+      email,
+      firstname,
+      lastname,
+      phone,
+      userId,
+    ]);
+
+    if (!rowCount) throw new Error('Update unsuccessful');
+
+    return rowCount;
   } catch (error) {
     throw error;
   }

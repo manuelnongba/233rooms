@@ -13,6 +13,7 @@ import styles from '~/styles/imageUpload.css';
 import { MAPSKEY } from '~/api/config';
 import axios from 'axios';
 import { Logo } from '../utils/Logo';
+import { hideAlert, showAlert } from '../utils/alert';
 
 function ImagesUpload() {
   const [images, setImages] = useState<any>([]);
@@ -27,7 +28,7 @@ function ImagesUpload() {
     location: '',
   });
   const fetcher = useFetcher();
-  const data = useActionData();
+  const roomID = useActionData();
   const navigate = useNavigate();
   const userId = useMatches()[1].data;
 
@@ -45,13 +46,12 @@ function ImagesUpload() {
         setImages((previousFiles: any) => [
           ...previousFiles,
           ...acceptedFiles.map((file: any) => {
-            console.log(previousFiles, acceptedFiles);
-
             return Object.assign(file, { preview: URL.createObjectURL(file) });
           }),
         ]);
       }
     },
+
     [images]
   );
 
@@ -105,16 +105,20 @@ function ImagesUpload() {
     if (!images?.length) {
       return alert('Please upload images of your property!');
     }
+
     const formData = new FormData();
+
     let img: string = '';
+
     images.forEach((image: any, i: any) => {
       img += image.name;
 
       if (i !== images.length - 1) img += ',';
+
       formData.append('images', img);
     });
 
-    formData.append('roomId', data);
+    formData.append('roomId', roomID);
     formData.append('lng', locationCoords.lng);
     formData.append('lat', locationCoords.lat);
     formData.append('price', formState.price);
@@ -130,11 +134,16 @@ function ImagesUpload() {
     //   body: formData,
     // }).then((res) => res.json());
     // console.log(data);
-
-    setTimeout(() => {
-      navigate(`/`);
-    }, 500);
   };
+
+  useEffect(() => {
+    if (fetcher.data) {
+      showAlert('success', 'Your Room is now available on 233 Rooms!');
+      setTimeout(() => {
+        navigate('/');
+      }, 1000);
+    }
+  }, [fetcher.data, navigate]);
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {

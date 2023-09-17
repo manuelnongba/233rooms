@@ -34,7 +34,7 @@ const MyRoomsDetails = ({ myRoomsData }: any) => {
       </div>
       <div className="my-room-details">
         <div className="my-room-details-header">
-          <div>
+          <div className="my-room-details-header-title">
             <p>{myRoomsData?.title}</p>
             <span>
               <FaLocationArrow /> &nbsp;

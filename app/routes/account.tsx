@@ -30,9 +30,11 @@ export const action = async ({ request }: any) => {
 
   const userId = await getUserFromSession(request);
 
-  updateUserInfo(credentials, userId);
+  const rowCount = await updateUserInfo(credentials, userId);
 
-  return 'Successfully updated!';
+  console.log(rowCount);
+
+  return rowCount;
 };
 
 export const links = () => {

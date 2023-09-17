@@ -14,15 +14,19 @@ export default RentNextStep;
 export const action = async ({ request }: any) => {
   const formData = await request.formData();
   const roomData = Object.fromEntries(formData);
-  let roomId: any = roomData.roomId;
+  let roomID: any = roomData.roomId;
 
   if (roomData.title) {
-    roomId = await createRoom(roomData);
+    roomID = await createRoom(roomData);
+
+    return roomID;
   }
 
-  if (roomData.price) await uploadImages(roomData);
+  if (roomData.price) {
+    const userId = await uploadImages(roomData);
 
-  return roomId;
+    return userId;
+  }
 };
 
 export function links() {

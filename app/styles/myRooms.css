@@ -18,6 +18,11 @@
   padding-right: 1rem;
 }
 
+.my-room-details-header-title {
+  width: 25rem;
+  /* word-wrap: break-word; */
+}
+
 /* .my-rooms .sub-header {
   display: flex;
   align-self: flex-start;
