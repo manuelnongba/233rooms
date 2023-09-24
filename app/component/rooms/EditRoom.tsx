@@ -4,11 +4,14 @@ import {
   Form,
   Link,
   useActionData,
+  useFetcher,
   useLoaderData,
   useNavigate,
 } from '@remix-run/react';
 import styles from '~/styles/editrooms.css';
 import { hideAlert, showAlert } from '../utils/alert';
+import axios from 'axios';
+import { MAPSKEY } from '~/api/config';
 
 const EditRoom = () => {
   const [inputValue, setInputValue] = useState({
@@ -21,6 +24,11 @@ const EditRoom = () => {
   });
   const [rowCount, setRowCount] = useState();
   const [command, setCommand] = useState();
+  const [debouncedAddress, setDebouncedAddress] = useState<any>();
+  const [locationCoords, setLocationCoords] = useState<any>({
+    lng: 0,
+    lat: 0,
+  });
 
   const bedroomsRef: any = useRef();
   const bathroomsRef: any = useRef();
@@ -31,6 +39,8 @@ const EditRoom = () => {
 
   const roomInfo = useLoaderData()[0];
   const data = useActionData();
+
+  const fetcher = useFetcher();
 
   const navigate = useNavigate();
 
@@ -79,7 +89,37 @@ const EditRoom = () => {
     if (!proceed) return;
   }
 
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedAddress(inputValue.address);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [inputValue.address]);
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+    debouncedAddress
+  )}&key=${MAPSKEY}`;
+
+  useEffect(() => {
+    debouncedAddress &&
+      axios(url).then((data) => {
+        const location = data.data.results[0]?.geometry.location;
+
+        setLocationCoords({ lat: location.lng, lng: location.lat });
+      });
+  }, [debouncedAddress, url]);
+
   const handleSubmit = () => {
+    const formData = new FormData();
+
+    formData.append('lng', locationCoords.lng);
+    formData.append('lat', locationCoords.lat);
+
+    fetcher.submit(formData, { method: 'post' });
+
     try {
       if (rowCount) showAlert('success', 'Room Details Successfully Updated.');
       else showAlert('success', 'updating...');

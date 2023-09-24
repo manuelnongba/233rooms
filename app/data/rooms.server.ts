@@ -1,4 +1,3 @@
-import { redirect } from '@remix-run/node';
 import { pool } from './db.server';
 
 export const createRoom = async ({ bedrooms, bathrooms, title }: any) => {
@@ -52,11 +51,19 @@ export const uploadImages = async ({
 
     if (images)
       imgArr.forEach(async (el: any) => {
-        const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el
-          .trim()
-          .replace(/[,'/]/g, '')}', ${roomId})`;
+        try {
+          // const result = await cloudinary.uploader.upload(el, {
+          //   folder: 'room images',
+          // });
 
-        await pool.query(sql);
+          // console.log(result);
+
+          const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el
+            .trim()
+            .replace(/[,'/]/g, '')}', ${roomId})`;
+
+          await pool.query(sql);
+        } catch (error) {}
       });
 
     return rows[0].user_id;
@@ -71,7 +78,7 @@ export const getRooms = async (lng: any, lat: any) => {
     SELECT r.id, rp.image, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
     FROM rooms r
     left join roomphotos rp on rp.room_id = r.id
-    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 10000000);
+    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 100000);
     `;
 
     const { rows } = await pool.query(sql);
@@ -113,27 +120,42 @@ export const getUserRooms = async (userId: Number) => {
 };
 
 export const updateRoomInfo = async (
-  { bedrooms, bathrooms, title, price, address, description }: any,
+  { bedrooms, bathrooms, title, price, address, description, lng, lat }: any,
   roomid: any
 ) => {
+  let sql = '';
+
   try {
-    const sql = `
-    UPDATE rooms
-    SET bedrooms = $1, bathrooms = $2, title = $3, price = $4, address = $5, description = $6
-    WHERE id = $7;
-  `;
+    if (lng) {
+      sql = `
+      UPDATE rooms
+      SET location = ST_GeomFromText('POINT(${lng} ${lat})')
+      WHERE id = ${roomid};
+      `;
 
-    const { rowCount } = await pool.query(sql, [
-      bedrooms,
-      bathrooms,
-      title,
-      price,
-      address,
-      description,
-      roomid,
-    ]);
+      const { rowCount } = await pool.query(sql);
+      return rowCount;
+    }
 
-    return rowCount;
+    if (bedrooms) {
+      sql = `
+      UPDATE rooms
+      SET bedrooms = $1, bathrooms = $2, title = $3, price = $4, address = $5, description = $6
+      WHERE id = $7;
+    `;
+
+      const { rowCount } = await pool.query(sql, [
+        bedrooms,
+        bathrooms,
+        title,
+        price,
+        address,
+        description,
+        roomid,
+      ]);
+
+      return rowCount;
+    }
   } catch (error) {
     throw error;
   }

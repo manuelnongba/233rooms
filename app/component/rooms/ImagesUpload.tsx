@@ -10,10 +10,10 @@ import { useDropzone } from 'react-dropzone';
 import { FaChevronRight } from 'react-icons/fa';
 import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import styles from '~/styles/imageUpload.css';
-import { MAPSKEY } from '~/api/config';
+import { CLOUD_URL, MAPSKEY } from '~/api/config';
 import axios from 'axios';
 import { Logo } from '../utils/Logo';
-import { hideAlert, showAlert } from '../utils/alert';
+import { showAlert } from '../utils/alert';
 
 function ImagesUpload() {
   const [images, setImages] = useState<any>([]);
@@ -86,9 +86,11 @@ function ImagesUpload() {
   useEffect(() => {
     debouncedAddress &&
       axios(url).then((data) => {
+        console.log(data);
+
         const location = data.data.results[0]?.geometry.location;
 
-        setLocationCoords({ lat: location.lng, lng: location.lat });
+        setLocationCoords({ lat: location?.lat, lng: location?.lng });
       });
   }, [debouncedAddress, url]);
 
@@ -107,6 +109,7 @@ function ImagesUpload() {
     }
 
     const formData = new FormData();
+    const imageFormData = new FormData();
 
     let img: string = '';
 
@@ -116,6 +119,7 @@ function ImagesUpload() {
       if (i !== images.length - 1) img += ',';
 
       formData.append('images', img);
+      imageFormData.append('images', img);
     });
 
     formData.append('roomId', roomID);
@@ -127,13 +131,19 @@ function ImagesUpload() {
     formData.append('userId', userId);
     fetcher.submit(formData, { method: 'post', action: '/rent/next-step' });
 
-    // formData.append('upload_preset', 'friendsbook');
-    // const URL: any = process.env.NEXT_PUBLIC_CLOUDINARY_URL;
-    // const data = await fetch('/rents/next-step', {
-    //   method: 'POST',
-    //   body: formData,
-    // }).then((res) => res.json());
-    // console.log(data);
+    imageFormData.append('upload_preset', 'jst0hhxj');
+
+    // const URL: any = process.env.CLOUD_URL;
+    axios.post(CLOUD_URL, imageFormData).then((res: any) => console.log(res));
+
+    // cloudinary.v2.uploader
+    //   .upload(imageFormData)
+    //   .then((result: any) => {
+    //     console.log('Image uploaded successfully:', result);
+    //   })
+    //   .catch((error: any) => {
+    //     console.error('Error uploading image:', error);
+    //   });
   };
 
   useEffect(() => {
