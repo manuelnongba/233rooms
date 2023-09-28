@@ -14,6 +14,7 @@ import { CLOUD_URL, MAPSKEY } from '~/api/config';
 import axios from 'axios';
 import { Logo } from '../utils/Logo';
 import { showAlert } from '../utils/alert';
+import cloudinary from 'cloudinary';
 
 function ImagesUpload() {
   const [images, setImages] = useState<any>([]);
@@ -103,7 +104,7 @@ function ImagesUpload() {
   };
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
+    // e.preventDefault();
     if (!images?.length) {
       return alert('Please upload images of your property!');
     }
@@ -115,11 +116,14 @@ function ImagesUpload() {
 
     images.forEach((image: any, i: any) => {
       img += image.name;
+      console.log(image);
 
       if (i !== images.length - 1) img += ',';
 
       formData.append('images', img);
-      imageFormData.append('images', img);
+      console.log(images);
+
+      imageFormData.append('file', image);
     });
 
     formData.append('roomId', roomID);
@@ -131,13 +135,29 @@ function ImagesUpload() {
     formData.append('userId', userId);
     fetcher.submit(formData, { method: 'post', action: '/rent/next-step' });
 
-    imageFormData.append('upload_preset', 'jst0hhxj');
+    imageFormData.append('cloud_name', 'drxwuqu3v');
+    imageFormData.append('upload_preset', '233Rooms');
 
     // const URL: any = process.env.CLOUD_URL;
-    axios.post(CLOUD_URL, imageFormData).then((res: any) => console.log(res));
+    try {
+      const res = await axios.post(CLOUD_URL, imageFormData);
+
+      console.log(res);
+    } catch (error: any) {
+      console.log(error?.response?.data?.error?.message);
+    }
+
+    // const data = await fetch(CLOUD_URL, {
+    //   method: 'POST',
+    //   body: imageFormData,
+    // })
+    //   .then((res) => res.json())
+    //   .catch((error) => error.message);
+
+    // console.log(data);
 
     // cloudinary.v2.uploader
-    //   .upload(imageFormData)
+    //   .upload(images[0])
     //   .then((result: any) => {
     //     console.log('Image uploaded successfully:', result);
     //   })
@@ -342,3 +362,8 @@ export const links = () => {
                 </li>
               ))}
             </ul> */
+
+//
+// create a field ghana card on staff table
+// validate  the ghana card no. and no staff is associated
+// gh card staff

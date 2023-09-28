@@ -7,13 +7,13 @@ exports.up = (pgm) => {
   CREATE TABLE roomphotos (
     id SERIAL PRIMARY KEY,
 	  image VARCHAR(200), 
-	  room_id INTEGER REFERENCES rooms(id) NOT NULL
+	  room_id INTEGER REFERENCES rooms(id) ON DELETE CASCADE NOT NULL 
       );
   `);
 };
 
 exports.down = (pgm) => {
   pgm.sql(`
-  DROP TABLE photos;
+  DROP TABLE roomphotos;
 `);
 };
