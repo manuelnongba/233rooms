@@ -3,7 +3,7 @@ import { getRoomDetails } from '~/data/rooms.server';
 import { links as roomDetailsLinks } from '~/component/rooms/RoomDetails';
 import { links as headerLinks } from '~/component/navigation/Header';
 import { links as menuLinks } from '~/component/navigation/Menu';
-import { getUserInfo } from '~/data/user.server';
+import { getRoomOwnerInfo } from '~/data/user.server';
 
 const Room = () => {
   return (
@@ -18,7 +18,7 @@ export default Room;
 export const loader = async ({ request, params }: any) => {
   const roomId = params.roomid;
   const roomInfo = await getRoomDetails(roomId);
-  const userInfo = await getUserInfo(roomId);
+  const userInfo = await getRoomOwnerInfo(roomId);
 
   return { roomInfo, userInfo };
 };

@@ -16,15 +16,13 @@ export const action = async ({ request }: any) => {
   const roomData = Object.fromEntries(formData);
   let roomID: any = roomData.roomId;
 
-  console.log(roomData);
-
   if (roomData.title) {
     roomID = await createRoom(roomData);
 
     return roomID;
   }
 
-  if (roomData.price) {
+  if (roomData.userId) {
     const userId = await uploadImages(roomData);
 
     return userId;

@@ -41,8 +41,8 @@ const RoomDetails = () => {
       <div key={i}>
         <div>
           <img
-            data-image={`/${el}`}
-            src={`/${el}`}
+            data-image={`${el}`}
+            src={`${el}`}
             alt="rooms details"
             onClick={onImageClick}
           />
@@ -58,7 +58,7 @@ const RoomDetails = () => {
       </div>
 
       <div className="room-details">
-        <img src={`/${mainImage}`} alt="rooms details" />
+        <img src={`${mainImage}`} alt="rooms details" />
 
         <div className="sub-details">
           <div className="room-desc">
@@ -89,7 +89,7 @@ const RoomDetails = () => {
             <div className="user-contact-main">
               <div className="user-name-image">
                 <img
-                  src={`/${userInfoData?.avatar}`}
+                  src={`${userInfoData?.avatar}`}
                   alt={userInfoData?.avatar}
                 />
                 <p>

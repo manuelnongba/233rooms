@@ -15,7 +15,7 @@ const EditImagesPage = () => {
 export default EditImagesPage;
 
 export const loader = async ({ request, params }: LoaderArgs) => {
-  const roomid = +params.roomid!;
+  const roomid = params.roomid!;
   const roomImages = await getRoomImages(roomid);
 
   return roomImages;
@@ -24,9 +24,10 @@ export const loader = async ({ request, params }: LoaderArgs) => {
 export const action = async ({ request }: ActionArgs) => {
   const formData = await request.formData();
   const { imageID } = Object.fromEntries(formData);
+  console.log(imageID);
 
   if (request.method === 'DELETE') {
-    await deleteRoomImage(+imageID);
+    await deleteRoomImage(String(imageID));
   }
   return imageID;
 };

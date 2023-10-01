@@ -13,8 +13,7 @@ exports.up = (pgm) => {
     avatar VARCHAR(200),
     phone VARCHAR(25),
     email VARCHAR(40) NOT NULL,
-    password VARCHAR(100) NOT NULL,
-    room_id UUID REFERENCES rooms(id)
+    password VARCHAR(100) NOT NULL
       );
   `);
 };

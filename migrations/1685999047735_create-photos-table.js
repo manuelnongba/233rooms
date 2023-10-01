@@ -7,7 +7,7 @@ exports.up = (pgm) => {
   CREATE TABLE roomphotos (
     id UUID PRIMARY KEY,
 	  image VARCHAR(200), 
-	  room_id UUID REFERENCES rooms(id) ON DELETE CASCADE NOT NULL 
+	  room_id UUID REFERENCES rooms(id) ON DELETE CASCADE
       );
   `);
 };

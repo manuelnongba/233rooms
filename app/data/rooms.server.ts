@@ -2,8 +2,10 @@ import { pool } from './db.server';
 
 export const createRoom = async ({ bedrooms, bathrooms, title }: any) => {
   try {
-    const sql = `INSERT INTO rooms(bedrooms, bathrooms, title)
-    VALUES (${bedrooms.trim().replace(/[,'/]/g, '')}, ${bathrooms
+    const sql = `INSERT INTO rooms(id, bedrooms, bathrooms, title)
+    VALUES (uuid_generate_v4(), ${bedrooms
+      .trim()
+      .replace(/[,'/]/g, '')}, ${bathrooms
       .trim()
       .replace(/[,'/]/g, '')}, '${title.trim().replace(/[,'/]/g, '')}')
     RETURNING id;
@@ -12,7 +14,7 @@ export const createRoom = async ({ bedrooms, bathrooms, title }: any) => {
     let roomId: number | null = null;
 
     const res = await pool.query(sql);
-    roomId = +res.rows[0].id;
+    roomId = res?.rows[0].id;
 
     return roomId;
   } catch (error) {
@@ -35,8 +37,10 @@ export const uploadImages = async ({
     UPDATE rooms
     SET price = $1, description = $2, location = ST_GeomFromText($3), address = $4, user_id = $5
     WHERE id = $6
-    RETURNING user_id;
+    RETURNING user_id
   `;
+
+    console.log(userId, roomId);
 
     const { rows } = await pool.query(sql, [
       +price.trim().replace(/[,'/]/g, ''),
@@ -47,22 +51,22 @@ export const uploadImages = async ({
       roomId,
     ]);
 
+    console.log(rows);
+
     const imgArr = images?.split(',');
 
     if (images)
       imgArr.forEach(async (el: any) => {
         try {
-          // const result = await cloudinary.uploader.upload(el, {
-          //   folder: 'room images',
-          // });
+          const sql = `INSERT INTO roomphotos(id, image, room_id) VALUES (uuid_generate_v4(), '${el.trim()}', '${roomId}')`;
 
-          // console.log(result);
-
-          const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el.trim()}', ${roomId})`;
+          console.log(sql);
 
           await pool.query(sql);
         } catch (error) {}
       });
+
+    console.log(rows);
 
     return rows[0].user_id;
   } catch (error) {
@@ -92,9 +96,11 @@ export const getRoomDetails = async (id: any) => {
     const sql = `
     SELECT r.bedrooms, r.bathrooms, r.title, r.price, r.description, r.address, rp.image, r.address FROM rooms r
     LEFT JOIN roomphotos rp ON rp.room_id  = r.id
-    WHERE r.id = ${id}`;
+    WHERE r.id = '${id}'`;
 
     const { rows } = await pool.query(sql);
+
+    console.log(rows);
 
     return rows;
   } catch (error) {
@@ -107,7 +113,7 @@ export const getUserRooms = async (userId: Number) => {
                bathrooms, bedrooms, STRING_AGG(image, ',' ORDER BY rp.id) as image
                FROM rooms r
                LEFT JOIN roomphotos rp  ON rp.room_id = r.id
-                WHERE user_id = ${userId}
+                WHERE r.user_id = '${userId}'
                 GROUP BY r.id, r.title, r.price, r.description, r.address,
                 r.bathrooms, r.bedrooms
                `;
@@ -128,7 +134,7 @@ export const updateRoomInfo = async (
       sql = `
       UPDATE rooms
       SET location = ST_GeomFromText('POINT(${lng} ${lat})')
-      WHERE id = ${roomid};
+      WHERE id = '${roomid}';
       `;
 
       const { rowCount } = await pool.query(sql);
@@ -159,10 +165,10 @@ export const updateRoomInfo = async (
   }
 };
 
-export const getRoomImages = async (roomid: number) => {
+export const getRoomImages = async (roomid: string) => {
   try {
     const sql = `SELECT * FROM roomphotos
-                 WHERE room_id = ${roomid}`;
+                 WHERE room_id = '${roomid}'`;
 
     const { rows } = await pool.query(sql);
 
@@ -170,7 +176,7 @@ export const getRoomImages = async (roomid: number) => {
   } catch (error) {}
 };
 
-export const deleteRoom = async (roomid: number) => {
+export const deleteRoom = async (roomid: string) => {
   try {
     const sql = `
     DELETE FROM rooms WHERE id = $1;
@@ -184,7 +190,7 @@ export const deleteRoom = async (roomid: number) => {
   }
 };
 
-export const deleteRoomImage = async (imageID: number) => {
+export const deleteRoomImage = async (imageID: string) => {
   try {
     const sql = `
     DELETE FROM roomphotos WHERE id = $1;

@@ -32,7 +32,7 @@ const EditImages = () => {
   const images = roomImages.map((el: RoomImagesInterface) => {
     return (
       <div key={el.id} className="edit-images">
-        <img src={`/${el.image}`} alt={el.image} />
+        <img src={`${el.image}`} alt={el.image} />
         <Form onSubmit={(e) => handleDelete(e, el.id)}>
           <button type="submit">Delete Image</button>
         </Form>

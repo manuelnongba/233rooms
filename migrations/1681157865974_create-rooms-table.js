@@ -12,7 +12,8 @@ exports.up = (pgm) => {
 	  address VARCHAR(200),
     location GEOGRAPHY(POINT, 4326),
     bathrooms INTEGER,
-    bedrooms INTEGER
+    bedrooms INTEGER,
+    user_id uuid REFERENCES users(id) ON DELETE CASCADE
       );
   `);
 };

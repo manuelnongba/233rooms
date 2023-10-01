@@ -1,10 +1,22 @@
 import { pool } from './db.server';
 
-export const getUserInfo = async (roomId: number) => {
-  const sql = `SELECT *
-                FROM users
-                LEFT JOIN rooms r ON r.room
-                WHERE id = ${roomId};`;
+export const getUserInfo = async (userId: string) => {
+  const sql = ` SELECT *
+                FROM users u
+                WHERE u.id = '${userId}'
+                `;
+
+  const { rows } = await pool.query(sql);
+
+  return rows;
+};
+
+export const getRoomOwnerInfo = async (roomId: string) => {
+  const sql = ` SELECT *
+                FROM users u
+                LEFT JOIN rooms r ON r.user_id = u.id
+                WHERE r.id = '${roomId}'
+                `;
 
   const { rows } = await pool.query(sql);
 
@@ -14,7 +26,7 @@ export const getUserInfo = async (roomId: number) => {
 export const getUserName = async (userId: Number) => {
   const sql = `SELECT firstname
                 FROM users
-                WHERE id = ${userId};`;
+                WHERE id = '${userId}';`;
 
   const { rows } = await pool.query(sql);
 
@@ -23,7 +35,7 @@ export const getUserName = async (userId: Number) => {
 
 export const updateUserInfo = async (
   { email, firstname, lastname, phone, address }: any,
-  userId: any
+  userId: string
 ) => {
   try {
     const sql = `
