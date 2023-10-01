@@ -77,13 +77,13 @@ export const signUp = async ({
   if (existingUser.rows.length > 0) {
     const error: any = new Error('A user with this email already exists.');
 
-    error.status = 400;
+    error.status = 422;
     throw error;
   }
 
   const passwordHash = await hash(password, 12);
 
-  const sql2 = `INSERT INTO users (firstname, lastname, phone, email, password) VALUES('${firstname}', '${lastname}', '${phone}', '${email}', '${passwordHash}')`;
+  const sql2 = `INSERT INTO users (id, firstname, lastname, phone, email, password) VALUES( uuid_generate_v4(),'${firstname}', '${lastname}', '${phone}', '${email}', '${passwordHash}')`;
 
   await pool.query(sql2);
 
@@ -103,7 +103,7 @@ export const login = async ({ email, password }: any) => {
     const error: any = new Error(
       `Could not log you in, please check the provided credentials`
     );
-    error.status = 401;
+    error.status = 422;
     throw error;
   }
 
@@ -116,7 +116,7 @@ export const login = async ({ email, password }: any) => {
     const error: any = new Error(
       `Could not log you in, please check the provided credentials`
     );
-    error.status = 401;
+    error.status = 422;
     throw error;
   }
 

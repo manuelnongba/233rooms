@@ -14,7 +14,6 @@ import { CLOUD_URL, MAPSKEY } from '~/api/config';
 import axios from 'axios';
 import { Logo } from '../utils/Logo';
 import { showAlert } from '../utils/alert';
-import cloudinary from 'cloudinary';
 
 function ImagesUpload() {
   const [images, setImages] = useState<any>([]);
@@ -103,8 +102,8 @@ function ImagesUpload() {
     });
   };
 
-  const handleSubmit = async (e: any) => {
-    // e.preventDefault();
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
     if (!images?.length) {
       return alert('Please upload images of your property!');
     }
@@ -112,58 +111,42 @@ function ImagesUpload() {
     const formData = new FormData();
     const imageFormData = new FormData();
 
-    let img: string = '';
-
-    images.forEach((image: any, i: any) => {
-      img += image.name;
-      console.log(image);
-
-      if (i !== images.length - 1) img += ',';
-
-      formData.append('images', img);
-      console.log(images);
+    let img = '';
+    const imagesPromise = images.map(async (image: any, i: any) => {
+      // img += image.name;
 
       imageFormData.append('file', image);
+      imageFormData.append('cloud_name', 'drxwuqu3v');
+      imageFormData.append('upload_preset', '233Rooms');
+
+      // const URL: any = process.env.CLOUD_URL;
+      try {
+        const res = await axios.post(CLOUD_URL, imageFormData);
+
+        img += res.data?.secure_url;
+
+        if (i !== images.length - 1) img += ',';
+
+        if (i === images.length - 1) formData.append('images', img);
+      } catch (error: any) {
+        console.log(error?.response?.data?.error?.message);
+      }
     });
 
-    formData.append('roomId', roomID);
-    formData.append('lng', locationCoords.lng);
-    formData.append('lat', locationCoords.lat);
-    formData.append('price', formState.price);
-    formData.append('address', formState.location);
-    formData.append('description', formState.description);
-    formData.append('userId', userId);
-    fetcher.submit(formData, { method: 'post', action: '/rent/next-step' });
+    Promise.all(imagesPromise).then(() => {
+      // Now, you can access the updated imagesUrl
+      console.log(formData.get('images'));
 
-    imageFormData.append('cloud_name', 'drxwuqu3v');
-    imageFormData.append('upload_preset', '233Rooms');
-
-    // const URL: any = process.env.CLOUD_URL;
-    try {
-      const res = await axios.post(CLOUD_URL, imageFormData);
-
-      console.log(res);
-    } catch (error: any) {
-      console.log(error?.response?.data?.error?.message);
-    }
-
-    // const data = await fetch(CLOUD_URL, {
-    //   method: 'POST',
-    //   body: imageFormData,
-    // })
-    //   .then((res) => res.json())
-    //   .catch((error) => error.message);
-
-    // console.log(data);
-
-    // cloudinary.v2.uploader
-    //   .upload(images[0])
-    //   .then((result: any) => {
-    //     console.log('Image uploaded successfully:', result);
-    //   })
-    //   .catch((error: any) => {
-    //     console.error('Error uploading image:', error);
-    //   });
+      formData.get('images');
+      formData.append('roomId', roomID);
+      formData.append('lng', locationCoords.lng);
+      formData.append('lat', locationCoords.lat);
+      formData.append('price', formState.price);
+      formData.append('address', formState.location);
+      formData.append('description', formState.description);
+      formData.append('userId', userId);
+      fetcher.submit(formData, { method: 'post', action: '/rent/next-step' });
+    });
   };
 
   useEffect(() => {

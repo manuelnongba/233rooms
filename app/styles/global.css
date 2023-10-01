@@ -109,11 +109,10 @@ button {
   gap: 2rem;
 }
 
-.alert .svg-wrapper{
+.alert .svg-wrapper {
   width: 4rem;
   height: 4rem;
 
-  background-color: #20bf6b;
   border-radius: 1rem;
 
   display: flex;
@@ -121,17 +120,29 @@ button {
   justify-content: center;
 }
 
-.alert .ionicon{
+.alert--success .svg-wrapper {
+  background-color: #20bf6b;
+}
+
+.alert--error .svg-wrapper {
+  background-color: #ff6b6b;
+}
+
+.alert .ionicon {
   height: 3.5rem;
   width: 3.5rem;
 
   fill: #fff;
-
 }
 
-.alert .ionicon path{
+.alert--success .ionicon path {
   fill: #fff;
   stroke: green;
+}
+
+.alert--error .ionicon path {
+  fill: #fff;
+  stroke: #f03e3e;
 }
 
 .alert--success {

@@ -58,9 +58,7 @@ export const uploadImages = async ({
 
           // console.log(result);
 
-          const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el
-            .trim()
-            .replace(/[,'/]/g, '')}', ${roomId})`;
+          const sql = `INSERT INTO roomphotos(image, room_id) VALUES ('${el.trim()}', ${roomId})`;
 
           await pool.query(sql);
         } catch (error) {}

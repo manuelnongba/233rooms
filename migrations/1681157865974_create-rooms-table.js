@@ -11,7 +11,6 @@ exports.up = (pgm) => {
 	  description VARCHAR(240),
 	  address VARCHAR(200),
     location GEOGRAPHY(POINT, 4326),
-    user_id INTEGER REFERENCES users(id),
     bathrooms INTEGER,
     bedrooms INTEGER
       );

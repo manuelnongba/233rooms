@@ -1,10 +1,26 @@
-import { Form, Link, useNavigation, useSearchParams } from '@remix-run/react';
+import {
+  Form,
+  Link,
+  useActionData,
+  useNavigation,
+  useSearchParams,
+} from '@remix-run/react';
 import { FaLock, FaUserPlus } from 'react-icons/fa';
 import styles from '~/styles/loginForm.css';
+import { showAlert } from '../utils/alert';
+import { useEffect } from 'react';
 
 const Login = () => {
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
+  const user = useActionData();
+
+  console.log(user);
+
+  useEffect(() => {
+    if (user?.credentials) showAlert('error', user?.credentials);
+    if (user) showAlert('success', 'Logged In Successfully');
+  }, [user]);
 
   const authMode = searchParams.get('mode') || 'login';
 

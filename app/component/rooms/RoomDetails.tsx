@@ -89,21 +89,21 @@ const RoomDetails = () => {
             <div className="user-contact-main">
               <div className="user-name-image">
                 <img
-                  src={`/${userInfoData.avatar}`}
-                  alt={userInfoData.avatar}
+                  src={`/${userInfoData?.avatar}`}
+                  alt={userInfoData?.avatar}
                 />
                 <p>
-                  {userInfoData.firstname} {userInfoData.lastname}
+                  {userInfoData?.firstname} {userInfoData?.lastname}
                 </p>
               </div>
               <div className="user-contact">
                 <div>
                   <FaPhoneAlt />
-                  <span>{userInfoData.phone}</span>
+                  <span>{userInfoData?.phone}</span>
                 </div>
                 <div>
                   <FaEnvelope />
-                  <span>{userInfoData.email}</span>
+                  <span>{userInfoData?.email}</span>
                 </div>
               </div>
             </div>

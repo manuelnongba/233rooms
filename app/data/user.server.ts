@@ -1,9 +1,10 @@
 import { pool } from './db.server';
 
-export const getUserInfo = async (userId: number) => {
+export const getUserInfo = async (roomId: number) => {
   const sql = `SELECT *
                 FROM users
-                WHERE id = ${userId};`;
+                LEFT JOIN rooms r ON r.room
+                WHERE id = ${roomId};`;
 
   const { rows } = await pool.query(sql);
 

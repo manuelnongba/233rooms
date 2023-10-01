@@ -5,7 +5,7 @@ exports.shorthands = undefined;
 exports.up = (pgm) => {
   pgm.sql(`
   CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     updated_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP,
     firstname VARCHAR(30)  NOT NULL,
@@ -13,7 +13,8 @@ exports.up = (pgm) => {
     avatar VARCHAR(200),
     phone VARCHAR(25),
     email VARCHAR(40) NOT NULL,
-    password VARCHAR(100) NOT NULL
+    password VARCHAR(100) NOT NULL,
+    room_id UUID REFERENCES rooms(id)
       );
   `);
 };
