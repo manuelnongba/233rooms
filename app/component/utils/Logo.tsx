@@ -1,9 +1,14 @@
-import { NavLink } from '@remix-run/react';
+import { NavLink, useLocation } from '@remix-run/react';
 
 export const Logo = () => {
+  const loc = useLocation();
+
+  let hideLogo = '';
+  if (loc.pathname == '/') hideLogo = 'hide-logo';
+
   return (
     <div>
-      <NavLink to="/" className="home">
+      <NavLink to="/" className={`home ${hideLogo}`}>
         <svg
           id="logosandtypes_com"
           data-name="logosandtypes com"

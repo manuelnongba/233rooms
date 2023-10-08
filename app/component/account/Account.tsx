@@ -59,68 +59,80 @@ const Account = () => {
     }
   };
 
+  function deleteRoomHandler(e: any) {
+    const proceed = confirm('Click OK to delete this room!');
+    if (!proceed) return;
+  }
+
   return (
     <div>
       <Header />
-      <div className="info-container">
-        <div className="info-header">
-          <h1>User Information</h1>
-          <p>You can edit your personal information </p>
-        </div>
-        <Form method="post" onSubmit={handleSubmit}>
-          <div className="user-email">
-            <label htmlFor="">Email Address</label>
-            <input
-              type="text"
-              name="email"
-              value={inputValue.email}
-              onChange={(e) => handleChange(e)}
-              ref={emailRef}
-            />
+      <div className="account-wrapper">
+        <div className="info-container">
+          <div className="info-header">
+            <h1>User Information</h1>
+            <p>You can edit your personal information </p>
           </div>
-          <div className="user-fullname">
-            <label htmlFor="">Fullname</label>
-            <div className="user-fullname-input">
+          <Form method="post" onSubmit={handleSubmit}>
+            <div className="user-email">
+              <label htmlFor="">Email Address</label>
               <input
                 type="text"
-                name="firstname"
-                value={inputValue.firstname}
+                name="email"
+                value={inputValue.email}
                 onChange={(e) => handleChange(e)}
-                ref={firstnameRef}
-              />
-              <input
-                type="text"
-                name="lastname"
-                value={inputValue.lastname}
-                onChange={(e) => handleChange(e)}
-                ref={lastnameRef}
+                ref={emailRef}
               />
             </div>
-          </div>
-          <div className="user-phone">
-            <label htmlFor="">Phone</label>
-            <input
-              type="text"
-              name="phone"
-              value={inputValue.phone}
-              onChange={(e) => handleChange(e)}
-              ref={phoneRef}
-            />
-          </div>
-          <div className="user-address">
-            <label htmlFor="">Address</label>
-            <input
-              type="text"
-              name="address"
-              value={inputValue.address}
-              onChange={(e) => handleChange(e)}
-              ref={addressRef}
-            />
-          </div>
-          <div className="submit-button">
-            <button type="submit">Update Info</button>
-          </div>
-        </Form>
+            <div className="user-fullname">
+              <label htmlFor="">Fullname</label>
+              <div className="user-fullname-input">
+                <input
+                  type="text"
+                  name="firstname"
+                  value={inputValue.firstname}
+                  onChange={(e) => handleChange(e)}
+                  ref={firstnameRef}
+                />
+                <input
+                  type="text"
+                  name="lastname"
+                  value={inputValue.lastname}
+                  onChange={(e) => handleChange(e)}
+                  ref={lastnameRef}
+                />
+              </div>
+            </div>
+            <div className="user-phone">
+              <label htmlFor="">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                value={inputValue.phone}
+                onChange={(e) => handleChange(e)}
+                ref={phoneRef}
+              />
+            </div>
+            <div className="user-address">
+              <label htmlFor="">Address</label>
+              <input
+                type="text"
+                name="address"
+                value={inputValue.address}
+                onChange={(e) => handleChange(e)}
+                ref={addressRef}
+              />
+            </div>
+            <div className="submit-button">
+              <button type="submit">Update Info</button>
+            </div>
+          </Form>
+        </div>
+        <div className="cta">
+          <Form method="delete" onSubmit={deleteRoomHandler}>
+            <button className="delete-action">Delete Room</button>
+          </Form>
+        </div>
       </div>
     </div>
   );

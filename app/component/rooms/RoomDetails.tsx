@@ -20,10 +20,8 @@ const RoomDetails = () => {
   const [mainImage, setMainImage] = useState<string>(roomInfo[0].image);
   const userInfoData = userInfo[0];
 
-  // const data = useMatches();
-
   useEffect(() => {
-    const imagesData = roomInfo.map((el: any) => el.image);
+    const imagesData = roomInfo?.map((el: any) => el.image);
     roomInfo.forEach((el: any) => {
       setRoomDataObj({ ...el, image: [...imagesData] });
     });
@@ -36,7 +34,7 @@ const RoomDetails = () => {
     setMainImage(selectedImage);
   };
 
-  const roomImages = roomDataObj.image?.map((el: any, i: any) => {
+  const roomImages = roomDataObj?.image?.map((el: any, i: any) => {
     return (
       <div key={i}>
         <div>

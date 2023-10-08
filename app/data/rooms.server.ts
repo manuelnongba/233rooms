@@ -182,9 +182,9 @@ export const deleteRoom = async (roomid: string) => {
     DELETE FROM rooms WHERE id = $1;
   `;
 
-    const { command } = await pool.query(sql, [roomid]);
+    const { rowCount } = await pool.query(sql, [roomid]);
 
-    return command;
+    return rowCount;
   } catch (error) {
     throw error;
   }

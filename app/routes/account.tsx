@@ -1,10 +1,9 @@
 import Account from '~/component/account/Account';
 import { links as accountLinks } from '~/component/account/Account';
 import { links as headerLinks } from '~/component/navigation/Header';
-import { links as sharedLinks } from '~/component/rooms/EditRoom';
 import { links as menuLinks } from '~/component/navigation/Menu';
-import { getUserFromSession } from '~/data/auth.server';
-import { getUserInfo, updateUserInfo } from '~/data/user.server';
+import { destroyUserSession, getUserFromSession } from '~/data/auth.server';
+import { deleteUser, getUserInfo, updateUserInfo } from '~/data/user.server';
 
 const AccountPage = () => {
   return (
@@ -30,18 +29,17 @@ export const action = async ({ request }: any) => {
 
   const userId = await getUserFromSession(request);
 
-  const rowCount = await updateUserInfo(credentials, userId);
+  if (request.method === 'DELETE') {
+    await deleteUser(userId);
 
-  console.log(rowCount);
+    return await destroyUserSession(request);
+  }
+
+  const rowCount = await updateUserInfo(credentials, userId);
 
   return rowCount;
 };
 
 export const links = () => {
-  return [
-    ...accountLinks(),
-    ...headerLinks(),
-    ...sharedLinks(),
-    ...menuLinks(),
-  ];
+  return [...accountLinks(), ...headerLinks(), ...menuLinks()];
 };

@@ -58,7 +58,7 @@ body {
   font-size: calc(100% + 0.8rem);
 }
 
-.info-container form {
+.account-wrapper form {
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -66,14 +66,14 @@ body {
   gap: 2.5rem;
 }
 
-.info-container input {
+.account-wrapper input {
   border: 0.5px solid #000;
   border-radius: 0.8rem;
   height: 3.5rem;
   padding: 1rem 1rem;
 }
 
-.info-container button {
+.account-wrapper button {
   padding: 1rem 2rem;
   border-radius: 0.4rem;
 }

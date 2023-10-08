@@ -15,7 +15,7 @@ const Room = () => {
 
 export default Room;
 
-export const loader = async ({ request, params }: any) => {
+export const loader = async ({ params }: any) => {
   const roomId = params.roomid;
   const roomInfo = await getRoomDetails(roomId);
   const userInfo = await getRoomOwnerInfo(roomId);

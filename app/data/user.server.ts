@@ -59,3 +59,11 @@ export const updateUserInfo = async (
     throw error;
   }
 };
+
+export const deleteUser = async (userId: string) => {
+  const sql = `DELETE FROM users WHERE id = '${userId}'`;
+
+  const { rowCount } = await pool.query(sql);
+
+  return rowCount;
+};

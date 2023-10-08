@@ -17,7 +17,7 @@ button {
 .sticky {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 2;
 }
 
 .icon {
@@ -96,4 +96,77 @@ button {
 .profile-icon {
   height: 4rem;
   width: 4rem;
+}
+
+@media (max-width: 754px) {
+  .header {
+    padding: 2rem 3rem;
+    gap: 1rem;
+  }
+
+  .hide-logo {
+    display: none;
+  }
+
+  .location .location-input {
+    width: 30rem;
+  }
+
+  .location input {
+    width: 24rem;
+  }
+}
+
+@media (max-width: 416px) {
+  .header {
+    padding: 2rem 1rem;
+    gap: 0rem;
+  }
+
+  .location .location-input {
+    width: 24rem;
+    padding: 0.3rem 0.9rem;
+  }
+
+  .location input {
+    width: 18rem;
+  }
+}
+
+@media (max-width: 370px) {
+  .location .location-input {
+    width: 24rem;
+  }
+
+  .location input {
+    width: 18rem;
+  }
+}
+
+@media (max-width: 316px) {
+  .header {
+    width: 35rem;
+  }
+
+  .location .location-input {
+    width: 22rem;
+  }
+
+  .location input {
+    width: 16rem;
+  }
+}
+
+@media (max-width: 280px) {
+  .location .location-input {
+    width: 18rem;
+  }
+
+  .location input {
+    width: 12rem;
+    height: 2rem;
+  }
+}
+
+@media (max-width: 230px) {
 }
