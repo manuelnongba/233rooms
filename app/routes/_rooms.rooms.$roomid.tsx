@@ -15,11 +15,11 @@ const Room = () => {
 
 export default Room;
 
-export const loader = async ({ params }: any) => {
+export const loader = async ({ params, request }: any) => {
   const roomId = params.roomid;
+
   const roomInfo = await getRoomDetails(roomId);
   const userInfo = await getRoomOwnerInfo(roomId);
-
   return { roomInfo, userInfo };
 };
 

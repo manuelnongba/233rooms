@@ -67,8 +67,8 @@ const Account = () => {
   return (
     <div>
       <Header />
-      <div className="account-wrapper">
-        <div className="info-container">
+      <div className="info-container account-wrapper">
+        <div>
           <div className="info-header">
             <h1>User Information</h1>
             <p>You can edit your personal information </p>
@@ -130,7 +130,7 @@ const Account = () => {
         </div>
         <div className="cta">
           <Form method="delete" onSubmit={deleteRoomHandler}>
-            <button className="delete-action">Delete Room</button>
+            <button className="delete-action">Delete Account</button>
           </Form>
         </div>
       </div>

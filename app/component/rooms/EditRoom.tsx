@@ -133,88 +133,88 @@ const EditRoom = () => {
   return (
     <div>
       <Header />
-      <div className="info-container">
-        <div className="info-header edit-room">
-          <div>
+      <div className="info-container account-wrapper">
+        <div>
+          <div className="info-header edit-room">
             <h1>Room Information</h1>
             <p>You can edit your room details</p>
           </div>
-          <div className="cta">
-            <Link to="images">
-              <button className="edit-photos">Edit Photos</button>
-            </Link>
-
-            <Form method="delete" onSubmit={deleteRoomHandler}>
-              <button className="delete-action">Delete Room</button>
-            </Form>
-          </div>
+          <Form method="post" onSubmit={handleSubmit}>
+            <div>
+              <label htmlFor="">Bedrooms</label>
+              <input
+                type="text"
+                name="bedrooms"
+                ref={bedroomsRef}
+                value={inputValue.bedrooms}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="">Bathrooms</label>
+              <input
+                type="text"
+                name="bathrooms"
+                ref={bathroomsRef}
+                value={inputValue.bathrooms}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="">Title</label>
+              <input
+                type="text"
+                name="title"
+                ref={titleRef}
+                value={inputValue.title}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="">Description</label>
+              <textarea
+                name="description"
+                ref={descriptionRef}
+                value={inputValue.description}
+                onChange={(e) => handleChange(e)}
+                maxLength={240}
+                placeholder="Give a detailed description of your property"
+              />
+            </div>
+            <div>
+              <label htmlFor="">Price</label>
+              <input
+                type="text"
+                name="price"
+                ref={priceRef}
+                value={inputValue.price}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div>
+              <label htmlFor="">Location</label>
+              <input
+                type="text"
+                name="address"
+                ref={addressRef}
+                value={inputValue.address}
+                onChange={(e) => handleChange(e)}
+              />
+            </div>
+            <div className="submit-button">
+              <button type="submit">Update Info</button>
+            </div>
+          </Form>
         </div>
-        <Form method="post" onSubmit={handleSubmit}>
-          <div>
-            <label htmlFor="">Bedrooms</label>
-            <input
-              type="text"
-              name="bedrooms"
-              ref={bedroomsRef}
-              value={inputValue.bedrooms}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label htmlFor="">Bathrooms</label>
-            <input
-              type="text"
-              name="bathrooms"
-              ref={bathroomsRef}
-              value={inputValue.bathrooms}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label htmlFor="">Title</label>
-            <input
-              type="text"
-              name="title"
-              ref={titleRef}
-              value={inputValue.title}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label htmlFor="">Description</label>
-            <textarea
-              name="description"
-              ref={descriptionRef}
-              value={inputValue.description}
-              onChange={(e) => handleChange(e)}
-              maxLength={240}
-              placeholder="Give a detailed description of your property"
-            />
-          </div>
-          <div>
-            <label htmlFor="">Price</label>
-            <input
-              type="text"
-              name="price"
-              ref={priceRef}
-              value={inputValue.price}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div>
-            <label htmlFor="">Location</label>
-            <input
-              type="text"
-              name="address"
-              ref={addressRef}
-              value={inputValue.address}
-              onChange={(e) => handleChange(e)}
-            />
-          </div>
-          <div className="submit-button">
-            <button type="submit">Update Info</button>
-          </div>
-        </Form>
+        <div className="cta">
+          <Link to="images">
+            <button className="edit-photos">Edit Photos</button>
+          </Link>
+
+          <Form method="delete" onSubmit={deleteRoomHandler}>
+            <button className="delete-action">Delete Room</button>
+          </Form>
+        </div>
       </div>
     </div>
   );

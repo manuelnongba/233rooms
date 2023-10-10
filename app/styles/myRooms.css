@@ -109,3 +109,127 @@
   position: relative;
   cursor: pointer;
 }
+
+@media (max-width: 700px) {
+  .my-room-wrapper {
+    gap: 3rem;
+    width: 55rem;
+  }
+
+  .my-room-wrapper .image-wrapper img {
+    height: 18rem;
+    width: 25rem;
+  }
+
+  .my-room-details {
+    gap: 2rem;
+    font-size: 1.4rem;
+  }
+
+  .my-room-sub-details {
+    display: grid;
+    grid-template-columns: repeat(3, 8rem);
+  }
+}
+
+@media (max-width: 580px) {
+  .my-room-wrapper {
+    gap: 3rem;
+    width: 45rem;
+  }
+
+  .my-room-wrapper .image-wrapper img {
+    height: 16rem;
+    width: 22rem;
+  }
+
+  .my-room-details {
+    gap: 1rem;
+    font-size: 1.2rem;
+  }
+
+  .my-room-sub-details {
+    display: grid;
+    grid-template-columns: repeat(3, 6.5rem);
+  }
+
+  .my-room-details-header-title {
+    width: 15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-room-wrapper {
+    gap: 2.5rem;
+    width: 35rem;
+  }
+
+  .my-room-wrapper .image-wrapper img {
+    height: 13rem;
+    width: 18rem;
+  }
+
+  .my-room-details {
+    gap: 0.7rem;
+    font-size: 1rem;
+  }
+
+  .my-room-sub-details {
+    display: grid;
+    grid-template-columns: repeat(3, 5rem);
+    font-size: 0.8rem;
+  }
+
+  .my-room-details-header-title {
+    width: 12.5rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .my-room-wrapper {
+    gap: 2rem;
+    width: 25rem;
+  }
+
+  .my-room-wrapper .image-wrapper img {
+    height: 8rem;
+    width: 12rem;
+  }
+
+  .my-room-details {
+    gap: 0.5rem;
+    font-size: 0.6rem;
+  }
+
+  .my-room-sub-details {
+    display: grid;
+    grid-template-columns: repeat(3, 3.5rem);
+    font-size: 0.6rem;
+  }
+
+  .my-room-details-header-title {
+    width: 7rem;
+  }
+
+  .my-room-icons {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .my-room-icons svg {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .my-rooms {
+    align-items: center;
+  }
+
+  .my-rooms .sub-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .my-rooms .sub-header h1 {
+    font-size: 2.4rem;
+  }
+}

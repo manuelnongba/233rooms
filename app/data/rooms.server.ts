@@ -40,8 +40,6 @@ export const uploadImages = async ({
     RETURNING user_id
   `;
 
-    console.log(userId, roomId);
-
     const { rows } = await pool.query(sql, [
       +price.trim().replace(/[,'/]/g, ''),
       description.trim().replace(/[,'/]/g, ''),
@@ -51,8 +49,6 @@ export const uploadImages = async ({
       roomId,
     ]);
 
-    console.log(rows);
-
     const imgArr = images?.split(',');
 
     if (images)
@@ -60,13 +56,9 @@ export const uploadImages = async ({
         try {
           const sql = `INSERT INTO roomphotos(id, image, room_id) VALUES (uuid_generate_v4(), '${el.trim()}', '${roomId}')`;
 
-          console.log(sql);
-
           await pool.query(sql);
         } catch (error) {}
       });
-
-    console.log(rows);
 
     return rows[0].user_id;
   } catch (error) {
@@ -91,7 +83,7 @@ export const getRooms = async (lng: any, lat: any) => {
   }
 };
 
-export const getRoomDetails = async (id: any) => {
+export const getRoomDetails = async (id: string) => {
   try {
     const sql = `
     SELECT r.bedrooms, r.bathrooms, r.title, r.price, r.description, r.address, rp.image, r.address FROM rooms r
@@ -99,8 +91,6 @@ export const getRoomDetails = async (id: any) => {
     WHERE r.id = '${id}'`;
 
     const { rows } = await pool.query(sql);
-
-    console.log(rows);
 
     return rows;
   } catch (error) {

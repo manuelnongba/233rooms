@@ -21,3 +21,44 @@
   height: 20rem;
   width: 20rem;
 }
+
+@media (max-width: 1000px) {
+  .edit-images {
+    width: 70%;
+  }
+}
+
+@media (max-width: 600px) {
+  .edit-images {
+    width: 80%;
+  }
+}
+
+@media (max-width: 600px) {
+  .edit-images {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .edit-images {
+    width: 100%;
+  }
+
+  .edit-images img {
+    height: 16rem;
+    width: 16rem;
+  }
+}
+
+@media (max-width: 316px) {
+  .edit-images img {
+    height: 12rem;
+    width: 12rem;
+  }
+
+  .edit-images button {
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+  }
+}

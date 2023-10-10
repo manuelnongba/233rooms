@@ -16,6 +16,7 @@ export default EditImagesPage;
 
 export const loader = async ({ request, params }: LoaderArgs) => {
   const roomid = params.roomid!;
+
   const roomImages = await getRoomImages(roomid);
 
   return roomImages;

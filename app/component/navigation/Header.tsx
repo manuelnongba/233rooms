@@ -117,7 +117,6 @@ const Header = ({
     address &&
       axios(url).then((data) => {
         const location = data.data.results[0]?.geometry.location;
-        console.log(location);
 
         setCenter({ lat: location?.lat, lng: location?.lng });
       });

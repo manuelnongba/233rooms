@@ -41,7 +41,7 @@ const MyRoomsDetails = ({ myRoomsData }: any) => {
               {myRoomsData?.address}
             </span>
           </div>
-          <div>
+          <div className="my-rooms-menu-btn">
             <FaEllipsisH onClick={showMenu} className="ellipsis" />
             <MyRoomsMenu
               isMyRoomsMenu={isMenu}

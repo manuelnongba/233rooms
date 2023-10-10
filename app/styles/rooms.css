@@ -32,7 +32,6 @@
 .room-details {
   cursor: pointer;
   position: relative;
-  width: 30rem;
 }
 
 .room-details a {

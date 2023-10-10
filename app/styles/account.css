@@ -3,9 +3,10 @@
 
   display: flex;
   align-items: first baseline;
-  justify-content: center;
-  width: 100rem;
-  font-size: calc(100% + 1rem);
+  justify-content: space-between;
+  flex-direction: row;
+
+  margin: 4rem auto;
 }
 
 .info-header {
@@ -63,6 +64,54 @@
   }
 
   .cta .delete-action {
-    width: 40rem;
+    width: 30rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .user-email input {
+    width: 30rem;
+  }
+
+  .user-fullname-input input {
+    width: 12.5rem;
+  }
+
+  .user-phone {
+    width: 12.5rem;
+  }
+
+  .user-address {
+    width: 12.5rem;
+  }
+
+  .info-header {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 316px) {
+  .user-email input {
+    width: 26rem;
+  }
+
+  .user-fullname-input input {
+    width: 10.5rem;
+  }
+
+  .user-phone {
+    width: 10.5rem;
+  }
+
+  .user-address {
+    width: 10.5rem;
+  }
+
+  .info-header {
+    font-size: 1.4rem;
+  }
+
+  .cta .delete-action {
+    width: 25rem;
   }
 }

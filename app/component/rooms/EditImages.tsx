@@ -10,7 +10,6 @@ interface RoomImagesInterface {
 const EditImages = () => {
   const roomImages = useLoaderData();
   const fetcher = useFetcher();
-  console.log(roomImages);
 
   const handleDelete = (e: any, imageID: number) => {
     e.preventDefault();

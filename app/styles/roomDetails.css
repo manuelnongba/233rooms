@@ -11,7 +11,7 @@
   z-index: -1;
 }
 
-.room-details img {
+.room-page-details img {
   height: 45rem;
   width: 100rem;
   border-radius: 1rem;
@@ -21,30 +21,31 @@
   padding: 1.5rem 0rem;
 }
 
+.sub-details {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 10rem;
+}
+
 .sub-photos {
   margin-top: -60px;
   margin-right: 2rem;
-
+  width: 65rem;
   display: grid;
   justify-content: right;
   align-content: baseline;
 
-  grid-template-columns: repeat(2, 30rem);
+  grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
 
   row-gap: 1rem;
-  column-gap: 2rem;
+  column-gap: 1rem;
 }
 
 .sub-photos img {
   height: 15rem;
   width: 30rem;
   border-radius: 1rem;
-}
-
-.sub-details {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
 }
 
 .room-desc {

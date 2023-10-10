@@ -1,8 +1,18 @@
+.account-wrapper {
+  margin: 4rem 0;
+
+  display: flex;
+  align-items: first baseline;
+  justify-content: space-between;
+  flex-direction: row;
+
+  margin: 4rem auto;
+}
+
 .edit-room {
   display: flex;
   justify-content: space-between;
-
-  width: 80rem;
+  align-items: first baseline;
 }
 
 .cta {
@@ -25,4 +35,13 @@
 .submit-button button {
   background-color: #000;
   color: #fff;
+}
+
+@media (max-width: 1150px) {
+  .account-wrapper {
+    flex-direction: column;
+    align-items: center;
+
+    width: auto;
+  }
 }

@@ -55,7 +55,7 @@ const RoomDetails = () => {
         <h1>{roomDataObj?.title}</h1>
       </div>
 
-      <div className="room-details">
+      <div className="room-page-details">
         <img src={`${mainImage}`} alt="rooms details" />
 
         <div className="sub-details">

@@ -33,7 +33,7 @@ a {
   background-color: #212529;
 
   position: absolute;
-  right: 40rem;
+  transform: translateX(-13rem);
 }
 
 .my-rooms-menu .action {
@@ -48,4 +48,28 @@ a {
   background-color: #343a40;
   width: 15rem;
   border-radius: 0.6rem;
+}
+
+@media (max-width: 580px) {
+  .my-rooms-menu {
+    width: 10rem;
+    transform: translateX(-9rem);
+  }
+
+  .my-rooms-menu .action {
+    width: 10rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .my-rooms-menu {
+    width: 8rem;
+    transform: translateX(-7rem);
+  }
+
+  .my-rooms-menu .action {
+    width: 10rem;
+    font-size: 0.8rem;
+  }
 }
