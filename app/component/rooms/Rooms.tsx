@@ -25,10 +25,9 @@ const Rooms = ({ rooms }: any) => {
     setRoom(
       roomsArr.map((el: any) => {
         const { id } = el;
-        // console.log(id);
 
         return (
-          <div className="room-details" key={el.id}>
+          <div className="room-details" key={id}>
             <Link to={`rooms/${id}`}>
               <Slideshow slideImages={el.image} />
               <div className="room-sub-details">

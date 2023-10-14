@@ -1,21 +1,25 @@
 import {
+  Link,
   Links,
   LiveReload,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
+  isRouteErrorResponse,
+  useRouteError,
 } from '@remix-run/react';
 import { Provider } from 'react-redux';
 import { applyMiddleware, legacy_createStore as createStore } from 'redux';
 import reducers from './reducers';
 import reduxThunk from 'redux-thunk';
+import ErrorComponent from './component/utils/Error';
 
 import globalCss from '~/styles/global.css';
 
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 
-export default function App() {
+function Document({ title, children }: any) {
   return (
     <Provider store={store}>
       <html lang="en">
@@ -26,7 +30,7 @@ export default function App() {
           <Links />
         </head>
         <body>
-          <Outlet />
+          {children}
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
@@ -34,6 +38,50 @@ export default function App() {
       </html>
     </Provider>
   );
+}
+
+export default function App() {
+  return (
+    <Document>
+      <Outlet />
+    </Document>
+  );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+
+  if (isRouteErrorResponse(error)) {
+    return (
+      <Document title={error.statusText}>
+        <ErrorComponent title={error.statusText}>
+          <div>
+            <h1>
+              {error.status} {error.statusText}
+            </h1>
+            <p>{error.data}</p>
+            <p>
+              Back to <Link to="/">safety</Link>
+            </p>
+          </div>
+        </ErrorComponent>
+      </Document>
+    );
+  } else if (error instanceof Error) {
+    return (
+      <Document title={'Something went wrong'}>
+        <ErrorComponent title={'Something went wrong'}>
+          <div>
+            <p>
+              Back to <Link to="/">safety</Link>
+            </p>
+          </div>
+        </ErrorComponent>
+      </Document>
+    );
+  } else {
+    return <h1>Unknown Error</h1>;
+  }
 }
 
 export function links() {

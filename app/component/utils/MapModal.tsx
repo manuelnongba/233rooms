@@ -4,13 +4,14 @@ import Modal from 'react-modal';
 
 const customStyles = {
   content: {
-    height: '80%',
+    // height: '72%',
     top: '50%',
     left: '50%',
     right: 'auto',
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    zIndex: '1000',
   },
 };
 
@@ -46,7 +47,7 @@ const MapModal = (
       >
         <GoogleMap
           center={props.center}
-          mapContainerStyle={{ width: '100rem', height: '100rem' }}
+          mapContainerStyle={{ width: '70vw', height: '66.5vh' }}
           zoom={15}
         >
           <MarkerF position={props.center} />

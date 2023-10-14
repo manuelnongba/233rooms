@@ -83,12 +83,12 @@ export const getRooms = async (lng: any, lat: any) => {
   }
 };
 
-export const getRoomDetails = async (id: string) => {
+export const getRoomDetails = async (roomId: string) => {
   try {
     const sql = `
     SELECT r.bedrooms, r.bathrooms, r.title, r.price, r.description, r.address, rp.image, r.address FROM rooms r
     LEFT JOIN roomphotos rp ON rp.room_id  = r.id
-    WHERE r.id = '${id}'`;
+    WHERE r.id = '${roomId}'`;
 
     const { rows } = await pool.query(sql);
 

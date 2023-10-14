@@ -305,6 +305,10 @@
     height: 4rem;
     width: 4rem;
   }
+
+  .user-contact {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 360px) {
@@ -340,7 +344,7 @@
     width: 4rem;
   }
 }
-
+/* 
 @media (max-width: 360px) {
   .room-page-details img {
     height: 14rem;
@@ -363,4 +367,4 @@
     height: 4rem;
     width: 4rem;
   }
-}
+} */

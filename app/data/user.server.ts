@@ -12,15 +12,19 @@ export const getUserInfo = async (userId: string) => {
 };
 
 export const getRoomOwnerInfo = async (roomId: string) => {
-  const sql = ` SELECT *
-                FROM users u
-                LEFT JOIN rooms r ON r.user_id = u.id
-                WHERE r.id = '${roomId}'
-                `;
+  try {
+    const sql = ` SELECT *
+      FROM users u
+      LEFT JOIN rooms r ON r.user_id = u.id
+      WHERE r.id = '${roomId}'
+      `;
 
-  const { rows } = await pool.query(sql);
+    const { rows } = await pool.query(sql);
 
-  return rows;
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const getUserName = async (userId: Number) => {

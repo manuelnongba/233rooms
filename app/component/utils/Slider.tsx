@@ -1,31 +1,14 @@
 import { useRef, useState } from 'react';
-import styles from '~/styles/slider.css';
+import { useSwipeable } from 'react-swipeable';
 
-// const slideImages = [
-//   {
-//     url: 'accra.png',
-//     caption: 'city',
-//   },
-//   {
-//     url: 'kumasi.png',
-//     caption: 'city1',
-//   },
-//   {
-//     url: 'accra.png',
-//     caption: 'city2',
-//   },
-//   {
-//     url: 'kumasi.png',
-//     caption: 'city1',
-//   },
-// ];
+import styles from '~/styles/slider.css';
 
 const Slideshow = ({ slideImages }: any) => {
   const [slideIndex, setSlideIndex] = useState(1);
   const nextButton: any = useRef();
   const prevButton: any = useRef();
 
-  const nextSlide = (e: any) => {
+  const nextButtonSlide = (e: any) => {
     e.preventDefault();
 
     if (slideIndex !== slideImages.length) {
@@ -37,8 +20,8 @@ const Slideshow = ({ slideImages }: any) => {
     }
   };
 
-  const prevSlide = (e: any) => {
-    e.preventDefault();
+  const prevButtonSlide = (e: any) => {
+    e?.preventDefault();
 
     if (slideIndex !== 1) {
       setSlideIndex(slideIndex - 1);
@@ -49,7 +32,28 @@ const Slideshow = ({ slideImages }: any) => {
     }
   };
 
-  const moveDot = (i: number) => {
+  const nextSlide = () => {
+    if (slideIndex !== slideImages.length) {
+      setSlideIndex(slideIndex + 1);
+    }
+
+    if (slideIndex === slideImages.length) {
+      setSlideIndex(1);
+    }
+  };
+
+  const prevSlide = () => {
+    if (slideIndex !== 1) {
+      setSlideIndex(slideIndex - 1);
+    }
+
+    if (slideIndex === 1) {
+      setSlideIndex(slideImages.length);
+    }
+  };
+
+  const moveDot = (i: number, e: any) => {
+    e.preventDefault();
     setSlideIndex(i);
   };
 
@@ -63,11 +67,20 @@ const Slideshow = ({ slideImages }: any) => {
     nextButton.current.style.opacity = 0;
   };
 
+  const handlers = useSwipeable({
+    onSwiped: (eventData) => {
+      // console.log('User Swiped!', eventData);
+      if (eventData.dir === 'Right') prevSlide();
+      if (eventData.dir === 'Left') nextSlide();
+    },
+  });
+
   return (
     <div
       className="container-slider"
       onMouseOver={onMouseOver}
       onMouseOut={onMouseOut}
+      {...handlers}
     >
       {slideImages.map((el: any, i: any) => {
         return (
@@ -82,7 +95,7 @@ const Slideshow = ({ slideImages }: any) => {
       <div className="btn-slide-container">
         <button
           ref={prevButton}
-          onClick={(e) => prevSlide(e)}
+          onClick={(e) => prevButtonSlide(e)}
           className="btn-slide prev"
         >
           <svg
@@ -101,7 +114,7 @@ const Slideshow = ({ slideImages }: any) => {
         </button>
         <button
           ref={nextButton}
-          onClick={(e) => nextSlide(e)}
+          onClick={(e) => nextButtonSlide(e)}
           className="btn-slide next"
         >
           <svg
@@ -123,7 +136,7 @@ const Slideshow = ({ slideImages }: any) => {
         {Array.from({ length: slideImages.length }).map((item, i) => {
           return (
             <div
-              onClick={() => moveDot(i + 1)}
+              onClick={(e) => moveDot(i + 1, e)}
               className={slideIndex === i + 1 ? 'dot active' : 'dot'}
               key={i}
             ></div>

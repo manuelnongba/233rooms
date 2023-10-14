@@ -21,8 +21,8 @@ const RoomDetails = () => {
   const userInfoData = userInfo[0];
 
   useEffect(() => {
-    const imagesData = roomInfo?.map((el: any) => el.image);
-    roomInfo.forEach((el: any) => {
+    const imagesData = roomInfo?.map((el: any) => el?.image);
+    roomInfo?.forEach((el: any) => {
       setRoomDataObj({ ...el, image: [...imagesData] });
     });
   }, [roomInfo]);

@@ -9,6 +9,7 @@ import { getCurrentLocation, getRooms } from '~/actions';
 import { connect } from 'react-redux';
 import Menu from './Menu';
 import { Logo } from '../utils/Logo';
+import { FaSearch } from 'react-icons/fa';
 
 const Header = ({
   location,
@@ -96,6 +97,9 @@ const Header = ({
                 setResultsIsOpen(false);
               }}
             >
+              <span>
+                <FaSearch />
+              </span>
               {el.description}
             </p>
           );

@@ -153,6 +153,32 @@ button {
   background-color: #eb4d4b;
 }
 
+.error {
+  margin: 5rem auto;
+  font-size: 1.4rem;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.error .icon {
+  font-size: 3rem;
+  color: #f08c00;
+}
+
+.error h1,
+.error h2 {
+  margin: 0.5rem 0;
+  color: black;
+}
+
+.error a {
+  color: #228be6;
+  font-size: 1.4rem;
+  text-decoration: underline;
+}
+
 @media (max-width: 640px) {
   .info-container input {
     width: 12.5rem;

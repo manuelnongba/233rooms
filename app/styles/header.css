@@ -62,14 +62,14 @@ button {
   width: 6rem;
 }
 
-.locationResults {
+.location-results {
   position: absolute;
 
   align-self: center;
   width: 25rem;
 }
 
-.locationResults p {
+.location-results p {
   font-size: 1.4rem;
 }
 
@@ -166,7 +166,4 @@ button {
     width: 12rem;
     height: 2rem;
   }
-}
-
-@media (max-width: 230px) {
 }

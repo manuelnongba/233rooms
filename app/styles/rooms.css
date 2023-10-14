@@ -39,6 +39,10 @@
   color: #000;
 }
 
+.room-details a:active {
+  background-color: transparent;
+}
+
 .room-sub-details {
   font-size: 1.4rem;
 
