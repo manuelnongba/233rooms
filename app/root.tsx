@@ -72,6 +72,7 @@ export function ErrorBoundary() {
       <Document title={'Something went wrong'}>
         <ErrorComponent title={'Something went wrong'}>
           <div>
+            <p>{error.message}</p>
             <p>
               Back to <Link to="/">safety</Link>
             </p>

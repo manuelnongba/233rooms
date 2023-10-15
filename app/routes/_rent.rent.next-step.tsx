@@ -22,7 +22,7 @@ export const action = async ({ request }: any) => {
     return roomID;
   }
 
-  if (roomData.userId) {
+  if (roomData.price) {
     const userId = await uploadImages(roomData);
 
     return userId;

@@ -5,9 +5,9 @@ import {
   useMatches,
   useNavigate,
 } from '@remix-run/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { FaChevronRight } from 'react-icons/fa';
+import { FaChevronRight, FaSearch } from 'react-icons/fa';
 import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import styles from '~/styles/imageUpload.css';
 import { CLOUD_URL, MAPSKEY } from '~/api/config';
@@ -17,6 +17,7 @@ import { showAlert } from '../utils/alert';
 
 function ImagesUpload() {
   const [images, setImages] = useState<any>([]);
+  const [address, setAddress] = useState('');
   const [debouncedAddress, setDebouncedAddress] = useState<any>();
   const [locationCoords, setLocationCoords] = useState<any>({
     lng: 0,
@@ -27,10 +28,16 @@ function ImagesUpload() {
     description: '',
     location: '',
   });
+  const [resultsIsOpen, setResultsIsOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [locationResults, setLocationResults] = useState([]);
   const fetcher = useFetcher();
   const roomID = useActionData();
   const navigate = useNavigate();
   const userId = useMatches()[1].data;
+
+  const divRef = useRef<HTMLDivElement>(null);
 
   const onDrop = useCallback(
     (acceptedFiles: any) => {
@@ -71,13 +78,13 @@ function ImagesUpload() {
 
   useEffect(() => {
     const timerId = setTimeout(() => {
-      setDebouncedAddress(formState.location);
+      setDebouncedAddress(address);
     }, 1000);
 
     return () => {
       clearTimeout(timerId);
     };
-  }, [formState.location]);
+  }, [address]);
 
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
     debouncedAddress
@@ -100,7 +107,12 @@ function ImagesUpload() {
       ...formState,
       [event.target.name]: event.target.value,
     });
+
+    setSearchTerm(event.target.value);
+    setResultsIsOpen(true);
   };
+
+  // const handleKeyStrokes = () => {};
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -172,6 +184,66 @@ function ImagesUpload() {
     };
   }, [navigate]);
 
+  useEffect(() => {
+    if (!searchTerm) setResultsIsOpen(false);
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
+  useEffect(() => {
+    const googlePlaces = async () => {
+      const response = await axios.get(
+        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=${debouncedSearchTerm}&key=${MAPSKEY}`
+      );
+
+      setLocationResults(
+        response.data.predictions.map((el: any) => {
+          return (
+            <p
+              key={el.description}
+              onClick={() => {
+                setSearchTerm(el.description);
+                setResultsIsOpen(false);
+                setAddress(el.description);
+              }}
+            >
+              <span>
+                <FaSearch />
+              </span>
+              {el.description}
+            </p>
+          );
+        })
+      );
+    };
+    googlePlaces();
+  }, [debouncedSearchTerm]);
+
+  function handleClickOutside(event: Event) {
+    // If the user clicks outside the div, hide it
+    if (
+      divRef.current &&
+      !divRef.current.contains(event.target as HTMLDivElement)
+    ) {
+      setResultsIsOpen(false);
+    }
+  }
+
+  useEffect(() => {
+    // Attach an event listener to the document that listens for clicks
+    document.addEventListener('click', handleClickOutside);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="upload-container">
       <div className="header">
@@ -237,8 +309,15 @@ function ImagesUpload() {
               maxLength={200}
               placeholder="Location"
               onChange={handleInputChange}
+              // onKeyUp={handleKeyStrokes}
+              value={searchTerm}
               required
             />
+            {resultsIsOpen && (
+              <div className="location-results" ref={divRef}>
+                {locationResults}
+              </div>
+            )}
           </div>
 
           <div className="description">
@@ -278,75 +357,3 @@ export default ImagesUpload;
 export const links = () => {
   return [{ rel: 'stylesheet', href: styles }];
 };
-// const ImagesUpload = () => {
-//   return (
-//     <div>
-//       <div className="image-upload">
-//         <h2>Upload Images</h2>
-//       </div>
-//       <Form method="post">
-//         <div>
-//           <button>
-//             Post Room <FaChevronRight />
-//           </button>
-//         </div>
-//       </Form>
-//     </div>
-//   );
-// };
-// export default ImagesUpload;
-
-// const [rejected, setRejected] = useState([]);
-
-// if (rejectedFiles?.length) {
-//   setRejected((previousFiles) => [...previousFiles, ...rejectedFiles]);
-// }
-
-// const removeAll = () => {
-//   setImages([]);
-//   setRejected([]);
-// };
-
-// const removeRejected = (name: any) => {
-//   setRejected((files) => files.filter(({ file }: any) => file.name !== name));
-// };
-
-/* <button type="button" onClick={removeAll} className="remove-all">
-                Remove all files
-              </button> */
-/* <button type="submit" className="cloudinary">
-                Upload to Cloudinary
-              </button> */
-
-/* <h3 className="rejected-images">Rejected Files</h3>
-            <ul className="mt-6 flex flex-col">
-              {rejected.map(({ file, errors }: any) => (
-                <li
-                  key={file.name}
-                  className="flex items-start justify-between"
-                >
-                  <div>
-                    <p className="mt-2 text-neutral-500 text-sm font-medium">
-                      {file.name}
-                    </p>
-                    <ul className="text-[12px] text-red-400">
-                      {errors.map((error: any) => (
-                        <li key={error.code}>{error.message}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  <button
-                    type="button"
-                    className="remove-rejected-btn"
-                    onClick={() => removeRejected(file.name)}
-                  >
-                    remove
-                  </button>
-                </li>
-              ))}
-            </ul> */
-
-//
-// create a field ghana card on staff table
-// validate  the ghana card no. and no staff is associated
-// gh card staff

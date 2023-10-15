@@ -87,7 +87,7 @@ const Header = ({
 
       setLocationResults(
         response.data.predictions.map((el: any) => {
-          if (el.description) setResultsIsOpen(true);
+          // if (el.description) setResultsIsOpen(true);
           return (
             <p
               key={el.description}
@@ -203,7 +203,7 @@ const Header = ({
           </div>
         </div>
         {resultsIsOpen && (
-          <div className="locationResults" ref={divRef}>
+          <div className="location-results" ref={divRef}>
             {locationResults}
           </div>
         )}

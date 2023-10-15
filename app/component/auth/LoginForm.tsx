@@ -15,8 +15,6 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const user = useActionData();
 
-  console.log(user);
-
   useEffect(() => {
     if (user?.credentials) showAlert('error', user?.credentials);
     if (user) showAlert('success', 'Logged In Successfully');

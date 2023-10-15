@@ -86,6 +86,7 @@ export const signUp = async ({
   const sql2 = `INSERT INTO users (id, firstname, lastname, phone, email, password) VALUES( uuid_generate_v4(),'${firstname}', '${lastname}', '${phone}', '${email}', '${passwordHash}')`;
 
   await pool.query(sql2);
+  console.log('hello');
 
   const sql3 = `SELECT id FROM users WHERE email = '${email}'`;
 
