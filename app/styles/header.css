@@ -39,14 +39,14 @@ button {
   border: 0.1rem solid #808080;
   border-radius: 3rem;
   padding: 0.5rem 1rem;
-  width: 28rem;
+  width: 30rem;
 }
 
 .location input {
   font-size: 1.8rem;
   border: none;
   height: 3rem;
-  width: 22rem;
+  width: 24rem;
 }
 
 .location input:focus {
@@ -76,11 +76,13 @@ button {
   position: absolute;
 
   align-self: center;
-  width: 25rem;
+  width: 29rem;
 }
 
 .location-results p {
   font-size: 1.6rem;
+  border-bottom: 0.5px solid #3a3a3a;
+  padding: 1rem 1rem;
 }
 
 .location-results p span {
@@ -144,6 +146,11 @@ button {
 
   .location input {
     width: 18rem;
+    font-size: 1.4rem;
+  }
+
+  .location-results {
+    width: 23rem;
   }
 }
 
@@ -154,6 +161,10 @@ button {
 
   .location input {
     width: 18rem;
+  }
+
+  .location-results {
+    width: 23rem;
   }
 }
 
@@ -168,6 +179,11 @@ button {
 
   .location input {
     width: 16rem;
+    font-size: 1.2rem;
+  }
+
+  .location-results {
+    width: 21rem;
   }
 }
 
@@ -179,5 +195,10 @@ button {
   .location input {
     width: 12rem;
     height: 2rem;
+    font-size: 1rem;
+  }
+
+  .location-results {
+    width: 17rem;
   }
 }
