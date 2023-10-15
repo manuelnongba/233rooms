@@ -40,6 +40,12 @@
   gap: 0.5rem;
 }
 
+button:disabled {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
 @media (max-width: 316px) {
   .form-wrapper {
     width: 32rem;

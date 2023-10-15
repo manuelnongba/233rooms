@@ -1,4 +1,4 @@
-import { Form } from '@remix-run/react';
+import { Form, useNavigation } from '@remix-run/react';
 import { useState } from 'react';
 import { FaChevronRight } from 'react-icons/fa';
 import styles from '~/styles/rent.css';
@@ -10,6 +10,9 @@ const RentRoom = () => {
     bathrooms: '',
     title: '',
   });
+  const navigation = useNavigation();
+
+  const isSubmitting = navigation.state !== 'idle';
 
   const handleChange = (event: any) => {
     setFormState({ ...formState, [event.target.name]: event.target.value });
@@ -52,7 +55,7 @@ const RentRoom = () => {
             />
           </div>
           <div>
-            <button type="submit">
+            <button type="submit" disabled={isSubmitting}>
               Add Images <FaChevronRight />
             </button>
           </div>

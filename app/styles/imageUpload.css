@@ -55,6 +55,12 @@
   gap: 0.5rem;
 }
 
+button:disabled {
+  background-color: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+
 .image-upload-container {
   border: 0.5px solid #000;
   height: auto;
@@ -184,4 +190,13 @@
 
 .file-select {
   cursor: pointer;
+}
+
+.location-results {
+  width: 35rem;
+}
+
+.location-results p {
+  border-bottom: 0.5px solid #3a3a3a;
+  padding: 1rem 1rem;
 }

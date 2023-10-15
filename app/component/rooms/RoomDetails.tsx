@@ -86,10 +86,10 @@ const RoomDetails = () => {
 
             <div className="user-contact-main">
               <div className="user-name-image">
-                <img
+                {/* <img
                   src={`${userInfoData?.avatar}`}
                   alt={userInfoData?.avatar}
-                />
+                /> */}
                 <p>
                   {userInfoData?.firstname} {userInfoData?.lastname}
                 </p>

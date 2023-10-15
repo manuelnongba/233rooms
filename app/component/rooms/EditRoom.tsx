@@ -3,10 +3,10 @@ import Header from '../navigation/Header';
 import {
   Form,
   Link,
-  useActionData,
   useFetcher,
   useLoaderData,
   useNavigate,
+  useParams,
 } from '@remix-run/react';
 import styles from '~/styles/editrooms.css';
 import { hideAlert, showAlert } from '../utils/alert';
@@ -29,6 +29,9 @@ const EditRoom = () => {
     lng: 0,
     lat: 0,
   });
+  const fetcher = useFetcher();
+  const navigate = useNavigate();
+  const { roomid } = useParams();
 
   const bedroomsRef: any = useRef();
   const bathroomsRef: any = useRef();
@@ -38,23 +41,18 @@ const EditRoom = () => {
   const addressRef: any = useRef();
 
   const roomInfo = useLoaderData()[0];
-  const data = useActionData();
-
-  const fetcher = useFetcher();
-
-  const navigate = useNavigate();
 
   useEffect(() => {
-    if (data === 1) setRowCount(data);
+    if (fetcher.data === 1) setRowCount(fetcher.data);
 
     if (rowCount) {
       hideAlert();
-      showAlert('success', 'User Details Successfully Updated.');
+      showAlert('success', 'Room Details Successfully Updated.');
     }
-  }, [data, rowCount]);
+  }, [fetcher.data, rowCount]);
 
   useEffect(() => {
-    if (data === 'DELETE') setCommand(data);
+    if (fetcher.data === 'DELETE') setCommand(fetcher.data);
 
     if (command) {
       try {
@@ -66,7 +64,7 @@ const EditRoom = () => {
         showAlert('error', 'error');
       }
     }
-  }, [command, data, navigate]);
+  }, [command, fetcher.data, navigate]);
 
   useEffect(() => {
     setInputValue({
@@ -83,11 +81,6 @@ const EditRoom = () => {
   const handleChange = (e: any) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
-
-  function deleteRoomHandler(e: any) {
-    const proceed = confirm('Click OK to delete this room!');
-    if (!proceed) return;
-  }
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -129,6 +122,16 @@ const EditRoom = () => {
       showAlert('error', 'error');
     }
   };
+
+  function deleteRoomHandler(e: any) {
+    const proceed = confirm('Click OK to delete this room!');
+    if (!proceed) return;
+
+    fetcher.submit(null, {
+      method: 'delete',
+      action: `/my-rooms/edit/${roomid}`,
+    });
+  }
 
   return (
     <div>
@@ -211,9 +214,11 @@ const EditRoom = () => {
             <button className="edit-photos">Edit Photos</button>
           </Link>
 
-          <Form method="delete" onSubmit={deleteRoomHandler}>
-            <button className="delete-action">Delete Room</button>
-          </Form>
+          {/* <Form method="delete" onSubmit={deleteRoomHandler}> */}
+          <button className="delete-action" onClick={deleteRoomHandler}>
+            Delete Room
+          </button>
+          {/* </Form> */}
         </div>
       </div>
     </div>

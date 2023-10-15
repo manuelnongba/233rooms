@@ -52,6 +52,7 @@ export const action = async ({ request, params }: any) => {
     const command = await deleteRoom(roomid);
 
     // return redirect('/my-rooms');
+
     return command;
   }
 };

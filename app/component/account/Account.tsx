@@ -1,4 +1,9 @@
-import { Form, useActionData, useLoaderData } from '@remix-run/react';
+import {
+  Form,
+  useActionData,
+  useFetcher,
+  useLoaderData,
+} from '@remix-run/react';
 
 import styles from '~/styles/account.css';
 import { useEffect, useRef, useState } from 'react';
@@ -14,6 +19,7 @@ const Account = () => {
     address: '',
   });
   const [rowCount, setRowCount] = useState();
+  const fetcher = useFetcher();
 
   const emailRef: any = useRef();
   const firstnameRef: any = useRef();
@@ -62,6 +68,8 @@ const Account = () => {
   function deleteRoomHandler(e: any) {
     const proceed = confirm('Click OK to delete this room!');
     if (!proceed) return;
+
+    fetcher.submit(null, { method: 'delete', action: `/account` });
   }
 
   return (
@@ -129,9 +137,11 @@ const Account = () => {
           </Form>
         </div>
         <div className="cta">
-          <Form method="delete" onSubmit={deleteRoomHandler}>
-            <button className="delete-action">Delete Account</button>
-          </Form>
+          {/* <Form method="delete" onSubmit={deleteRoomHandler}> */}
+          <button className="delete-action" onClick={deleteRoomHandler}>
+            Delete Account
+          </button>
+          {/* </Form> */}
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import {
 } from '@remix-run/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { FaChevronRight, FaSearch } from 'react-icons/fa';
+import { FaChevronRight, FaSearchLocation } from 'react-icons/fa';
 import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import styles from '~/styles/imageUpload.css';
 import { CLOUD_URL, MAPSKEY } from '~/api/config';
@@ -36,8 +36,13 @@ function ImagesUpload() {
   const roomID = useActionData();
   const navigate = useNavigate();
   const userId = useMatches()[1].data;
-
   const divRef = useRef<HTMLDivElement>(null);
+
+  const isSubmitting = fetcher.state !== 'idle';
+
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+    debouncedAddress
+  )}&key=${MAPSKEY}`;
 
   const onDrop = useCallback(
     (acceptedFiles: any) => {
@@ -79,22 +84,18 @@ function ImagesUpload() {
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedAddress(address);
+
+      if (!address) setDebouncedAddress(formState.location);
     }, 1000);
 
     return () => {
       clearTimeout(timerId);
     };
-  }, [address]);
-
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-    debouncedAddress
-  )}&key=${MAPSKEY}`;
+  }, [address, formState.location]);
 
   useEffect(() => {
     debouncedAddress &&
       axios(url).then((data) => {
-        console.log(data);
-
         const location = data.data.results[0]?.geometry.location;
 
         setLocationCoords({ lat: location?.lat, lng: location?.lng });
@@ -108,8 +109,10 @@ function ImagesUpload() {
       [event.target.name]: event.target.value,
     });
 
-    setSearchTerm(event.target.value);
-    setResultsIsOpen(true);
+    if (event.target.name === 'location') {
+      setSearchTerm(event.target.value);
+      setResultsIsOpen(true);
+    }
   };
 
   // const handleKeyStrokes = () => {};
@@ -146,9 +149,6 @@ function ImagesUpload() {
     });
 
     Promise.all(imagesPromise).then(() => {
-      // Now, you can access the updated imagesUrl
-      console.log(formData.get('images'));
-
       formData.get('images');
       formData.append('roomId', roomID);
       formData.append('lng', locationCoords.lng);
@@ -213,7 +213,7 @@ function ImagesUpload() {
               }}
             >
               <span>
-                <FaSearch />
+                <FaSearchLocation />
               </span>
               {el.description}
             </p>
@@ -342,7 +342,7 @@ function ImagesUpload() {
             <span>per month</span>
           </div>
           <div className="post">
-            <button type="submit">
+            <button type="submit" disabled={isSubmitting}>
               Post Room <FaChevronRight />
             </button>
           </div>
