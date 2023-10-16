@@ -1,13 +1,14 @@
 import RoomDetails from '~/component/rooms/RoomDetails';
 import { getRoomDetails } from '~/data/rooms.server';
 import { links as roomDetailsLinks } from '~/component/rooms/RoomDetails';
-import { links as headerLinks } from '~/component/navigation/Header';
+import Header, { links as headerLinks } from '~/component/navigation/Header';
 import { links as menuLinks } from '~/component/navigation/Menu';
 import { getRoomOwnerInfo } from '~/data/user.server';
 
 const Room = () => {
   return (
     <div>
+      <Header />
       <RoomDetails />
     </div>
   );

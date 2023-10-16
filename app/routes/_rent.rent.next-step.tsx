@@ -19,13 +19,13 @@ export const action = async ({ request }: any) => {
   if (roomData.title) {
     roomID = await createRoom(roomData);
 
-    return roomID;
+    return { roomID };
   }
 
   if (roomData.price) {
     const userId = await uploadImages(roomData);
 
-    return userId;
+    return { userId };
   }
 };
 

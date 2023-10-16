@@ -23,12 +23,12 @@
 }
 
 .description textarea {
-  width: 35rem;
+  width: 40rem;
   height: 10rem;
 }
 
 .room-location input {
-  width: 35rem;
+  width: 40rem;
   height: 5rem;
 }
 
@@ -199,4 +199,36 @@ button:disabled {
 .location-results p {
   border-bottom: 0.5px solid #3a3a3a;
   padding: 1rem 1rem;
+}
+
+@media (max-width: 420px) {
+  .form-wrapper {
+    margin: 2rem 0;
+  }
+
+  .image-upload {
+    width: 30rem;
+    padding: 4rem;
+    margin-top: 2.5rem;
+
+    border-width: 1px;
+    font-size: 1.4rem;
+  }
+
+  .description textarea {
+    width: 30rem;
+    height: 10rem;
+  }
+
+  .room-location input {
+    width: 30rem;
+    height: 5rem;
+  }
+
+  .price input {
+    height: 6rem;
+    width: 20rem;
+    font-size: 2.4rem;
+    color: #265b8a !important;
+  }
 }

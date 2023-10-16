@@ -2,7 +2,7 @@ import { Form, Link, useLoaderData } from '@remix-run/react';
 import styles from '~/styles/menu.css';
 
 const Menu = ({ isMenu, menuRef, setIsMenu }: any) => {
-  const userId = useLoaderData();
+  const { userId } = useLoaderData();
 
   function handleLinkClick() {
     setIsMenu(false);

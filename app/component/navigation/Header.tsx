@@ -22,7 +22,7 @@ const Header = ({
 }) => {
   const [locationResults, setLocationResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<any>('');
   const [address, setAddress] = useState('');
   const [center, setCenter] = useState({
     lat: location.latitude,
@@ -38,7 +38,7 @@ const Header = ({
   const profileRef = useRef<HTMLButtonElement>(null);
 
   const fetcher = useFetcher();
-  const submit = fetcher.submit;
+  const { submit, data } = fetcher;
 
   useEffect(() => {
     if (center.lat) {
@@ -52,8 +52,8 @@ const Header = ({
   }, [center, submit]);
 
   useEffect(() => {
-    if (fetcher.data) {
-      getRooms(fetcher.data);
+    if (fetcher.data && Array.isArray(fetcher.data.rooms)) {
+      getRooms(fetcher.data.rooms);
     }
   }, [fetcher.data, getRooms]);
 
@@ -80,13 +80,18 @@ const Header = ({
   }, [searchTerm]);
 
   useEffect(() => {
-    const googlePlaces = async () => {
-      const response = await axios.get(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=${debouncedSearchTerm}&key=${MAPSKEY}`
-      );
+    const googlePlaces = () => {
+      const data2 = {
+        debouncedSearchTerm,
+      };
+
+      submit(data2, {
+        method: 'post',
+        action: '?index',
+      });
 
       setLocationResults(
-        response.data.predictions.map((el: any) => {
+        data?.predictions?.map((el: any) => {
           // if (el.description) setResultsIsOpen(true);
           return (
             <p

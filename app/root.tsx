@@ -34,6 +34,7 @@ function Document({ title, children }: any) {
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBycrEHHe7O_xOVuWFvo8aRG-nCgi-Zbz4&libraries=places"></script>
         </body>
       </html>
     </Provider>

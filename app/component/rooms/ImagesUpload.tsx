@@ -37,6 +37,7 @@ function ImagesUpload() {
   const navigate = useNavigate();
   const userId = useMatches()[1].data;
   const divRef = useRef<HTMLDivElement>(null);
+  const { submit, data } = fetcher;
 
   const isSubmitting = fetcher.state !== 'idle';
 
@@ -162,7 +163,7 @@ function ImagesUpload() {
   };
 
   useEffect(() => {
-    if (fetcher.data) {
+    if (fetcher.data?.userId) {
       showAlert('success', 'Your Room is now available on 233 Rooms!');
       setTimeout(() => {
         navigate('/');
@@ -197,12 +198,17 @@ function ImagesUpload() {
 
   useEffect(() => {
     const googlePlaces = async () => {
-      const response = await axios.get(
-        `https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/queryautocomplete/json?input=${debouncedSearchTerm}&key=${MAPSKEY}`
-      );
+      const data2 = {
+        debouncedSearchTerm,
+      };
+
+      submit(data2, {
+        method: 'post',
+        action: '?index',
+      });
 
       setLocationResults(
-        response.data.predictions.map((el: any) => {
+        data?.predictions?.map((el: any) => {
           return (
             <p
               key={el.description}
