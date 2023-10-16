@@ -42,5 +42,4 @@ export const action = async ({ request }: ActionArgs) => {
   const predictions = await autocomplete(debouncedSearchTerm);
 
   return predictions;
-  // autocomplete(address)
 };
