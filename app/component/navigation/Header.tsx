@@ -50,13 +50,13 @@ const Header = ({
 
       submit(data, { method: 'GET', action: '?index' });
     }
-  }, [center, submit]);
+  }, [center, submit, data]);
 
   useEffect(() => {
-    if (fetcher.data && Array.isArray(fetcher.data.rooms)) {
-      getRooms(fetcher.data.rooms);
+    if (data && Array.isArray(data.rooms)) {
+      getRooms(data.rooms);
     }
-  }, [fetcher.data, getRooms]);
+  }, [data, getRooms]);
 
   useEffect(() => {
     getCurrentLocation();
@@ -114,12 +114,13 @@ const Header = ({
           })
         );
       }
+
       setTimeout(() => {
         setIsChanged(false);
       }, 1000);
     };
     googlePlaces();
-  }, [debouncedSearchTerm, isChanged, submit, data]);
+  }, [debouncedSearchTerm, isChanged, data, submit]);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: `${MAPSKEY}`,

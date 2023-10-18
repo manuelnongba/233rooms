@@ -33,10 +33,11 @@ function ImagesUpload() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [locationResults, setLocationResults] = useState([]);
   const fetcher = useFetcher();
-  const roomID = useActionData();
+  const { roomID } = useActionData();
   const navigate = useNavigate();
   const userId = useMatches()[1].data;
   const divRef = useRef<HTMLDivElement>(null);
+  const [isChanged, setIsChanged] = useState(false);
   const { submit, data } = fetcher;
 
   const isSubmitting = fetcher.state !== 'idle';
@@ -116,8 +117,6 @@ function ImagesUpload() {
     }
   };
 
-  // const handleKeyStrokes = () => {};
-
   const handleSubmit = (e: any) => {
     e.preventDefault();
     if (!images?.length) {
@@ -189,6 +188,7 @@ function ImagesUpload() {
     if (!searchTerm) setResultsIsOpen(false);
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
+      setIsChanged(true);
     }, 1000);
 
     return () => {
@@ -202,33 +202,39 @@ function ImagesUpload() {
         debouncedSearchTerm,
       };
 
-      submit(data2, {
-        method: 'post',
-        action: '?index',
-      });
+      if (isChanged) {
+        submit(data2, {
+          method: 'post',
+          action: '?index',
+        });
 
-      setLocationResults(
-        data?.predictions?.map((el: any) => {
-          return (
-            <p
-              key={el.description}
-              onClick={() => {
-                setSearchTerm(el.description);
-                setResultsIsOpen(false);
-                setAddress(el.description);
-              }}
-            >
-              <span>
-                <FaSearchLocation />
-              </span>
-              {el.description}
-            </p>
-          );
-        })
-      );
+        setLocationResults(
+          data?.predictions?.map((el: any) => {
+            return (
+              <p
+                key={el.description}
+                onClick={() => {
+                  setSearchTerm(el.description);
+                  setResultsIsOpen(false);
+                  setAddress(el.description);
+                }}
+              >
+                <span>
+                  <FaSearchLocation />
+                </span>
+                {el.description}
+              </p>
+            );
+          })
+        );
+      }
+
+      setTimeout(() => {
+        setIsChanged(false);
+      }, 1000);
     };
     googlePlaces();
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, isChanged, submit, data]);
 
   function handleClickOutside(event: Event) {
     // If the user clicks outside the div, hide it
@@ -313,7 +319,7 @@ function ImagesUpload() {
               type="text"
               name="location"
               maxLength={200}
-              placeholder="Location"
+              placeholder="search location"
               onChange={handleInputChange}
               // onKeyUp={handleKeyStrokes}
               value={searchTerm}

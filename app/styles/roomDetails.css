@@ -48,6 +48,12 @@
   border-radius: 1rem;
 }
 
+.sub-photos img:hover {
+  transform: scale(1.05);
+  transition: 0.3s all;
+  cursor: pointer;
+}
+
 .room-desc {
   margin-top: 5rem;
   display: flex;
