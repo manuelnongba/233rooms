@@ -26,9 +26,10 @@ const Account = () => {
   const lastnameRef: any = useRef();
   const phoneRef: any = useRef();
   const addressRef: any = useRef();
-
-  const userInfo = useLoaderData()[0];
+  let { userInfo } = useLoaderData();
   const data = useActionData();
+
+  userInfo = userInfo[0];
 
   useEffect(() => {
     setRowCount(data);

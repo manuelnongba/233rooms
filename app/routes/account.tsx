@@ -25,7 +25,7 @@ export const loader = async ({ request }: any) => {
 
   const userInfo = await getUserInfo(userId);
 
-  return userInfo;
+  return { userInfo, userId };
 };
 
 export const action = async ({ request }: any) => {

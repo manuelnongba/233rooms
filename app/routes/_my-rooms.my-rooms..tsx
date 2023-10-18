@@ -24,6 +24,7 @@ export const loader = async ({ request }: any) => {
   return {
     userRooms: await getUserRooms(userId),
     userName: await getUserName(userId),
+    userId,
   };
 };
 

@@ -32,6 +32,7 @@ const Header = ({
   const [resultsIsOpen, setResultsIsOpen] = useState(false);
   const [isMenu, setIsMenu] = useState(false);
   const loc = useLocation();
+  const [isChanged, setIsChanged] = useState(false);
 
   const divRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -72,6 +73,7 @@ const Header = ({
     if (!searchTerm) setResultsIsOpen(false);
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
+      setIsChanged(true);
     }, 1000);
 
     return () => {
@@ -85,34 +87,39 @@ const Header = ({
         debouncedSearchTerm,
       };
 
-      submit(data2, {
-        method: 'post',
-        action: '?index',
-      });
+      if (isChanged) {
+        submit(data2, {
+          method: 'post',
+          action: '?index',
+        });
 
-      setLocationResults(
-        data?.predictions?.map((el: any) => {
-          // if (el.description) setResultsIsOpen(true);
-          return (
-            <p
-              key={el.description}
-              onClick={(e) => {
-                setAddress(el.description);
-                setSearchTerm(el.description);
-                setResultsIsOpen(false);
-              }}
-            >
-              <span>
-                <FaSearch />
-              </span>
-              {el.description}
-            </p>
-          );
-        })
-      );
+        setLocationResults(
+          data?.predictions?.map((el: any) => {
+            // if (el.description) setResultsIsOpen(true);
+            return (
+              <p
+                key={el.description}
+                onClick={(e) => {
+                  setAddress(el.description);
+                  setSearchTerm(el.description);
+                  setResultsIsOpen(false);
+                }}
+              >
+                <span>
+                  <FaSearch />
+                </span>
+                {el.description}
+              </p>
+            );
+          })
+        );
+      }
+      setTimeout(() => {
+        setIsChanged(false);
+      }, 1000);
     };
     googlePlaces();
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, isChanged, submit, data]);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: `${MAPSKEY}`,

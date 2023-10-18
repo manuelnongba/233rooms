@@ -40,7 +40,8 @@ const EditRoom = () => {
   const priceRef: any = useRef();
   const addressRef: any = useRef();
 
-  const roomInfo = useLoaderData()[0];
+  let { roomInfo } = useLoaderData();
+  roomInfo = roomInfo[0];
 
   useEffect(() => {
     if (fetcher.data === 1) setRowCount(fetcher.data);

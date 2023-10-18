@@ -25,13 +25,13 @@ export const links = () => {
 };
 
 export const loader = async ({ request, params }: any) => {
-  await getUserFromSession(request);
+  const userId = await getUserFromSession(request);
 
   const roomid = params.roomid;
 
   const roomInfo = await getRoomDetails(roomid);
 
-  return roomInfo;
+  return { roomInfo, userId };
 };
 
 export const action = async ({ request, params }: any) => {

@@ -8,7 +8,7 @@ interface RoomImagesInterface {
 }
 
 const EditImages = () => {
-  const roomImages = useLoaderData();
+  const { roomImages } = useLoaderData();
   const fetcher = useFetcher();
 
   const handleDelete = (e: any, imageID: number) => {
