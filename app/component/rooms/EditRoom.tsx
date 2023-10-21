@@ -116,7 +116,7 @@ const EditRoom = () => {
 
     try {
       if (rowCount) showAlert('success', 'Room Details Successfully Updated.');
-      else showAlert('success', 'updating...');
+      else showAlert('update', 'updating...');
     } catch (error) {
       console.log(error);
 

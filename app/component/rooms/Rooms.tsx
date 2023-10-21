@@ -44,11 +44,22 @@ const Rooms = ({ rooms }: any) => {
     );
   }, [rooms]);
 
-  return <main className="rooms">{room}</main>;
+  return (
+    <>
+      {rooms.length === 0 && (
+        <div className="lds-facebook">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      )}
+      <main className="rooms">{room}</main>
+    </>
+  );
 };
 
 const mapStateToProps = (state: any) => {
-  return { rooms: state.rooms };
+  return { rooms: state.rooms, location: { state } };
 };
 
 export default connect(mapStateToProps)(Rooms);

@@ -8,7 +8,7 @@ export interface Location {
 
 export interface Rooms {
   // {id: 1, title: 'Accra Room', image: 'accra.png', distance: 13270.3905742
-  rooms: object[];
+  rooms: object;
 }
 
 export interface LocationAction {

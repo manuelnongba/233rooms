@@ -129,6 +129,10 @@ button {
   background-color: #ff6b6b;
 }
 
+.alert--update .svg-wrapper {
+  background-color: #f59f00;
+}
+
 .alert .ionicon {
   height: 3.5rem;
   width: 3.5rem;
@@ -146,11 +150,23 @@ button {
   stroke: #f03e3e;
 }
 
+.alert--update .ionicon {
+  /* fill: #000; */
+  stroke: #f59f00;
+}
+
+.alert--update .ionicon {
+  fill: #000 !important;
+}
+
 .alert--success {
   background-color: #d3f9d8;
 }
 .alert--error {
   background-color: #eb4d4b;
+}
+.alert--update {
+  background-color: #ffe066;
 }
 
 .error {
@@ -164,7 +180,7 @@ button {
 
 .error .icon {
   font-size: 3rem;
-  color: #f08c00;
+  color: #fcc419;
 }
 
 .error h1,

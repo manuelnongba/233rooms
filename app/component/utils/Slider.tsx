@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
+import { Blurhash } from 'react-blurhash';
 
 import styles from '~/styles/slider.css';
 
 const Slideshow = ({ slideImages }: any) => {
   const [slideIndex, setSlideIndex] = useState(1);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const nextButton: any = useRef();
   const prevButton: any = useRef();
 
@@ -84,11 +86,33 @@ const Slideshow = ({ slideImages }: any) => {
     >
       {slideImages.map((el: any, i: any) => {
         return (
-          <div
-            key={i}
-            className={slideIndex === i + 1 ? 'slide active-img' : 'slide'}
-          >
-            <img src={el} alt="ant" />
+          <div key={i}>
+            <div
+              className={slideIndex === i + 1 ? 'slide active-img' : 'slide'}
+              style={{
+                display: imageLoaded ? 'none' : '',
+              }}
+            >
+              <Blurhash
+                hash={'L9Qcn{IUWBt7~qayWBayIUayWBay'}
+                width={300}
+                height={300}
+                resolutionX={32}
+                resolutionY={32}
+                punch={1}
+              />
+            </div>
+            <div
+              className={slideIndex === i + 1 ? 'slide active-img' : 'slide'}
+              style={{ visibility: imageLoaded ? 'visible' : 'hidden' }}
+            >
+              <img
+                src={el}
+                alt="ant"
+                loading="lazy"
+                onLoad={() => setImageLoaded(true)}
+              />
+            </div>
           </div>
         );
       })}

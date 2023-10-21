@@ -33,6 +33,7 @@ const Header = ({
   const [isMenu, setIsMenu] = useState(false);
   const loc = useLocation();
   const [isChanged, setIsChanged] = useState(false);
+  const [rooms, setRooms] = useState([]);
 
   const divRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -53,10 +54,11 @@ const Header = ({
   }, [center, submit, data]);
 
   useEffect(() => {
-    if (data && Array.isArray(data.rooms)) {
-      getRooms(data.rooms);
+    if (data && data?.rooms) {
+      setRooms(data.rooms);
     }
-  }, [data, getRooms]);
+    getRooms(rooms);
+  }, [data, getRooms, rooms]);
 
   useEffect(() => {
     getCurrentLocation();
@@ -102,6 +104,7 @@ const Header = ({
                 onClick={(e) => {
                   setAddress(el.description);
                   setSearchTerm(el.description);
+                  setRooms([]);
                   setResultsIsOpen(false);
                 }}
               >

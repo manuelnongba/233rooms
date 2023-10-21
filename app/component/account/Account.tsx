@@ -58,7 +58,7 @@ const Account = () => {
   const handleSubmit = () => {
     try {
       if (rowCount) showAlert('success', 'User Details Successfully Updated.');
-      else showAlert('success', 'updating...');
+      else showAlert('update', 'updating...');
     } catch (error) {
       console.log(error);
 
