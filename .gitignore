@@ -6,3 +6,7 @@ node_modules
 .env
 /app/api
 .vercel
+
+# Local Netlify folder
+.netlify
+/netlify.toml
