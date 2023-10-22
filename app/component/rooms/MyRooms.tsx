@@ -7,7 +7,7 @@ import {
   FaEllipsisH,
   FaLocationArrow,
   FaWifi,
-} from 'react-icons/fa';
+} from 'react-icons/fa/index';
 import { useState } from 'react';
 import MyRoomsMenu from './MyRoomsMenu';
 import Header from '../navigation/Header';
@@ -75,7 +75,7 @@ const MyRoomsDetails = ({ myRoomsData }: any) => {
 };
 
 const MyRooms = () => {
-  const data = useLoaderData();
+  const data = useLoaderData<any>();
 
   return (
     <div className="my-rooms-main">
@@ -90,6 +90,16 @@ const MyRooms = () => {
               <h1>Welcome, {data.userName[0].firstname}!</h1>
               <h2>Your Rooms</h2>
             </div>
+            {data.userRooms.length === 0 && (
+              <div className="no-rooms">
+                <h1>Sorry. No Rooms Available!</h1>
+                <br />
+                <p>
+                  Click <a href="/rent">here</a> to have your room on 233Rooms
+                  now!
+                </p>
+              </div>
+            )}
             {data.userRooms.map((el: any) => (
               <MyRoomsDetails key={el.id} myRoomsData={el} />
             ))}

@@ -9,6 +9,6 @@ export default (state: Rooms, action: Action) => {
     case ActionTypes.ROOMS:
       return action.payload;
     default:
-      return state || [];
+      return state || { rooms: [], message: '' };
   }
 };

@@ -67,9 +67,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10rem;
+  gap: 2rem;
 
   padding: 1rem 0rem;
+}
+
+.price-desc div:first-child {
+  width: 12rem;
 }
 
 .price-desc span {
@@ -319,7 +323,8 @@
 
 @media (max-width: 360px) {
   .room-page-details img {
-    height: 16rem;
+    height: 14rem;
+    width: 22rem;
   }
 
   .sub-photos {

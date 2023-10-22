@@ -1,5 +1,6 @@
 import { Form, useFetcher, useLoaderData } from '@remix-run/react';
 import Header from '../navigation/Header';
+import { useEffect, useState } from 'react';
 
 interface RoomImagesInterface {
   id: number;
@@ -8,7 +9,8 @@ interface RoomImagesInterface {
 }
 
 const EditImages = () => {
-  const { roomImages } = useLoaderData();
+  const { roomImages }: any = useLoaderData();
+  const [images, setImages] = useState();
   const fetcher = useFetcher();
 
   const handleDelete = (e: any, imageID: number) => {
@@ -28,16 +30,20 @@ const EditImages = () => {
       });
   };
 
-  const images = roomImages.map((el: RoomImagesInterface) => {
-    return (
-      <div key={el.id} className="edit-images">
-        <img src={`${el.image}`} alt={el.image} />
-        <Form onSubmit={(e) => handleDelete(e, el.id)}>
-          <button type="submit">Delete Image</button>
-        </Form>
-      </div>
+  useEffect(() => {
+    setImages(
+      roomImages.map((el: RoomImagesInterface) => {
+        return (
+          <div key={el.id} className="edit-images">
+            <img src={`${el.image}`} alt={el.image} />
+            <Form onSubmit={(e) => handleDelete(e, el.id)}>
+              <button type="submit">Delete Image</button>
+            </Form>
+          </div>
+        );
+      })
     );
-  });
+  }, [roomImages]);
 
   return (
     <div>

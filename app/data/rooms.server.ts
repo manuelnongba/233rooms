@@ -40,11 +40,13 @@ export const uploadImages = async ({
     RETURNING user_id
   `;
 
+    console.log(address);
+
     const { rows } = await pool.query(sql, [
       +price.trim().replace(/[,'/]/g, ''),
       description.trim().replace(/[,'/]/g, ''),
       `POINT(${lng} ${lat})`,
-      address.trim().replace(/[,'/]/g, ''),
+      address.trim(),
       userId,
       roomId,
     ]);
@@ -72,7 +74,8 @@ export const getRooms = async (lng: any, lat: any) => {
     SELECT r.id, rp.image, title, ST_Distance(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})')) AS distance, address, price
     FROM rooms r
     left join roomphotos rp on rp.room_id = r.id
-    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 10000);
+    WHERE ST_DWithin(location::geography, ST_GeographyFromText('POINT(${lng} ${lat})'), 10000)
+    ORDER BY created_at DESC;
     `;
 
     const { rows } = await pool.query(sql);
@@ -106,6 +109,7 @@ export const getUserRooms = async (userId: Number) => {
                 WHERE r.user_id = '${userId}'
                 GROUP BY r.id, r.title, r.price, r.description, r.address,
                 r.bathrooms, r.bedrooms
+                ORDER BY created_at DESC;
                `;
 
   const { rows } = await pool.query(sql);

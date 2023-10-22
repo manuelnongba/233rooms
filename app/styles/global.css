@@ -126,11 +126,11 @@ button {
 }
 
 .alert--error .svg-wrapper {
-  background-color: #ff6b6b;
+  background-color: #fa5252;
 }
 
 .alert--update .svg-wrapper {
-  background-color: #f59f00;
+  background-color: #ffd43b;
 }
 
 .alert .ionicon {
@@ -147,12 +147,12 @@ button {
 
 .alert--error .ionicon path {
   fill: #fff;
-  stroke: #f03e3e;
+  stroke: #ff8787;
 }
 
 .alert--update .ionicon {
   /* fill: #000; */
-  stroke: #f59f00;
+  stroke: #ffd43b;
 }
 
 .alert--update .ionicon {
@@ -163,10 +163,10 @@ button {
   background-color: #d3f9d8;
 }
 .alert--error {
-  background-color: #eb4d4b;
+  background-color: #ff8787;
 }
 .alert--update {
-  background-color: #ffe066;
+  background-color: #ffec99;
 }
 
 .error {
@@ -193,6 +193,22 @@ button {
   color: #228be6;
   font-size: 1.4rem;
   text-decoration: underline;
+}
+
+.no-rooms {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  font-size: 1.5rem;
+  margin: 4rem;
+  margin-left: 4rem;
+}
+
+.no-rooms a {
+  color: #228be6;
+  font-size: 1.4rem;
 }
 
 @media (max-width: 640px) {

@@ -16,7 +16,7 @@ const RoomDetails = () => {
     address: '',
     image: [],
   });
-  const { roomInfo, userInfo } = useLoaderData();
+  const { roomInfo, userInfo } = useLoaderData<any>();
   const [mainImage, setMainImage] = useState<string>(roomInfo[0].image);
   const userInfoData = userInfo[0];
 
@@ -28,8 +28,8 @@ const RoomDetails = () => {
   }, [roomInfo]);
 
   const onImageClick = (e: MouseEvent) => {
-    const target = e.target as HTMLImageElement;
-    const selectedImage: string = target.dataset.image?.replace('/', '')!;
+    const target: any = e.target as HTMLImageElement;
+    const selectedImage: string = target.dataset.image?.replace('/', '');
 
     setMainImage(selectedImage);
   };
@@ -69,15 +69,19 @@ const RoomDetails = () => {
                 <div>
                   <p>
                     <FaMoneyCheck />
-                    <span>Price: </span>
-                    {roomDataObj?.price}
+                    <span>
+                      <b>Price: </b>
+                    </span>
+                    ¢{roomDataObj?.price}
                   </p>
                 </div>
 
                 <div>
                   <p>
                     <FaLocationArrow />
-                    <span>Address: </span>
+                    <span>
+                      <b>Address: </b>
+                    </span>
                     {roomDataObj?.address}
                   </p>
                 </div>

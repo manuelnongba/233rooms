@@ -12,6 +12,7 @@ import styles from '~/styles/editrooms.css';
 import { hideAlert, showAlert } from '../utils/alert';
 import axios from 'axios';
 import { MAPSKEY } from '~/api/config';
+import { LoaderFunction, LoaderFunctionArgs } from '@remix-run/node';
 
 const EditRoom = () => {
   const [inputValue, setInputValue] = useState({
@@ -22,8 +23,8 @@ const EditRoom = () => {
     price: '',
     address: '',
   });
-  const [rowCount, setRowCount] = useState();
-  const [command, setCommand] = useState();
+  const [rowCount, setRowCount] = useState<number>();
+  const [command, setCommand] = useState<string>();
   const [debouncedAddress, setDebouncedAddress] = useState<any>();
   const [locationCoords, setLocationCoords] = useState<any>({
     lng: 0,
@@ -40,7 +41,7 @@ const EditRoom = () => {
   const priceRef: any = useRef();
   const addressRef: any = useRef();
 
-  let { roomInfo } = useLoaderData();
+  let { roomInfo }: any = useLoaderData();
   roomInfo = roomInfo[0];
 
   useEffect(() => {
@@ -195,7 +196,7 @@ const EditRoom = () => {
                 onChange={(e) => handleChange(e)}
               />
             </div>
-            <div>
+            {/* <div>
               <label htmlFor="">Location</label>
               <input
                 type="text"
@@ -204,7 +205,7 @@ const EditRoom = () => {
                 value={inputValue.address}
                 onChange={(e) => handleChange(e)}
               />
-            </div>
+            </div> */}
             <div className="submit-button">
               <button type="submit">Update Info</button>
             </div>

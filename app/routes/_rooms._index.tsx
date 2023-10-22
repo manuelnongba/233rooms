@@ -1,4 +1,4 @@
-import type { ActionArgs } from '@remix-run/node';
+import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import Footer from '~/component/navigation/Footer';
 import Header from '~/component/navigation/Header';
 import Rooms from '~/component/rooms/Rooms';
@@ -16,7 +16,7 @@ export default function Index() {
   );
 }
 
-export const loader = async ({ request }: any) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(await request.url);
   const userId = await getUserFromSession(request);
 
@@ -35,7 +35,7 @@ export const loader = async ({ request }: any) => {
   return { rooms, userId };
 };
 
-export const action = async ({ request }: ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const { debouncedSearchTerm } = Object.fromEntries(formData);
 

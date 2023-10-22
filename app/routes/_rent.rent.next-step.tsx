@@ -1,5 +1,7 @@
-import ImagesUpload from '~/component/rooms/ImagesUpload';
-import { links as ImagesUploadLinks } from '~/component/rooms/ImagesUpload';
+import ImagesUpload, {
+  links as ImagesUploadLinks,
+} from '~/component/rooms/ImagesUpload';
+import { autocomplete } from '~/data/google.server';
 import { createRoom, uploadImages } from '~/data/rooms.server';
 
 const RentNextStep = () => {
@@ -16,6 +18,9 @@ export const action = async ({ request }: any) => {
   const roomData = Object.fromEntries(formData);
   let roomID: any = roomData.roomId;
 
+  const { debouncedSearchTerm } = Object.fromEntries(formData);
+  const predictions = await autocomplete(debouncedSearchTerm);
+
   if (roomData.title) {
     roomID = await createRoom(roomData);
 
@@ -26,7 +31,7 @@ export const action = async ({ request }: any) => {
     const userId = await uploadImages(roomData);
 
     return { userId };
-  }
+  } else return predictions;
 };
 
 export function links() {

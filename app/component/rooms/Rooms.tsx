@@ -16,7 +16,7 @@ const Rooms = ({ rooms }: any) => {
   useEffect(() => {
     let roomsObj: any = {};
 
-    rooms?.forEach((el: any) => {
+    rooms?.rooms?.forEach((el: any) => {
       if (roomsObj[el.id] && el) roomsObj[el.id].image.push(el.image);
       else roomsObj[el.id] = { ...el, image: [el.image] };
     });
@@ -46,11 +46,16 @@ const Rooms = ({ rooms }: any) => {
 
   return (
     <>
-      {rooms.length === 0 && (
+      {!rooms.message && rooms.rooms.length === 0 && (
         <div className="lds-facebook">
           <div></div>
           <div></div>
           <div></div>
+        </div>
+      )}
+      {rooms.message === 'loaded' && rooms.rooms.length === 0 && (
+        <div className="no-rooms">
+          <h1>Sorry. No Rooms Available in this location!</h1>
         </div>
       )}
       <main className="rooms">{room}</main>

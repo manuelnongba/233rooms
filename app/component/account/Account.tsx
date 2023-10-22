@@ -25,7 +25,7 @@ const Account = () => {
   const firstnameRef: any = useRef();
   const lastnameRef: any = useRef();
   const phoneRef: any = useRef();
-  const addressRef: any = useRef();
+  // const addressRef: any = useRef();
   let { userInfo } = useLoaderData();
   const data = useActionData();
 
@@ -122,7 +122,7 @@ const Account = () => {
                 ref={phoneRef}
               />
             </div>
-            <div className="user-address">
+            {/* <div className="user-address">
               <label htmlFor="">Address</label>
               <input
                 type="text"
@@ -131,7 +131,7 @@ const Account = () => {
                 onChange={(e) => handleChange(e)}
                 ref={addressRef}
               />
-            </div>
+            </div> */}
             <div className="submit-button">
               <button type="submit">Update Info</button>
             </div>

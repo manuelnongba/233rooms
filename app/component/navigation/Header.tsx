@@ -1,4 +1,4 @@
-import { useFetcher, useLocation } from '@remix-run/react';
+import { useFetcher, useLoaderData, useLocation } from '@remix-run/react';
 import styles from '~/styles/header.css';
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
@@ -33,14 +33,19 @@ const Header = ({
   const [isMenu, setIsMenu] = useState(false);
   const loc = useLocation();
   const [isChanged, setIsChanged] = useState(false);
-  const [rooms, setRooms] = useState([]);
+  const [rooms, setRooms] = useState({ rooms: [], message: '' });
 
   const divRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const profileRef = useRef<HTMLButtonElement>(null);
 
-  const fetcher = useFetcher();
-  const { submit, data } = fetcher;
+  const fetcherGet = useFetcher();
+  const fetcherPost = useFetcher();
+
+  const dataGet: any = fetcherGet.data;
+  const dataPost: any = fetcherPost.data;
+
+  const submitGet = fetcherGet.submit;
 
   useEffect(() => {
     if (center.lat) {
@@ -49,16 +54,16 @@ const Header = ({
         lng: String(center.lng),
       };
 
-      submit(data, { method: 'GET', action: '?index' });
+      submitGet(data, { method: 'GET', action: '?index' });
     }
-  }, [center, submit, data]);
+  }, [center]);
 
   useEffect(() => {
-    if (data && data?.rooms) {
-      setRooms(data.rooms);
+    if (dataGet && dataGet?.rooms) {
+      setRooms({ rooms: dataGet?.rooms, message: 'loaded' });
     }
     getRooms(rooms);
-  }, [data, getRooms, rooms]);
+  }, [getRooms, rooms, dataGet]);
 
   useEffect(() => {
     getCurrentLocation();
@@ -75,8 +80,8 @@ const Header = ({
     if (!searchTerm) setResultsIsOpen(false);
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-      setIsChanged(true);
-    }, 1000);
+      if (searchTerm) setIsChanged(true);
+    }, 1500);
 
     return () => {
       clearTimeout(timerId);
@@ -90,13 +95,13 @@ const Header = ({
       };
 
       if (isChanged) {
-        submit(data2, {
+        fetcherPost.submit(data2, {
           method: 'post',
           action: '?index',
         });
 
         setLocationResults(
-          data?.predictions?.map((el: any) => {
+          dataPost?.predictions?.map((el: any) => {
             // if (el.description) setResultsIsOpen(true);
             return (
               <p
@@ -104,7 +109,7 @@ const Header = ({
                 onClick={(e) => {
                   setAddress(el.description);
                   setSearchTerm(el.description);
-                  setRooms([]);
+                  setRooms({ rooms: [], message: '' });
                   setResultsIsOpen(false);
                 }}
               >
@@ -123,24 +128,24 @@ const Header = ({
       }, 1000);
     };
     googlePlaces();
-  }, [debouncedSearchTerm, isChanged, data, submit]);
+  }, [debouncedSearchTerm, isChanged, dataPost]);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: `${MAPSKEY}`,
   });
 
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-    address
-  )}&key=${MAPSKEY}`;
-
   useEffect(() => {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      address
+    )}&key=${MAPSKEY}`;
+
     address &&
       axios(url).then((data) => {
         const location = data.data.results[0]?.geometry.location;
 
         setCenter({ lat: location?.lat, lng: location?.lng });
       });
-  }, [address, url]);
+  }, [address]);
 
   const showMenu = () => {
     setIsMenu(!isMenu);
@@ -173,9 +178,6 @@ const Header = ({
   const openModal = () => {
     setIsOpen(true);
   };
-  // if (fetcher.state !== 'idle') {
-  //   return <h1>Loading...</h1>;
-  // }
 
   let showSearch = '';
   if (loc.pathname == '/') showSearch = 'show-srh';
@@ -209,7 +211,7 @@ const Header = ({
           <div>
             <input
               type="text"
-              placeholder="Search desired location"
+              placeholder="Change location"
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);

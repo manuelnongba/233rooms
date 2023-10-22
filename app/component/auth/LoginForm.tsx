@@ -13,7 +13,7 @@ import { useEffect } from 'react';
 const Login = () => {
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
-  const user = useActionData();
+  const user = useActionData<any>();
 
   useEffect(() => {
     if (user?.credentials) showAlert('error', user?.credentials);

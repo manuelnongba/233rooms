@@ -1,4 +1,4 @@
-import type { ActionArgs, LoaderArgs } from '@remix-run/node';
+import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import EditImages from '~/component/rooms/EditImages';
 import { deleteRoomImage, getRoomImages } from '~/data/rooms.server';
 import { links as menuLinks } from '../component/navigation/Menu';
@@ -15,7 +15,7 @@ const EditImagesPage = () => {
 };
 export default EditImagesPage;
 
-export const loader = async ({ request, params }: LoaderArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const roomid = params.roomid!;
   const userId = await getUserFromSession(request);
 
@@ -24,7 +24,7 @@ export const loader = async ({ request, params }: LoaderArgs) => {
   return { roomImages, userId };
 };
 
-export const action = async ({ request }: ActionArgs) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const { imageID } = Object.fromEntries(formData);
 

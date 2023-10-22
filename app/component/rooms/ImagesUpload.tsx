@@ -6,8 +6,9 @@ import {
   useNavigate,
 } from '@remix-run/react';
 import { useCallback, useEffect, useRef, useState } from 'react';
+
 import { useDropzone } from 'react-dropzone';
-import { FaChevronRight, FaSearchLocation } from 'react-icons/fa';
+import { FaChevronRight, FaSearchLocation } from 'react-icons/fa/';
 import { ArrowUpTrayIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import styles from '~/styles/imageUpload.css';
 import { CLOUD_URL, MAPSKEY } from '~/api/config';
@@ -32,13 +33,13 @@ function ImagesUpload() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [locationResults, setLocationResults] = useState([]);
-  const fetcher = useFetcher();
-  const { roomID } = useActionData();
+  const fetcher: any = useFetcher();
+  const roomID = useActionData<any>()?.roomID;
   const navigate = useNavigate();
-  const userId = useMatches()[1].data;
+  const userId: any = useMatches()[1].data;
   const divRef = useRef<HTMLDivElement>(null);
   const [isChanged, setIsChanged] = useState(false);
-  const { submit, data } = fetcher;
+  const { submit, data }: any = fetcher;
 
   const isSubmitting = fetcher.state !== 'idle';
 
@@ -106,10 +107,11 @@ function ImagesUpload() {
 
   const handleInputChange = (event: any) => {
     // Update the formData state with the new values from the input fields
-    setFormState({
-      ...formState,
-      [event.target.name]: event.target.value,
-    });
+    if (event.target.name !== 'location')
+      setFormState({
+        ...formState,
+        [event.target.name]: event.target.value,
+      });
 
     if (event.target.name === 'location') {
       setSearchTerm(event.target.value);
@@ -154,7 +156,7 @@ function ImagesUpload() {
       formData.append('lng', locationCoords.lng);
       formData.append('lat', locationCoords.lat);
       formData.append('price', formState.price);
-      formData.append('address', formState.location);
+      formData.append('address', searchTerm);
       formData.append('description', formState.description);
       formData.append('userId', userId);
       fetcher.submit(formData, { method: 'post', action: '/rent/next-step' });
@@ -207,6 +209,8 @@ function ImagesUpload() {
           method: 'post',
           action: '?index',
         });
+
+        console.log(data);
 
         setLocationResults(
           data?.predictions?.map((el: any) => {
@@ -263,7 +267,7 @@ function ImagesUpload() {
       </div>
 
       <div className="form-wrapper">
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} autoComplete="off">
           <h1>Upload Image(s)</h1>
           <div className="image-upload-container">
             <div

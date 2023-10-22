@@ -13,7 +13,8 @@ exports.up = (pgm) => {
     location GEOGRAPHY(POINT, 4326),
     bathrooms INTEGER,
     bedrooms INTEGER,
-    user_id uuid REFERENCES users(id) ON DELETE CASCADE
+    user_id uuid REFERENCES users(id) ON DELETE CASCADE,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
       );
   `);
 };

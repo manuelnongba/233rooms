@@ -2,10 +2,6 @@ import { compare, hash } from 'bcrypt';
 import { createCookieSessionStorage, redirect } from '@remix-run/node';
 import { pool } from './db.server';
 
-const dotenv = require('dotenv');
-
-dotenv.config({ path: './config.env' });
-
 const SESSION_SECRET = process.env.SESSION_SECRET!;
 
 const sessionStorage = createCookieSessionStorage({
