@@ -2,7 +2,7 @@ import { compare, hash } from 'bcrypt';
 import { createCookieSessionStorage, redirect } from '@remix-run/node';
 import { pool } from './db.server';
 
-const SESSION_SECRET = process.env.SESSION_SECRET!;
+const SESSION_SECRET = 'mysupersecuresecretfor233roomz';
 
 const sessionStorage = createCookieSessionStorage({
   cookie: {
@@ -82,7 +82,6 @@ export const signUp = async ({
   const sql2 = `INSERT INTO users (id, firstname, lastname, phone, email, password) VALUES( uuid_generate_v4(),'${firstname}', '${lastname}', '${phone}', '${email}', '${passwordHash}')`;
 
   await pool.query(sql2);
-  console.log('hello');
 
   const sql3 = `SELECT id FROM users WHERE email = '${email}'`;
 

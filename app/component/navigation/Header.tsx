@@ -33,7 +33,7 @@ const Header = ({
   const [isMenu, setIsMenu] = useState(false);
   const loc = useLocation();
   const [isChanged, setIsChanged] = useState(false);
-  const [rooms, setRooms] = useState({ rooms: [], message: '' });
+  // const [rooms, setRooms] = useState({ rooms: [], message: '' });
 
   const divRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -60,10 +60,9 @@ const Header = ({
 
   useEffect(() => {
     if (dataGet && dataGet?.rooms) {
-      setRooms({ rooms: dataGet?.rooms, message: 'loaded' });
+      getRooms({ rooms: dataGet?.rooms, message: 'loaded' });
     }
-    getRooms(rooms);
-  }, [getRooms, rooms, dataGet]);
+  }, [dataGet]);
 
   useEffect(() => {
     getCurrentLocation();
@@ -109,7 +108,7 @@ const Header = ({
                 onClick={(e) => {
                   setAddress(el.description);
                   setSearchTerm(el.description);
-                  setRooms({ rooms: [], message: '' });
+                  getRooms({ rooms: [], message: '' });
                   setResultsIsOpen(false);
                 }}
               >

@@ -40,8 +40,6 @@ export const uploadImages = async ({
     RETURNING user_id
   `;
 
-    console.log(address);
-
     const { rows } = await pool.query(sql, [
       +price.trim().replace(/[,'/]/g, ''),
       description.trim().replace(/[,'/]/g, ''),

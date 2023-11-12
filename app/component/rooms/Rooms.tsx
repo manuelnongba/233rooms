@@ -64,7 +64,7 @@ const Rooms = ({ rooms }: any) => {
 };
 
 const mapStateToProps = (state: any) => {
-  return { rooms: state.rooms, location: { state } };
+  return { rooms: state.rooms };
 };
 
 export default connect(mapStateToProps)(Rooms);

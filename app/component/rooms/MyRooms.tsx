@@ -57,7 +57,7 @@ const MyRoomsDetails = ({ myRoomsData }: any) => {
         </div>
         <div className="my-room-sub-details">
           <div>
-            <span>{myRoomsData?.price}</span>
+            <span>¢{myRoomsData?.price}</span>
             <span>price</span>
           </div>
           <div>
@@ -92,7 +92,7 @@ const MyRooms = () => {
             </div>
             {data.userRooms.length === 0 && (
               <div className="no-rooms">
-                <h1>Sorry. No Rooms Available!</h1>
+                <h1>Sorry. You Have No Rooms Available!</h1>
                 <br />
                 <p>
                   Click <a href="/rent">here</a> to have your room on 233Rooms

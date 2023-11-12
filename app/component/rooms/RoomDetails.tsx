@@ -29,7 +29,7 @@ const RoomDetails = () => {
 
   const onImageClick = (e: MouseEvent) => {
     const target: any = e.target as HTMLImageElement;
-    const selectedImage: string = target.dataset.image?.replace('/', '');
+    const selectedImage: string = target.dataset?.image;
 
     setMainImage(selectedImage);
   };

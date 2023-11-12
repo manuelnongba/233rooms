@@ -13,7 +13,7 @@
 
 .room-page-details img {
   height: 45rem;
-  width: 65vw;
+  width: 60vw;
   border-radius: 1rem;
 }
 
@@ -25,7 +25,7 @@
   display: flex;
   align-items: flex-start;
 
-  gap: 10rem;
+  gap: 15rem;
 }
 
 .sub-photos {
@@ -65,10 +65,11 @@
 
 .price-desc {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   gap: 2rem;
 
+  margin-top: 2rem;
   padding: 1rem 0rem;
 }
 
@@ -159,7 +160,7 @@
   }
 
   .sub-details {
-    font-size: 1rem;
+    font-size: 1.4rem;
     gap: 1rem;
   }
 
@@ -192,8 +193,6 @@
   }
 
   .sub-details {
-    font-size: 1rem;
-
     gap: 1rem;
   }
 
@@ -226,8 +225,6 @@
   }
 
   .sub-details {
-    font-size: 1rem;
-
     gap: 1rem;
   }
 
@@ -264,8 +261,6 @@
   }
 
   .sub-details {
-    font-size: 0.8rem;
-
     gap: 2rem;
   }
 
@@ -280,13 +275,22 @@
   }
 }
 
+@media (max-width: 390px) {
+  .sub-photos img {
+    height: 7rem;
+    width: 14rem;
+  }
+}
+
 @media (max-width: 430px) {
   .room-page-details img {
+    width: 80vw;
     height: 20rem;
   }
 
   .sub-photos {
-    margin-top: -40px;
+    margin-top: -4rem;
+    margin-left: 1rem;
 
     width: 14rem;
     grid-template-columns: repeat(1, 14rem);
@@ -294,11 +298,17 @@
   }
 
   .sub-photos img {
-    height: 7rem;
-    width: 14rem;
+    height: 8rem;
+    width: 16rem;
+  }
+
+  .price-desc {
+    width: 230px;
   }
 
   .sub-details {
+    padding: 0 2rem;
+
     gap: 1rem;
   }
 
@@ -308,7 +318,7 @@
   }
 
   .room-desc h1 {
-    font-size: 1.2rem;
+    font-size: 1.6rem;
   }
 
   .user-name-image img {

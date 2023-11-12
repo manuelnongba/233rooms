@@ -10,6 +10,14 @@ import { useEffect, useRef, useState } from 'react';
 import Header from '../navigation/Header';
 import { hideAlert, showAlert } from '../utils/alert';
 
+interface UserInfo {
+  email: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  address: string;
+}
+
 const Account = () => {
   const [inputValue, setInputValue] = useState({
     email: '',
@@ -26,8 +34,10 @@ const Account = () => {
   const lastnameRef: any = useRef();
   const phoneRef: any = useRef();
   // const addressRef: any = useRef();
-  let { userInfo } = useLoaderData();
-  const data = useActionData();
+  let { userInfo } = useLoaderData<any>();
+  console.log(userInfo);
+
+  const data = useActionData<any>();
 
   userInfo = userInfo[0];
 

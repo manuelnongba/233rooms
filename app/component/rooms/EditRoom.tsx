@@ -12,7 +12,6 @@ import styles from '~/styles/editrooms.css';
 import { hideAlert, showAlert } from '../utils/alert';
 import axios from 'axios';
 import { MAPSKEY } from '~/api/config';
-import { LoaderFunction, LoaderFunctionArgs } from '@remix-run/node';
 
 const EditRoom = () => {
   const [inputValue, setInputValue] = useState({

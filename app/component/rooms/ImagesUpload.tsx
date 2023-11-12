@@ -210,8 +210,6 @@ function ImagesUpload() {
           action: '?index',
         });
 
-        console.log(data);
-
         setLocationResults(
           data?.predictions?.map((el: any) => {
             return (

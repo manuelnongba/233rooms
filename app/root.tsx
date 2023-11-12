@@ -16,8 +16,28 @@ import reduxThunk from 'redux-thunk';
 import ErrorComponent from './component/utils/Error';
 
 import globalCss from '~/styles/global.css';
+import { MetaFunction } from '@remix-run/node';
 
 const store = createStore(reducers, applyMiddleware(reduxThunk));
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: '233 Rooms' },
+    {
+      property: 'og:title',
+      content: '233 Rooms',
+    },
+    {
+      property: 'og:description',
+      content: 'Find affordable rooms close to you on 233 Rooms',
+    },
+    {
+      property: 'og:image',
+      content:
+        'https://res.cloudinary.com/drxwuqu3v/image/upload/v1699751290/233Rooms_m9zod3.jpg',
+    },
+  ];
+};
 
 function Document({ title, children }: any) {
   return (

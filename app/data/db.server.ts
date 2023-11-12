@@ -8,8 +8,9 @@
 //   password: '',
 // });
 import pkg from 'pg';
+import { POSTGRES_URL } from '~/api/config';
 const { Pool } = pkg;
 
 export const pool = new Pool({
-  connectionString: process.env.POSTGRES_URL,
+  connectionString: POSTGRES_URL,
 });
