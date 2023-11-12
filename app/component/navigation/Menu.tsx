@@ -1,8 +1,9 @@
+import { LoaderFunction } from '@remix-run/node';
 import { Form, Link, useLoaderData } from '@remix-run/react';
 import styles from '~/styles/menu.css';
 
 const Menu = ({ isMenu, menuRef, setIsMenu }: any) => {
-  const { userId } = useLoaderData();
+  const { userId } = useLoaderData<LoaderFunction>();
 
   function handleLinkClick() {
     setIsMenu(false);
@@ -33,14 +34,14 @@ const Menu = ({ isMenu, menuRef, setIsMenu }: any) => {
         )}
 
         {!userId && (
-          <Link to="auth">
+          <Link to="/auth">
             <p className="action" onClick={handleLinkClick}>
               Login{' '}
             </p>
           </Link>
         )}
         {!userId && (
-          <Link to="auth?mode=signup">
+          <Link to="/auth?mode=signup">
             <p className="action" onClick={handleLinkClick}>
               Sign Up
             </p>
