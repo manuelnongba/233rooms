@@ -28,11 +28,11 @@ export const meta: MetaFunction = () => {
       content: '233 Rooms',
     },
     {
-      property: 'og:description',
+      name: 'description',
       content: 'Find affordable rooms close to you on 233 Rooms',
     },
     {
-      property: 'og:image',
+      name: 'image',
       content:
         'https://res.cloudinary.com/drxwuqu3v/image/upload/v1699751290/233Rooms_m9zod3.jpg',
     },

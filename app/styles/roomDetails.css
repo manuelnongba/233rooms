@@ -186,8 +186,8 @@
   }
 
   .sub-photos img {
-    height: 8rem;
-    width: 16rem;
+    height: 10rem;
+    width: 20rem;
 
     column-gap: 0.5rem;
   }
@@ -220,8 +220,8 @@
   }
 
   .sub-photos img {
-    height: 6rem;
-    width: 12rem;
+    height: 10rem;
+    width: 20rem;
   }
 
   .sub-details {
@@ -300,6 +300,7 @@
   .sub-photos img {
     height: 8rem;
     width: 16rem;
+    margin-right: 1rem;
   }
 
   .price-desc {

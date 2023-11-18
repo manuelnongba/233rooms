@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { Blurhash } from 'react-blurhash';
 
@@ -7,6 +7,7 @@ import styles from '~/styles/slider.css';
 const Slideshow = ({ slideImages }: any) => {
   const [slideIndex, setSlideIndex] = useState(1);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [width, setWidth] = useState(300);
   const nextButton: any = useRef();
   const prevButton: any = useRef();
 
@@ -77,6 +78,13 @@ const Slideshow = ({ slideImages }: any) => {
     },
   });
 
+  useEffect(() => {
+    const innerWidth = window?.innerWidth;
+    if (innerWidth <= 695) {
+      setWidth(370);
+    } else setWidth(300);
+  }, []);
+
   return (
     <div
       className="container-slider"
@@ -95,10 +103,10 @@ const Slideshow = ({ slideImages }: any) => {
             >
               <Blurhash
                 hash={'L9Qcn{IUWBt7~qayWBayIUayWBay'}
-                width={300}
-                height={300}
-                resolutionX={32}
-                resolutionY={32}
+                width={width}
+                height={width}
+                resolutionX={34}
+                resolutionY={34}
                 punch={1}
               />
             </div>

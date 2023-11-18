@@ -91,19 +91,38 @@
   }
 }
 
-@media (max-width: 694px) {
+@media (max-width: 695px) {
   .rooms {
-    width: 32rem;
+    width: 36rem;
     margin: 6rem auto;
+    row-gap: 26rem;
   }
 
   .lds-facebook {
     left: 47%;
   }
+
+  .room-sub-details {
+    position: absolute;
+    top: 37.5rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .room-sub-details {
+    position: absolute;
+    top: 35.5rem;
+  }
 }
 
 @media (max-width: 370px) {
   .rooms {
-    margin: 6rem 3rem;
+    margin: 6rem 1rem;
+    row-gap: 25rem;
+  }
+
+  .room-sub-details {
+    position: absolute;
+    top: 36rem;
   }
 }
