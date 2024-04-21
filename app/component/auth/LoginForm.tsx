@@ -16,8 +16,9 @@ const Login = () => {
   const user = useActionData<any>();
 
   useEffect(() => {
+    if (user?.email) showAlert('error', user?.email);
+    if (user?.password) showAlert('error', user?.password);
     if (user?.credentials) showAlert('error', user?.credentials);
-    if (user) showAlert('success', 'Logged In Successfully');
   }, [user]);
 
   const authMode = searchParams.get('mode') || 'login';
@@ -59,7 +60,7 @@ const Login = () => {
       </p>
       <p>
         <label htmlFor="password">Password</label>
-        <input type="password" id="password" name="password" minLength={7} />
+        <input type="password" id="password" name="password" required />
       </p>
       {/* {validationErrors && (
         <ul>
@@ -70,7 +71,7 @@ const Login = () => {
       )} */}
       <div className="form-actions">
         <button disabled={isSubmitting}>
-          {isSubmitting ? 'Authenting...' : submitBtnCaption}
+          {isSubmitting ? 'Authenticating...' : submitBtnCaption}
         </button>
         <Link to={authMode === 'login' ? '?mode=signup' : '?mode=login'}>
           {toggleBtnCaption}

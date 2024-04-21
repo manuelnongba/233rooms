@@ -15,7 +15,7 @@ export function validateCredentials(input: any) {
 
   if (!isValidPassword(input.password)) {
     validationErrors.password =
-      'Invalid password. Must be at least 7 characters long.';
+      'Invalid password. Must be at least 8 characters long.';
   }
 
   if (Object.keys(validationErrors).length > 0) {
