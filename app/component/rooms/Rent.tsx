@@ -5,7 +5,7 @@ import styles from '~/styles/rent.css';
 import { Logo } from '../utils/Logo';
 
 const RentRoom = () => {
-  const [formState, setFormState] = useState<any>({
+  const [formState, setFormState] = useState({
     bedrooms: '',
     bathrooms: '',
     title: '',
@@ -14,7 +14,7 @@ const RentRoom = () => {
 
   const isSubmitting = navigation.state !== 'idle';
 
-  const handleChange = (event: any) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFormState({ ...formState, [event.target.name]: event.target.value });
   };
 

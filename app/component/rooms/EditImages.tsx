@@ -1,6 +1,7 @@
 import { Form, useFetcher, useLoaderData } from '@remix-run/react';
 import Header from '../navigation/Header';
 import { useEffect, useState } from 'react';
+import { LoaderFunction } from '@remix-run/node';
 
 interface RoomImagesInterface {
   id: number;
@@ -9,11 +10,14 @@ interface RoomImagesInterface {
 }
 
 const EditImages = () => {
-  const { roomImages }: any = useLoaderData();
+  const { roomImages } = useLoaderData<LoaderFunction>();
   const [images, setImages] = useState();
   const fetcher = useFetcher();
 
-  const handleDelete = (e: any, imageID: number) => {
+  const handleDelete = (
+    e: React.FormEvent<HTMLFormElement>,
+    imageID: number
+  ) => {
     e.preventDefault();
     const formData = new FormData();
 

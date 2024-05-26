@@ -9,6 +9,7 @@ import {
   getRoomDetails,
   updateRoomInfo,
 } from '~/data/rooms.server';
+import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 
 const EditRoomPage = () => {
   return (
@@ -24,23 +25,23 @@ export const links = () => {
   return [...headerLinks(), ...sharedLinks(), ...menuLinks()];
 };
 
-export const loader = async ({ request, params }: any) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const userId = await getUserFromSession(request);
 
-  const roomid = params.roomid;
+  const roomid = params.roomid!;
 
   const roomInfo = await getRoomDetails(roomid);
 
   return { roomInfo, userId };
 };
 
-export const action = async ({ request, params }: any) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const credentials = Object.fromEntries(formData);
 
   await getUserFromSession(request);
 
-  const roomid = params.roomid;
+  const roomid = params.roomid!;
 
   if (request.method === 'POST') {
     const rowCount = await updateRoomInfo(credentials, roomid);

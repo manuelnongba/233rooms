@@ -12,6 +12,7 @@ import styles from '~/styles/editrooms.css';
 import { hideAlert, showAlert } from '../utils/alert';
 import axios from 'axios';
 import { MAPSKEY } from '~/api/config';
+import { LoaderFunction } from '@remix-run/node';
 
 const EditRoom = () => {
   const [inputValue, setInputValue] = useState({
@@ -24,8 +25,11 @@ const EditRoom = () => {
   });
   const [rowCount, setRowCount] = useState<number>();
   const [command, setCommand] = useState<string>();
-  const [debouncedAddress, setDebouncedAddress] = useState<any>();
-  const [locationCoords, setLocationCoords] = useState<any>({
+  const [debouncedAddress, setDebouncedAddress] = useState<string>('');
+  const [locationCoords, setLocationCoords] = useState<{
+    lng: number | string;
+    lat: number;
+  }>({
     lng: 0,
     lat: 0,
   });
@@ -33,14 +37,13 @@ const EditRoom = () => {
   const navigate = useNavigate();
   const { roomid } = useParams();
 
-  const bedroomsRef: any = useRef();
-  const bathroomsRef: any = useRef();
-  const titleRef: any = useRef();
-  const descriptionRef: any = useRef();
-  const priceRef: any = useRef();
-  const addressRef: any = useRef();
+  const bedroomsRef = useRef<HTMLInputElement>(null);
+  const bathroomsRef = useRef<HTMLInputElement>(null);
+  const titleRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  const priceRef = useRef<HTMLInputElement>(null);
 
-  let { roomInfo }: any = useLoaderData();
+  let { roomInfo } = useLoaderData<LoaderFunction>();
   roomInfo = roomInfo[0];
 
   useEffect(() => {
@@ -79,7 +82,9 @@ const EditRoom = () => {
     });
   }, []);
 
-  const handleChange = (e: any) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setInputValue({ ...inputValue, [e.target.name]: e.target.value });
   };
 
@@ -109,8 +114,8 @@ const EditRoom = () => {
   const handleSubmit = () => {
     const formData = new FormData();
 
-    formData.append('lng', locationCoords.lng);
-    formData.append('lat', locationCoords.lat);
+    formData.append('lng', String(locationCoords.lng));
+    formData.append('lat', String(locationCoords.lat));
 
     fetcher.submit(formData, { method: 'post' });
 
@@ -124,7 +129,7 @@ const EditRoom = () => {
     }
   };
 
-  function deleteRoomHandler(e: any) {
+  function deleteRoomHandler(e: React.MouseEvent) {
     const proceed = confirm('Click OK to delete this room!');
     if (!proceed) return;
 

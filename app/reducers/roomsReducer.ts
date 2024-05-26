@@ -1,10 +1,13 @@
-import type { Rooms } from '~/actions';
 import { ActionTypes } from '~/actions/types';
 import type { Action } from '~/actions/types';
+import { Rooms } from '~/types/rooms.types';
 
-// const defaultRoomValue = { id: 0, title: '', image: '', distance: 0 };
+interface RoomsType {
+  rooms: Rooms[];
+  message: string;
+}
 
-export default (state: Rooms, action: Action) => {
+export default (state: RoomsType, action: Action) => {
   switch (action.type) {
     case ActionTypes.ROOMS:
       return action.payload;

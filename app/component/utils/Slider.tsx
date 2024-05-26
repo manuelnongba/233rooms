@@ -1,17 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useSwipeable } from 'react-swipeable';
 import { Blurhash } from 'react-blurhash';
 
 import styles from '~/styles/slider.css';
 
-const Slideshow = ({ slideImages }: any) => {
+const Slideshow = ({ slideImages }: { slideImages: string[] }) => {
   const [slideIndex, setSlideIndex] = useState(1);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [width, setWidth] = useState(300);
-  const nextButton: any = useRef();
-  const prevButton: any = useRef();
+  const nextButton = useRef() as MutableRefObject<HTMLButtonElement>;
+  const prevButton = useRef() as MutableRefObject<HTMLButtonElement>;
 
-  const nextButtonSlide = (e: any) => {
+  console.log(slideImages);
+
+  const nextButtonSlide = (e: React.MouseEvent) => {
     e.preventDefault();
 
     if (slideIndex !== slideImages.length) {
@@ -23,7 +25,7 @@ const Slideshow = ({ slideImages }: any) => {
     }
   };
 
-  const prevButtonSlide = (e: any) => {
+  const prevButtonSlide = (e: React.MouseEvent) => {
     e?.preventDefault();
 
     if (slideIndex !== 1) {
@@ -55,19 +57,19 @@ const Slideshow = ({ slideImages }: any) => {
     }
   };
 
-  const moveDot = (i: number, e: any) => {
+  const moveDot = (i: number, e: React.MouseEvent) => {
     e.preventDefault();
     setSlideIndex(i);
   };
 
-  const onMouseOver = (): any => {
-    prevButton.current.style.opacity = 1;
-    nextButton.current.style.opacity = 1;
+  const onMouseOver = (): void => {
+    prevButton.current.style.opacity = '1';
+    nextButton.current.style.opacity = '1';
   };
 
-  const onMouseOut = (): any => {
-    prevButton.current.style.opacity = 0;
-    nextButton.current.style.opacity = 0;
+  const onMouseOut = (): void => {
+    prevButton.current.style.opacity = '0';
+    nextButton.current.style.opacity = '0';
   };
 
   const handlers = useSwipeable({
@@ -92,7 +94,7 @@ const Slideshow = ({ slideImages }: any) => {
       onMouseOut={onMouseOut}
       {...handlers}
     >
-      {slideImages.map((el: any, i: any) => {
+      {slideImages.map((el: string, i: number) => {
         return (
           <div key={i}>
             <div

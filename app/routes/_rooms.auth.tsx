@@ -1,3 +1,4 @@
+import { ActionFunctionArgs } from '@remix-run/node';
 import { links as loginLinks } from '~/component/auth/LoginForm';
 import LoginForm from '~/component/auth/LoginForm';
 import { signUp, login } from '~/data/auth.server';
@@ -13,7 +14,7 @@ function Login() {
 
 export default Login;
 
-export const action = async ({ request }: any) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const searchParams = new URL(request.url).searchParams;
   const authMode = searchParams.get('mode') || 'login';
   const formData = await request.formData();

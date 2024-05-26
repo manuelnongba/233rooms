@@ -15,12 +15,13 @@ import { CLOUD_URL, MAPSKEY } from '~/api/config';
 import axios from 'axios';
 import { Logo } from '../utils/Logo';
 import { showAlert } from '../utils/alert';
+import { ActionFunction } from '@remix-run/node';
 
 function ImagesUpload() {
-  const [images, setImages] = useState<any>([]);
+  const [images, setImages] = useState<string[]>([]);
   const [address, setAddress] = useState('');
-  const [debouncedAddress, setDebouncedAddress] = useState<any>();
-  const [locationCoords, setLocationCoords] = useState<any>({
+  const [debouncedAddress, setDebouncedAddress] = useState<string>('');
+  const [locationCoords, setLocationCoords] = useState<{ lng: 0; lat: 0 }>({
     lng: 0,
     lat: 0,
   });
@@ -33,13 +34,13 @@ function ImagesUpload() {
   const [searchTerm, setSearchTerm] = useState('');
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [locationResults, setLocationResults] = useState([]);
-  const fetcher: any = useFetcher();
-  const roomID = useActionData<any>()?.roomID;
+  const fetcher = useFetcher<any>();
+  const roomID = useActionData<ActionFunction>()?.roomID;
   const navigate = useNavigate();
-  const userId: any = useMatches()[1].data;
+  const userId = useMatches()[1]?.data as string;
   const divRef = useRef<HTMLDivElement>(null);
   const [isChanged, setIsChanged] = useState(false);
-  const { submit, data }: any = fetcher;
+  const { submit, data } = fetcher;
 
   const isSubmitting = fetcher.state !== 'idle';
 
@@ -48,7 +49,7 @@ function ImagesUpload() {
   )}&key=${MAPSKEY}`;
 
   const onDrop = useCallback(
-    (acceptedFiles: any) => {
+    (acceptedFiles: any[]) => {
       let imageExists = false;
       images?.forEach((el: any) => {
         if (el.name === acceptedFiles[0].name) {
@@ -105,7 +106,9 @@ function ImagesUpload() {
       });
   }, [debouncedAddress, url]);
 
-  const handleInputChange = (event: any) => {
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     // Update the formData state with the new values from the input fields
     if (event.target.name !== 'location')
       setFormState({
@@ -119,7 +122,7 @@ function ImagesUpload() {
     }
   };
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!images?.length) {
       return alert('Please upload images of your property!');
@@ -129,14 +132,13 @@ function ImagesUpload() {
     const imageFormData = new FormData();
 
     let img = '';
-    const imagesPromise = images.map(async (image: any, i: any) => {
+    const imagesPromise = images.map(async (image: string, i: number) => {
       // img += image.name;
 
       imageFormData.append('file', image);
       imageFormData.append('cloud_name', 'drxwuqu3v');
       imageFormData.append('upload_preset', '233Rooms');
 
-      // const URL: any = process.env.CLOUD_URL;
       try {
         const res = await axios.post(CLOUD_URL, imageFormData);
 
@@ -153,8 +155,8 @@ function ImagesUpload() {
     Promise.all(imagesPromise).then(() => {
       formData.get('images');
       formData.append('roomId', roomID);
-      formData.append('lng', locationCoords.lng);
-      formData.append('lat', locationCoords.lat);
+      formData.append('lng', String(locationCoords.lng));
+      formData.append('lat', String(locationCoords.lat));
       formData.append('price', formState.price);
       formData.append('address', searchTerm);
       formData.append('description', formState.description);
@@ -174,7 +176,7 @@ function ImagesUpload() {
 
   useEffect(() => {
     const handleBeforeUnload = (event: any) => {
-      if (event.currentTarget.performance.navigation.type === 1) {
+      if (event?.currentTarget?.performance.navigation.type === 1) {
         navigate('/rent');
       }
     };

@@ -2,7 +2,15 @@ import { LoaderFunction } from '@remix-run/node';
 import { Form, Link, useLoaderData } from '@remix-run/react';
 import styles from '~/styles/menu.css';
 
-const Menu = ({ isMenu, menuRef, setIsMenu }: any) => {
+const Menu = ({
+  isMenu,
+  menuRef,
+  setIsMenu,
+}: {
+  isMenu: boolean;
+  menuRef: React.LegacyRef<HTMLDivElement>;
+  setIsMenu: (state: boolean) => void;
+}) => {
   const { userId } = useLoaderData<LoaderFunction>();
 
   function handleLinkClick() {

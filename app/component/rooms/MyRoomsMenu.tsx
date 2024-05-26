@@ -1,7 +1,17 @@
 import { Link } from '@remix-run/react';
 import { useCallback, useEffect, useRef } from 'react';
 
-const MyRoomsMenu = ({ isMyRoomsMenu, setIsMyRoomsMenu, roomId }: any) => {
+interface MyRoomsMenuTypes {
+  isMyRoomsMenu: boolean;
+  setIsMyRoomsMenu: (state: boolean) => void;
+  roomId: string;
+}
+
+const MyRoomsMenu = ({
+  isMyRoomsMenu,
+  setIsMyRoomsMenu,
+  roomId,
+}: MyRoomsMenuTypes) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleClickOutside = useCallback(

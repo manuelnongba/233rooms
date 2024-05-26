@@ -6,23 +6,28 @@ import { useJsApiLoader } from '@react-google-maps/api';
 import { MAPSKEY } from '~/api/config';
 import MapModal from '../utils/MapModal';
 import { getCurrentLocation, getRooms } from '~/actions';
-import { connect } from 'react-redux';
+import { Matching, connect } from 'react-redux';
 import Menu from './Menu';
 import { Logo } from '../utils/Logo';
 import { FaSearch } from 'react-icons/fa';
+import { HeaderProps, fetcherGet, fetcherPost } from '~/types/header.types';
+import { Rooms } from '~/types/rooms.types';
 
-const Header = ({
-  location,
-  getCurrentLocation,
-  getRooms,
-}: {
-  location: { latitude: number; longitude: number };
-  getCurrentLocation: any;
-  getRooms: any;
-}) => {
+const Header: React.ComponentType<
+  Matching<
+    {
+      location: { latitude: number; longitude: number };
+      rooms: Rooms;
+    } & {
+      getCurrentLocation: () => void;
+      getRooms: (rooms: Rooms) => void;
+    },
+    HeaderProps
+  >
+> = ({ location, getCurrentLocation, getRooms }) => {
   const [locationResults, setLocationResults] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState<any>('');
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [address, setAddress] = useState('');
   const [center, setCenter] = useState({
     lat: location.latitude,
@@ -42,8 +47,8 @@ const Header = ({
   const fetcherGet = useFetcher();
   const fetcherPost = useFetcher();
 
-  const dataGet: any = fetcherGet.data;
-  const dataPost: any = fetcherPost.data;
+  const dataGet = fetcherGet.data as fetcherGet;
+  const dataPost = fetcherPost.data as fetcherPost;
 
   const submitGet = fetcherGet.submit;
 
@@ -257,7 +262,10 @@ const Header = ({
   );
 };
 
-export const mapStateToProps = (state: any) => {
+export const mapStateToProps = (state: {
+  location: { latitude: number; longitude: number };
+  rooms: Rooms;
+}) => {
   return { location: state.location, rooms: state.rooms };
 };
 

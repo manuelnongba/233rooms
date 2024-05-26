@@ -1,3 +1,4 @@
+import { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
 import Account from '~/component/account/Account';
 import { links as accountLinks } from '~/component/account/Account';
 import { links as headerLinks } from '~/component/navigation/Header';
@@ -8,6 +9,7 @@ import {
   requireUserSession,
 } from '~/data/auth.server';
 import { deleteUser, getUserInfo, updateUserInfo } from '~/data/user.server';
+import { User } from '~/types/account.types';
 
 const AccountPage = () => {
   return (
@@ -19,16 +21,16 @@ const AccountPage = () => {
 
 export default AccountPage;
 
-export const loader = async ({ request }: any) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserFromSession(request);
   await requireUserSession(request);
 
-  const userInfo = await getUserInfo(userId);
+  const userInfo: User[] = await getUserInfo(userId);
 
   return { userInfo, userId };
 };
 
-export const action = async ({ request }: any) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const credentials = Object.fromEntries(formData);
 

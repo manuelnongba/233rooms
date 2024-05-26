@@ -1,3 +1,4 @@
+import { ActionFunctionArgs } from '@remix-run/node';
 import ImagesUpload, {
   links as ImagesUploadLinks,
 } from '~/component/rooms/ImagesUpload';
@@ -13,10 +14,10 @@ const RentNextStep = () => {
 };
 export default RentNextStep;
 
-export const action = async ({ request }: any) => {
+export const action = async ({ request }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const roomData = Object.fromEntries(formData);
-  let roomID: any = roomData.roomId;
+  let roomID: FormDataEntryValue | number | null = roomData.roomId;
 
   const { debouncedSearchTerm } = Object.fromEntries(formData);
   const predictions = await autocomplete(debouncedSearchTerm);

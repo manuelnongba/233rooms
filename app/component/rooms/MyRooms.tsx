@@ -12,7 +12,22 @@ import { useState } from 'react';
 import MyRoomsMenu from './MyRoomsMenu';
 import Header from '../navigation/Header';
 
-const MyRoomsDetails = ({ myRoomsData }: any) => {
+interface MyRoomData {
+  address: string;
+  bathrooms: number;
+  bedrooms: number;
+  description: string;
+  id: string;
+  image: string;
+  price: number;
+  title: string;
+}
+
+interface MyRoomsTypes {
+  myRoomsData: MyRoomData;
+}
+
+const MyRoomsDetails: React.FC<MyRoomsTypes> = ({ myRoomsData }) => {
   const [isMenu, setIsMenu] = useState(false);
 
   const showMenu = () => {
@@ -100,7 +115,7 @@ const MyRooms = () => {
                 </p>
               </div>
             )}
-            {data.userRooms.map((el: any) => (
+            {data.userRooms.map((el: MyRoomData) => (
               <MyRoomsDetails key={el.id} myRoomsData={el} />
             ))}
           </div>

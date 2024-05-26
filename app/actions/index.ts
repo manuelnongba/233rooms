@@ -1,14 +1,10 @@
 import type { Dispatch } from 'redux';
 import { ActionTypes } from './types';
+import { Rooms } from '~/types/rooms.types';
 
 export interface Location {
   longitude: number | null;
   latitude: number | null;
-}
-
-export interface Rooms {
-  // {id: 1, title: 'Accra Room', image: 'accra.png', distance: 13270.3905742
-  rooms: object;
 }
 
 export interface LocationAction {

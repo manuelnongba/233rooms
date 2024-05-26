@@ -1,3 +1,4 @@
+import { LoaderFunction } from '@remix-run/node';
 import { useLoaderData } from '@remix-run/react';
 import { useState, type MouseEvent, useEffect } from 'react';
 import {
@@ -7,34 +8,36 @@ import {
   FaPhoneAlt,
 } from 'react-icons/fa';
 import styles from '~/styles/roomDetails.css';
+import { Rooms } from '~/types/rooms.types';
 
 const RoomDetails = () => {
-  const [roomDataObj, setRoomDataObj] = useState<any>({
+  const [roomDataObj, setRoomDataObj] = useState<Rooms>({
     title: '',
+    id: '',
     description: '',
-    price: '',
+    price: 0,
     address: '',
     image: [],
   });
-  const { roomInfo, userInfo } = useLoaderData<any>();
+  const { roomInfo, userInfo } = useLoaderData<LoaderFunction>();
   const [mainImage, setMainImage] = useState<string>(roomInfo[0].image);
   const userInfoData = userInfo[0];
 
   useEffect(() => {
-    const imagesData = roomInfo?.map((el: any) => el?.image);
-    roomInfo?.forEach((el: any) => {
+    const imagesData = roomInfo?.map((el: Rooms) => el?.image);
+    roomInfo?.forEach((el: Rooms) => {
       setRoomDataObj({ ...el, image: [...imagesData] });
     });
   }, [roomInfo]);
 
   const onImageClick = (e: MouseEvent) => {
-    const target: any = e.target as HTMLImageElement;
-    const selectedImage: string = target.dataset?.image;
+    const target = e.target as HTMLImageElement;
+    const selectedImage = target.dataset?.image as string;
 
     setMainImage(selectedImage);
   };
 
-  const roomImages = roomDataObj?.image?.map((el: any, i: any) => {
+  const roomImages = roomDataObj?.image?.map((el: string, i: number) => {
     return (
       <div key={i}>
         <div>

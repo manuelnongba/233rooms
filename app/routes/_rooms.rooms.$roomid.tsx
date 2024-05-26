@@ -5,6 +5,7 @@ import Header, { links as headerLinks } from '~/component/navigation/Header';
 import { links as menuLinks } from '~/component/navigation/Menu';
 import { getRoomOwnerInfo } from '~/data/user.server';
 import { getUserFromSession } from '~/data/auth.server';
+import { LoaderFunctionArgs } from '@remix-run/node';
 
 const Room = () => {
   return (
@@ -17,8 +18,8 @@ const Room = () => {
 
 export default Room;
 
-export const loader = async ({ params, request }: any) => {
-  const roomId = params?.roomid;
+export const loader = async ({ params, request }: LoaderFunctionArgs) => {
+  const roomId = params?.roomid!;
   const userId = await getUserFromSession(request);
 
   const roomInfo = await getRoomDetails(roomId);

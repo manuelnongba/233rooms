@@ -9,11 +9,12 @@ import { FaLock, FaUserPlus } from 'react-icons/fa';
 import styles from '~/styles/loginForm.css';
 import { showAlert } from '../utils/alert';
 import { useEffect } from 'react';
+import { ActionFunction } from '@remix-run/node';
 
 const Login = () => {
   const navigation = useNavigation();
   const [searchParams] = useSearchParams();
-  const user = useActionData<any>();
+  const user = useActionData<ActionFunction>();
 
   useEffect(() => {
     if (user?.email) showAlert('error', user?.email);

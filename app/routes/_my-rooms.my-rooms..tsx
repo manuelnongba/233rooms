@@ -6,6 +6,7 @@ import { getUserFromSession, requireUserSession } from '~/data/auth.server';
 import { getUserRooms } from '~/data/rooms.server';
 import { getUserName } from '~/data/user.server';
 import { Outlet } from '@remix-run/react';
+import { LoaderFunctionArgs } from '@remix-run/node';
 
 const MyRoomsPage = () => {
   return (
@@ -17,7 +18,7 @@ const MyRoomsPage = () => {
 };
 export default MyRoomsPage;
 
-export const loader = async ({ request }: any) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const userId = await getUserFromSession(request);
   await requireUserSession(request);
 

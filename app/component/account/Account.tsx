@@ -9,14 +9,7 @@ import styles from '~/styles/account.css';
 import { useEffect, useRef, useState } from 'react';
 import Header from '../navigation/Header';
 import { hideAlert, showAlert } from '../utils/alert';
-
-interface UserInfo {
-  email: string;
-  firstname: string;
-  lastname: string;
-  phone: string;
-  address: string;
-}
+import { ActionFunction, LoaderFunction } from '@remix-run/node';
 
 const Account = () => {
   const [inputValue, setInputValue] = useState({
@@ -24,20 +17,18 @@ const Account = () => {
     firstname: '',
     lastname: '',
     phone: '',
-    address: '',
   });
-  const [rowCount, setRowCount] = useState();
+  const [rowCount, setRowCount] = useState<number>();
   const fetcher = useFetcher();
 
-  const emailRef: any = useRef();
-  const firstnameRef: any = useRef();
-  const lastnameRef: any = useRef();
-  const phoneRef: any = useRef();
-  // const addressRef: any = useRef();
-  let { userInfo } = useLoaderData<any>();
-  console.log(userInfo);
+  const emailRef = useRef<HTMLInputElement>(null);
+  const firstnameRef = useRef<HTMLInputElement>(null);
+  const lastnameRef = useRef<HTMLInputElement>(null);
+  const phoneRef = useRef<HTMLInputElement>(null);
 
-  const data = useActionData<any>();
+  let { userInfo } = useLoaderData<LoaderFunction>();
+
+  const data = useActionData<ActionFunction>();
 
   userInfo = userInfo[0];
 
@@ -57,12 +48,11 @@ const Account = () => {
       firstname: userInfo.firstname,
       lastname: userInfo.lastname,
       phone: userInfo.phone,
-      address: userInfo.address || 'Not provided',
     });
   }, []);
 
-  const handleChange = (e: any) => {
-    setInputValue({ ...inputValue, [e.target.name]: e.target.value });
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue({ ...inputValue, [e?.target?.name]: e.target.value });
   };
 
   const handleSubmit = () => {
@@ -70,13 +60,11 @@ const Account = () => {
       if (rowCount) showAlert('success', 'User Details Successfully Updated.');
       else showAlert('update', 'updating...');
     } catch (error) {
-      console.log(error);
-
       showAlert('error', 'error');
     }
   };
 
-  function deleteRoomHandler(e: any) {
+  function deleteRoomHandler(e: React.MouseEvent<HTMLButtonElement>) {
     const proceed = confirm('Click OK to delete this room!');
     if (!proceed) return;
 
@@ -132,16 +120,6 @@ const Account = () => {
                 ref={phoneRef}
               />
             </div>
-            {/* <div className="user-address">
-              <label htmlFor="">Address</label>
-              <input
-                type="text"
-                name="address"
-                value={inputValue.address}
-                onChange={(e) => handleChange(e)}
-                ref={addressRef}
-              />
-            </div> */}
             <div className="submit-button">
               <button type="submit">Update Info</button>
             </div>
